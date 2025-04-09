@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InfoDto {
+    private int id;
     private String title;
     private String description;
     private List<InfoLinkDto> links;

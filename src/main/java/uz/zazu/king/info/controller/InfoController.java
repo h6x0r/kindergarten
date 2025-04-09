@@ -51,7 +51,9 @@ public class InfoController {
     }
 
     private ModuleInfoDto getModuleInfo(String title, String tableLink) {
+        int i = 1;
         InfoDto sample1 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 1")
                 .description("Sample description for title 1")
                 .links(List.of(
@@ -61,6 +63,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample2 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 2")
                 .description("Sample description for title 2")
                 .links(List.of(
@@ -70,6 +73,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample3 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 3")
                 .description("Sample description for title 3")
                 .links(List.of(
@@ -79,6 +83,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample4 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 4")
                 .description("Sample description for title 4")
                 .links(List.of(
@@ -88,6 +93,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample5 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 5")
                 .description("Sample description for title 5")
                 .links(List.of(
@@ -97,6 +103,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample6 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 6")
                 .description("Sample description for title 6")
                 .links(List.of(
@@ -106,6 +113,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample7 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 7")
                 .description("Sample description for title 7")
                 .links(List.of(
@@ -115,6 +123,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample8 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 8")
                 .description("Sample description for title 8")
                 .links(List.of(
@@ -124,6 +133,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample9 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 9")
                 .description("Sample description for title 9")
                 .links(List.of(
@@ -133,6 +143,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample10 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 10")
                 .description("Sample description for title 10")
                 .links(List.of(
@@ -142,6 +153,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample11 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 11")
                 .description("Sample description for title 11")
                 .links(List.of(
@@ -151,6 +163,7 @@ public class InfoController {
                 .build();
 
         InfoDto sample12 = InfoDto.builder()
+                .id(i++)
                 .title("Sample Title 12")
                 .description("Sample description for title 12")
                 .links(List.of(
