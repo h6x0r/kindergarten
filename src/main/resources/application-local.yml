@@ -1,0 +1,22 @@
+server:
+  port: 8050
+
+spring:
+  data:
+    mongodb:
+      # Рекомендуется использовать полноценную строку подключения, включая пользователя и пароль (если они есть).
+      # Пример: mongodb://<user>:<password>@localhost:27017/your_database_name
+      #      uri: "mongodb://myUser:myPassword@localhost:27017/kindergarten"
+      uri: "mongodb://localhost:27017/kindergarten"
+
+  application:
+    name: kindergarten
+
+king:
+  jwt:
+    secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
+
+logging:
+  level:
+    root: INFO
+#    org.springframework.data.mongodb.core: DEBUG
