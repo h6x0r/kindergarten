@@ -1,21 +1,32 @@
 package uz.zazu.king.lead.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LeadQuestionnaireDto {
     private String id;
     private long orgId;
+    @NotBlank
     private String firstName;
     private String lastName;
     private String patronymic;
+    @NotBlank
     private String groupAndTeacher;
     private long ltv;
+    @NotBlank
     private String childPickupPerson;
+    @NotBlank
     private String parentFullName;
     private String childAgeAndDOB;
     private String childSpecialNeeds;

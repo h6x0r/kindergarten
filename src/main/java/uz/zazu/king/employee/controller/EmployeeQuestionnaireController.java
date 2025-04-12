@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.zazu.king.employee.dto.EmployeeEmployeeQuestionnaireBusinessRoleDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
-import uz.zazu.king.service.EmployeeQuestionnaireService;
+import uz.zazu.king.employee.service.EmployeeQuestionnaireService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/questionnaire/employee")
 @RequiredArgsConstructor
+@RequestMapping("/api/questionnaire/employee")
+@PreAuthorize("hasRole('SUPER_ADMIN')")
 public class EmployeeQuestionnaireController {
 
     private final EmployeeQuestionnaireService employeeQuestionnaireService;
@@ -51,7 +52,7 @@ public class EmployeeQuestionnaireController {
     }
 
     @GetMapping("/business")
-    public ResponseEntity<List<EmployeeEmployeeQuestionnaireBusinessRoleDto>> getAllBusiness() {
+    public ResponseEntity<List<EmployeeQuestionnaireBusinessRoleDto>> getAllBusiness() {
         return ResponseEntity.ok(employeeQuestionnaireService.findAllBusiness());
     }
 

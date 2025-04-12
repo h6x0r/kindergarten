@@ -1,6 +1,6 @@
-package uz.zazu.king.service;
+package uz.zazu.king.employee.service;
 
-import uz.zazu.king.employee.dto.EmployeeEmployeeQuestionnaireBusinessRoleDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
 
@@ -13,7 +13,7 @@ public interface EmployeeQuestionnaireService {
 
     List<EmployeeQuestionnaireDto> findAll();
 
-    List<EmployeeEmployeeQuestionnaireBusinessRoleDto> findAllBusiness();
+    List<EmployeeQuestionnaireBusinessRoleDto> findAllBusiness();
 
     List<EmployeeQuestionnaireEducativeRoleDto> findAllEducative();
 

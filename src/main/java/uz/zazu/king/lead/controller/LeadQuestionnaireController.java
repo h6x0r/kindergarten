@@ -1,7 +1,12 @@
 package uz.zazu.king.lead.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,21 +21,24 @@ import uz.zazu.king.lead.service.LeadQuestionnaireService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/children")
-@PreAuthorize("hasRole('ADMIN')")
+@RequestMapping("/api/leads/questionnaire")
 @RequiredArgsConstructor
 public class LeadQuestionnaireController {
 
     private final LeadQuestionnaireService leadQuestionnaireService;
 
     @PostMapping
-    public LeadQuestionnaireDto create(@RequestBody LeadQuestionnaireDto lead) {
+    public LeadQuestionnaireDto create(@Valid @RequestBody LeadQuestionnaireDto lead) {
         return leadQuestionnaireService.create(lead);
     }
 
     @GetMapping("/{id}")
-    public LeadQuestionnaireDto getById(@PathVariable String id) {
-        return leadQuestionnaireService.findById(id);
+    public ResponseEntity<LeadQuestionnaireDto> getById(@NotBlank @PathVariable String id) {
+        try {
+            return ResponseEntity.ok(leadQuestionnaireService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping
@@ -39,12 +47,21 @@ public class LeadQuestionnaireController {
     }
 
     @PutMapping("/{id}")
-    public LeadQuestionnaireDto update(@PathVariable String id, @RequestBody LeadQuestionnaireDto lead) {
-        return leadQuestionnaireService.update(id, lead);
+    public ResponseEntity<LeadQuestionnaireDto> update(@NotBlank @PathVariable String id, @NotNull @RequestBody LeadQuestionnaireDto lead) {
+        try {
+            return ResponseEntity.ok(leadQuestionnaireService.update(id, lead));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        leadQuestionnaireService.delete(id);
+    public ResponseEntity<Void> delete(@NotBlank @PathVariable String id) {
+        try {
+            leadQuestionnaireService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

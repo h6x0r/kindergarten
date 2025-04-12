@@ -1,6 +1,7 @@
 package uz.zazu.king.employee.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "questionnaires_business_role")
+@Document(collection = "employee_questionnaires_business")
 public class EmployeeQuestionnaireBusinessRoleEntity {
     @Id
     private String id;

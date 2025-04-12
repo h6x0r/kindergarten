@@ -1,4 +1,4 @@
-package uz.zazu.king.service.impl;
+package uz.zazu.king.employee.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import uz.zazu.king.employee.common.exception.EmployeeNotFoundException;
 import uz.zazu.king.employee.dto.EmployeeDto;
 import uz.zazu.king.employee.mapper.EmployeeMapper;
 import uz.zazu.king.employee.repository.EmployeeRepository;
-import uz.zazu.king.service.EmployeeService;
+import uz.zazu.king.employee.service.EmployeeService;
 
 import java.util.List;
 import java.util.stream.Collectors;

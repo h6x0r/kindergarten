@@ -1,4 +1,4 @@
-package uz.zazu.king.service;
+package uz.zazu.king.employee.service;
 
 import uz.zazu.king.employee.dto.EmployeeDto;
 

@@ -1,4 +1,4 @@
-package uz.zazu.king.config;
+package uz.zazu.king.common.config;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
 

@@ -1,4 +1,4 @@
-package uz.zazu.king.config;
+package uz.zazu.king.common.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

@@ -1,6 +1,8 @@
 package uz.zazu.king.employee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import uz.zazu.king.employee.dto.EmployeeEmployeeQuestionnaireBusinessRoleDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -30,46 +33,55 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
 
     private static final String BASE_URL = "/api/questionnaire/employee";
 
+    private static EmployeeQuestionnaireBusinessRoleDto businessDto;
+
+    private static EmployeeQuestionnaireEducativeRoleDto educativeDto;
+
+    @BeforeAll
+    static void setUp() {
+        businessDto = EmployeeQuestionnaireBusinessRoleDto.builder()
+                .fullName("Тестовый Пользователь (Business)")
+                .age(30)
+                .build();
+
+        educativeDto = EmployeeQuestionnaireEducativeRoleDto.builder()
+                .fullName("Тестовый Пользователь (Educative)")
+                .age(28)
+                .education("Высшее педагогическое")
+                .reasonForWorkingInThisField("Люблю работать с детьми")
+                .build();
+    }
+
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод create()")
     class CreateMethodTests {
 
         @Test
         @DisplayName("Позитивный сценарий создания (Business)")
         void createPositiveBusiness() throws Exception {
-            EmployeeEmployeeQuestionnaireBusinessRoleDto dto = EmployeeEmployeeQuestionnaireBusinessRoleDto.builder()
-                    .fullName("Иванов Иван")
-                    .age(30)
-                    .build();
-
             mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(dto)))
+                            .content(objectMapper.writeValueAsString(businessDto)))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.fullName").value("Иванов Иван"))
+                    .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Business)"))
                     .andExpect(jsonPath("$.age").value(30));
         }
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод create() - Educative")
     class CreateEducativeMethodTests {
 
         @Test
         @DisplayName("Позитивный сценарий создания (Educative)")
         void createPositiveEducative() throws Exception {
-            EmployeeQuestionnaireEducativeRoleDto dto = EmployeeQuestionnaireEducativeRoleDto.builder()
-                    .fullName("Петров Пётр")
-                    .age(28)
-                    .education("Высшее педагогическое")
-                    .reasonForWorkingInThisField("Люблю работать с детьми")
-                    .build();
-
             mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(dto)))
+                            .content(objectMapper.writeValueAsString(educativeDto)))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.fullName").value("Петров Пётр"))
+                    .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Educative)"))
                     .andExpect(jsonPath("$.age").value(28))
                     .andExpect(jsonPath("$.education").value("Высшее педагогическое"))
                     .andExpect(jsonPath("$.reasonForWorkingInThisField").value("Люблю работать с детьми"));
@@ -77,20 +89,16 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getById()")
     class GetByIdMethodTests {
 
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Business)")
         void getByIdPositiveBusiness() throws Exception {
-            EmployeeEmployeeQuestionnaireBusinessRoleDto dto = EmployeeEmployeeQuestionnaireBusinessRoleDto.builder()
-                    .fullName("Тест Пользователь Должен Быть Неактивен")
-                    .age(25)
-                    .build();
-
             var savedEntity = mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(dto)))
+                            .content(objectMapper.writeValueAsString(businessDto)))
                     .andExpect(status().isOk())
                     .andReturn()
                     .getResponse()
@@ -119,21 +127,16 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getById() - Educative")
     class GetByIdEducativeMethodTests {
 
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Educative)")
         void getByIdPositiveEducative() throws Exception {
-            EmployeeQuestionnaireEducativeRoleDto dto = EmployeeQuestionnaireEducativeRoleDto.builder()
-                    .fullName("Тестовый Пользователь (Educative)")
-                    .age(29)
-                    .education("Среднее специальное")
-                    .build();
-
             var savedEntity = mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(dto)))
+                            .content(objectMapper.writeValueAsString(educativeDto)))
                     .andExpect(status().isOk())
                     .andReturn()
                     .getResponse()
@@ -163,6 +166,7 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getAll()")
     class GetAllMethodTests {
 
@@ -183,6 +187,7 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getAllBusiness()")
     class GetAllBusinessMethodTests {
 
@@ -203,6 +208,7 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
     }
 
     @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getAllEducative()")
     class GetAllEducativeMethodTests {
 

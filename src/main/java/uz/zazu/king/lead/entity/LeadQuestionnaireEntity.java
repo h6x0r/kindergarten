@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "questionnaire")
-public class QuestionnaireEntity {
+@Document(collection = "lead_questionnaire")
+public class LeadQuestionnaireEntity {
     @Id
     private String id;
 

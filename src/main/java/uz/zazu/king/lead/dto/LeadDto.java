@@ -1,5 +1,6 @@
 package uz.zazu.king.lead.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,11 +16,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LeadDto {
     private String id;
-    private String name;
-    private String contact;
     private String leadSource;     // источник лида
+    @NotBlank
     private String parentName;     // имя родителя
+    @NotBlank
     private String parentPhone;    // номер телефона
+    @NotBlank
     private String childName;      // имя ребенка
     private int childAge;
     private String childHobbies;   // увлечения ребенка

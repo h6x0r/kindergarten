@@ -1,4 +1,4 @@
-package uz.zazu.king.config;
+package uz.zazu.king.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

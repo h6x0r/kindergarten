@@ -2,11 +2,11 @@ package uz.zazu.king.lead.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
-import uz.zazu.king.lead.entity.QuestionnaireEntity;
-import uz.zazu.king.lead.exception.ChildNotFoundException;
-import uz.zazu.king.lead.mapper.ChildMapper;
-import uz.zazu.king.lead.repository.ChildRepository;
+import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
+import uz.zazu.king.lead.mapper.LeadQuestionnaireMapper;
+import uz.zazu.king.lead.repository.LeadQuestionnaireRepository;
 import uz.zazu.king.lead.service.LeadQuestionnaireService;
 
 import java.util.List;
@@ -16,51 +16,55 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class LeadQuestionnaireServiceImpl implements LeadQuestionnaireService {
 
-    private final ChildRepository childRepository;
-    private final ChildMapper childMapper;
+    private final LeadQuestionnaireRepository leadQuestionnaireRepository;
+    private final LeadQuestionnaireMapper leadQuestionnaireMapper;
 
     @Override
     public LeadQuestionnaireDto create(LeadQuestionnaireDto leadQuestionnaireDto) {
-        var entity = childMapper.toEntity(leadQuestionnaireDto);
-        var saved = childRepository.save(entity);
-        return childMapper.toDto(saved);
+        var entity = leadQuestionnaireMapper.toEntity(leadQuestionnaireDto);
+        var saved = leadQuestionnaireRepository.save(entity);
+        return leadQuestionnaireMapper.toDto(saved);
     }
 
     @Override
     public LeadQuestionnaireDto findById(String id) {
-        var result = childRepository.findActiveById(id);
-        if (result == null) {
-            throw new ChildNotFoundException(id);
+        var result = leadQuestionnaireRepository.findActiveById(id);
+        if (result != null) {
+            return leadQuestionnaireMapper.toDto(result);
         }
-        return childMapper.toDto(result);
+
+        throw new QuestionnaireNotFoundException(id);
     }
 
     @Override
     public List<LeadQuestionnaireDto> findAll() {
-        var list = childRepository.findAll();
+        var list = leadQuestionnaireRepository.findAllActive();
         return list.stream()
-                .map(childMapper::toDto)
+                .map(leadQuestionnaireMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public LeadQuestionnaireDto update(String id, LeadQuestionnaireDto leadQuestionnaireDto) {
-        var existing = childRepository.findActiveById(id);
-        if (existing == null) {
-            throw new ChildNotFoundException(id);
+        var existing = leadQuestionnaireRepository.findActiveById(id);
+        if (existing != null) {
+            leadQuestionnaireMapper.updateEntityFromDto(leadQuestionnaireDto, existing);
+            existing = leadQuestionnaireRepository.save(existing);
+            return leadQuestionnaireMapper.toDto(existing);
         }
-        childMapper.updateEntityFromDto(leadQuestionnaireDto, existing);
-        existing = childRepository.save(existing);
-        return childMapper.toDto(existing);
+
+        throw new QuestionnaireNotFoundException(id);
     }
 
     @Override
     public void delete(String id) {
-        QuestionnaireEntity existing = childRepository.findActiveById(id);
-        if (existing == null) {
-            throw new ChildNotFoundException(id);
+        var existing = leadQuestionnaireRepository.findActiveById(id);
+        if (existing != null) {
+            existing.setActive(false);
+            leadQuestionnaireRepository.save(existing);
+            return;
         }
-        existing.setActive(false);
-        childRepository.save(existing);
+
+        throw new QuestionnaireNotFoundException(id);
     }
 }

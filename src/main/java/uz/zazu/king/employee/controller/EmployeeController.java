@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.zazu.king.employee.dto.EmployeeDto;
-import uz.zazu.king.service.EmployeeService;
+import uz.zazu.king.employee.service.EmployeeService;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/employees")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
-@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
