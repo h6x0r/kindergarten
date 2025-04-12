@@ -3,73 +3,73 @@ package uz.zazu.king.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import uz.zazu.king.employee.dto.QuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.QuestionnaireDto;
-import uz.zazu.king.employee.dto.QuestionnaireEducativeRoleDto;
+import uz.zazu.king.employee.dto.EmployeeEmployeeQuestionnaireBusinessRoleDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
 import uz.zazu.king.employee.entity.QuestionnaireEducativeRoleEntity;
-import uz.zazu.king.employee.mapper.QuestionnaireMapper;
-import uz.zazu.king.employee.repository.QuestionnaireBusinessRoleRepository;
-import uz.zazu.king.employee.repository.QuestionnaireEducativeRoleRepository;
-import uz.zazu.king.service.QuestionnaireService;
+import uz.zazu.king.employee.mapper.EmployeeQuestionnaireMapper;
+import uz.zazu.king.employee.repository.EmployeeQuestionnaireBusinessRoleRepository;
+import uz.zazu.king.employee.repository.EmployeeQuestionnaireEducativeRoleRepository;
+import uz.zazu.king.service.EmployeeQuestionnaireService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class QuestionnaireServiceImpl implements QuestionnaireService {
+public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestionnaireService {
 
-    private final QuestionnaireMapper questionnaireMapper;
-    private final QuestionnaireBusinessRoleRepository businessRoleRepository;
-    private final QuestionnaireEducativeRoleRepository educativeRoleRepository;
+    private final EmployeeQuestionnaireMapper employeeQuestionnaireMapper;
+    private final EmployeeQuestionnaireBusinessRoleRepository businessRoleRepository;
+    private final EmployeeQuestionnaireEducativeRoleRepository educativeRoleRepository;
 
     @Override
-    public QuestionnaireDto create(QuestionnaireDto questionnaireDto) {
-        Assert.notNull(questionnaireDto, "questionnaireDto не может быть null");
+    public EmployeeQuestionnaireDto create(EmployeeQuestionnaireDto employeeQuestionnaireDto) {
+        Assert.notNull(employeeQuestionnaireDto, "questionnaireDto не может быть null");
 
-        if (questionnaireDto instanceof QuestionnaireBusinessRoleDto dto) {
-            var entity = questionnaireMapper.toBusinessRoleEntity(dto);
+        if (employeeQuestionnaireDto instanceof EmployeeEmployeeQuestionnaireBusinessRoleDto dto) {
+            var entity = employeeQuestionnaireMapper.toBusinessRoleEntity(dto);
             var saved = businessRoleRepository.save(entity);
-            return questionnaireMapper.toBusinessRoleDto(saved);
+            return employeeQuestionnaireMapper.toBusinessRoleDto(saved);
 
-        } else if (questionnaireDto instanceof QuestionnaireEducativeRoleDto dto) {
-            var entity = questionnaireMapper.toEducativeRoleEntity(dto);
+        } else if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireEducativeRoleDto dto) {
+            var entity = employeeQuestionnaireMapper.toEducativeRoleEntity(dto);
             entity = educativeRoleRepository.save(entity);
-            return questionnaireMapper.toEducativeRoleDto(entity);
+            return employeeQuestionnaireMapper.toEducativeRoleDto(entity);
         }
 
         throw new IllegalArgumentException("Неизвестный тип DTO для создания записи.");
     }
 
     @Override
-    public QuestionnaireDto findById(String id) {
+    public EmployeeQuestionnaireDto findById(String id) {
         Assert.hasText(id, "id не может быть пустым");
 
         var businessOpt = businessRoleRepository.findById(id);
         if (businessOpt.isPresent()) {
-            return questionnaireMapper.toBusinessRoleDto(businessOpt.get());
+            return employeeQuestionnaireMapper.toBusinessRoleDto(businessOpt.get());
         }
 
         var educativeOpt = educativeRoleRepository.findById(id);
         if (educativeOpt.isPresent()) {
-            return questionnaireMapper.toEducativeRoleDto(educativeOpt.get());
+            return employeeQuestionnaireMapper.toEducativeRoleDto(educativeOpt.get());
         }
 
         throw new IllegalArgumentException("Опросник с указанным ID не найден.");
     }
 
     @Override
-    public List<QuestionnaireDto> findAll() {
+    public List<EmployeeQuestionnaireDto> findAll() {
         var businessList = businessRoleRepository.findAll();
         var convertedBusinessList = businessList.stream()
-                .map(questionnaireMapper::toBusinessRoleDto)
+                .map(employeeQuestionnaireMapper::toBusinessRoleDto)
                 .toList();
 
-        var results = new ArrayList<QuestionnaireDto>(convertedBusinessList);
+        var results = new ArrayList<EmployeeQuestionnaireDto>(convertedBusinessList);
 
         var educativeList = educativeRoleRepository.findAll();
         var convertedEducativeList = educativeList.stream()
-                .map(questionnaireMapper::toEducativeRoleDto)
+                .map(employeeQuestionnaireMapper::toEducativeRoleDto)
                 .toList();
 
         results.addAll(convertedEducativeList);
@@ -78,41 +78,41 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public List<QuestionnaireBusinessRoleDto> findAllBusiness() {
+    public List<EmployeeEmployeeQuestionnaireBusinessRoleDto> findAllBusiness() {
         var businessList = businessRoleRepository.findAllByIsActiveTrue();
         return businessList.stream()
-                .map(questionnaireMapper::toBusinessRoleDto)
+                .map(employeeQuestionnaireMapper::toBusinessRoleDto)
                 .toList();
     }
 
     @Override
-    public List<QuestionnaireEducativeRoleDto> findAllEducative() {
+    public List<EmployeeQuestionnaireEducativeRoleDto> findAllEducative() {
         var educativeList = educativeRoleRepository.findAllByIsActiveTrue();
         return educativeList.stream()
-                .map(questionnaireMapper::toEducativeRoleDto)
+                .map(employeeQuestionnaireMapper::toEducativeRoleDto)
                 .toList();
     }
 
     @Override
-    public QuestionnaireDto update(String id, QuestionnaireDto questionnaireDto) {
+    public EmployeeQuestionnaireDto update(String id, EmployeeQuestionnaireDto employeeQuestionnaireDto) {
         Assert.hasText(id, "id не может быть пустым");
-        Assert.notNull(questionnaireDto, "questionnaireDto не может быть null");
+        Assert.notNull(employeeQuestionnaireDto, "questionnaireDto не может быть null");
 
-        if (questionnaireDto instanceof QuestionnaireBusinessRoleDto dto) {
+        if (employeeQuestionnaireDto instanceof EmployeeEmployeeQuestionnaireBusinessRoleDto dto) {
             var existingEntity =
                     businessRoleRepository.findById(id)
                             .orElseThrow(() -> new IllegalArgumentException("Бизнес-опросник не найден"));
-            questionnaireMapper.updateBusinessRoleEntityFromDto(dto, existingEntity);
+            employeeQuestionnaireMapper.updateBusinessRoleEntityFromDto(dto, existingEntity);
             var updatedEntity = businessRoleRepository.save(existingEntity);
-            return questionnaireMapper.toBusinessRoleDto(updatedEntity);
+            return employeeQuestionnaireMapper.toBusinessRoleDto(updatedEntity);
 
-        } else if (questionnaireDto instanceof QuestionnaireEducativeRoleDto dto) {
+        } else if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireEducativeRoleDto dto) {
             QuestionnaireEducativeRoleEntity existingEntity =
                     educativeRoleRepository.findById(id)
                             .orElseThrow(() -> new IllegalArgumentException("Образовательный опросник не найден"));
-            questionnaireMapper.updateEducativeRoleEntityFromDto(dto, existingEntity);
+            employeeQuestionnaireMapper.updateEducativeRoleEntityFromDto(dto, existingEntity);
             var updatedEntity = educativeRoleRepository.save(existingEntity);
-            return questionnaireMapper.toEducativeRoleDto(updatedEntity);
+            return employeeQuestionnaireMapper.toEducativeRoleDto(updatedEntity);
         }
 
         throw new IllegalArgumentException("Неизвестный тип DTO для обновления записи.");

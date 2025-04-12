@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import uz.zazu.king.lead.common.Branch;
 
 import java.time.LocalDateTime;
 
@@ -17,12 +18,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "children")
-public class ChildEntity {
+@Document(collection = "questionnaire")
+public class QuestionnaireEntity {
     @Id
     private String id;
 
     private long orgId;
+    private Branch branch;
     private String firstName;   // имя ребенка
     private String lastName;   // фамилия ребенка
     private String patronymic;   // отчество ребенка

@@ -1,4 +1,4 @@
-package uz.zazu.king.controller;
+package uz.zazu.king.employee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import uz.zazu.king.employee.dto.QuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.QuestionnaireEducativeRoleDto;
+import uz.zazu.king.employee.dto.EmployeeEmployeeQuestionnaireBusinessRoleDto;
+import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -20,13 +20,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class QuestionnaireControllerIntegrationTest {
+public class EmployeeQuestionnaireControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    private static final String BASE_URL = "/api/questionnaire/employee";
 
     @Nested
     @DisplayName("Метод create()")
@@ -35,12 +37,12 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий создания (Business)")
         void createPositiveBusiness() throws Exception {
-            QuestionnaireBusinessRoleDto dto = QuestionnaireBusinessRoleDto.builder()
+            EmployeeEmployeeQuestionnaireBusinessRoleDto dto = EmployeeEmployeeQuestionnaireBusinessRoleDto.builder()
                     .fullName("Иванов Иван")
                     .age(30)
                     .build();
 
-            mockMvc.perform(post("/api/questionnaire")
+            mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(dto)))
                     .andExpect(status().isOk())
@@ -56,14 +58,14 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий создания (Educative)")
         void createPositiveEducative() throws Exception {
-            QuestionnaireEducativeRoleDto dto = QuestionnaireEducativeRoleDto.builder()
+            EmployeeQuestionnaireEducativeRoleDto dto = EmployeeQuestionnaireEducativeRoleDto.builder()
                     .fullName("Петров Пётр")
                     .age(28)
                     .education("Высшее педагогическое")
                     .reasonForWorkingInThisField("Люблю работать с детьми")
                     .build();
 
-            mockMvc.perform(post("/api/questionnaire")
+            mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(dto)))
                     .andExpect(status().isOk())
@@ -81,12 +83,12 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Business)")
         void getByIdPositiveBusiness() throws Exception {
-            QuestionnaireBusinessRoleDto dto = QuestionnaireBusinessRoleDto.builder()
+            EmployeeEmployeeQuestionnaireBusinessRoleDto dto = EmployeeEmployeeQuestionnaireBusinessRoleDto.builder()
                     .fullName("Тест Пользователь Должен Быть Неактивен")
                     .age(25)
                     .build();
 
-            var savedEntity = mockMvc.perform(post("/api/questionnaire")
+            var savedEntity = mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(dto)))
                     .andExpect(status().isOk())
@@ -97,11 +99,11 @@ public class QuestionnaireControllerIntegrationTest {
             var savedId = objectMapper.readTree(savedEntity).get("id").asText();
 
             try {
-                mockMvc.perform(get("/api/questionnaire/{id}", savedId))
+                mockMvc.perform(get(BASE_URL + "/{id}", savedId))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.id").value(savedId));
             } finally {
-                mockMvc.perform(delete("/api/questionnaire/{id}", savedId))
+                mockMvc.perform(delete(BASE_URL + "/{id}", savedId))
                         .andExpect(status().isOk());
             }
         }
@@ -111,7 +113,7 @@ public class QuestionnaireControllerIntegrationTest {
         void getByIdNegative_NotFound() throws Exception {
             String invalidId = "not_existing_id";
 
-            mockMvc.perform(get("/api/questionnaire/{id}", invalidId))
+            mockMvc.perform(get(BASE_URL + "/{id}", invalidId))
                     .andExpect(status().is4xxClientError());
         }
     }
@@ -123,13 +125,13 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Educative)")
         void getByIdPositiveEducative() throws Exception {
-            QuestionnaireEducativeRoleDto dto = QuestionnaireEducativeRoleDto.builder()
+            EmployeeQuestionnaireEducativeRoleDto dto = EmployeeQuestionnaireEducativeRoleDto.builder()
                     .fullName("Тестовый Пользователь (Educative)")
                     .age(29)
                     .education("Среднее специальное")
                     .build();
 
-            var savedEntity = mockMvc.perform(post("/api/questionnaire")
+            var savedEntity = mockMvc.perform(post(BASE_URL)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(dto)))
                     .andExpect(status().isOk())
@@ -140,12 +142,12 @@ public class QuestionnaireControllerIntegrationTest {
             var savedId = objectMapper.readTree(savedEntity).get("id").asText();
 
             try {
-                mockMvc.perform(get("/api/questionnaire/{id}", savedId))
+                mockMvc.perform(get(BASE_URL + "/{id}", savedId))
                         .andExpect(status().isOk())
                         .andExpect(jsonPath("$.id").value(savedId))
                         .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Educative)"));
             } finally {
-                mockMvc.perform(delete("/api/questionnaire/{id}", savedId))
+                mockMvc.perform(delete(BASE_URL + "/{id}", savedId))
                         .andExpect(status().isOk());
             }
         }
@@ -155,7 +157,7 @@ public class QuestionnaireControllerIntegrationTest {
         void getByIdNegativeEducative_NotFound() throws Exception {
             String invalidId = "non_existent_educative_id";
 
-            mockMvc.perform(get("/api/questionnaire/{id}", invalidId))
+            mockMvc.perform(get(BASE_URL + "/{id}", invalidId))
                     .andExpect(status().is4xxClientError());
         }
     }
@@ -167,7 +169,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: список возвращается")
         void getAllPositive() throws Exception {
-            mockMvc.perform(get("/api/questionnaire"))
+            mockMvc.perform(get(BASE_URL))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
         }
@@ -175,7 +177,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Негативный сценарий: некорректный путь (403)")
         void getAllNegative_NotFound() throws Exception {
-            mockMvc.perform(get("/api/questionnaire123"))
+            mockMvc.perform(get(BASE_URL + "123"))
                     .andExpect(status().is4xxClientError());
         }
     }
@@ -187,7 +189,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: возвращаем список бизнес-опросников")
         void getAllBusinessPositive() throws Exception {
-            mockMvc.perform(get("/api/questionnaire/business"))
+            mockMvc.perform(get(BASE_URL + "/business"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
         }
@@ -195,7 +197,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Негативный сценарий: некорректный путь")
         void getAllBusinessNegative_BadRequest() throws Exception {
-            mockMvc.perform(get("/api/questionnaire/business123"))
+            mockMvc.perform(get(BASE_URL + "/business123"))
                     .andExpect(status().is4xxClientError());
         }
     }
@@ -207,7 +209,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: возвращаем список образовательных опросников")
         void getAllEducativePositive() throws Exception {
-            mockMvc.perform(get("/api/questionnaire/educative"))
+            mockMvc.perform(get(BASE_URL + "/educative"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
         }
@@ -215,7 +217,7 @@ public class QuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Негативный сценарий: некорректный URL")
         void getAllEducativeNegative_BadRequest() throws Exception {
-            mockMvc.perform(get("/api/questionnaire/educative_not_exists"))
+            mockMvc.perform(get(BASE_URL + "/educative_not_exists"))
                     .andExpect(status().is4xxClientError());
         }
     }

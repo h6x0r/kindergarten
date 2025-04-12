@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "questionnaires_business_role")
-public class QuestionnaireBusinessRoleEntity {
+public class EmployeeQuestionnaireBusinessRoleEntity {
     @Id
     private String id;
 

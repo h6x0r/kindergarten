@@ -2,32 +2,32 @@ package uz.zazu.king.lead.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.zazu.king.lead.dto.ChildDto;
-import uz.zazu.king.lead.entity.ChildEntity;
+import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
+import uz.zazu.king.lead.entity.QuestionnaireEntity;
 import uz.zazu.king.lead.exception.ChildNotFoundException;
 import uz.zazu.king.lead.mapper.ChildMapper;
 import uz.zazu.king.lead.repository.ChildRepository;
-import uz.zazu.king.lead.service.ChildService;
+import uz.zazu.king.lead.service.LeadQuestionnaireService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ChildServiceImpl implements ChildService {
+public class LeadQuestionnaireServiceImpl implements LeadQuestionnaireService {
 
     private final ChildRepository childRepository;
     private final ChildMapper childMapper;
 
     @Override
-    public ChildDto create(ChildDto childDto) {
-        var entity = childMapper.toEntity(childDto);
+    public LeadQuestionnaireDto create(LeadQuestionnaireDto leadQuestionnaireDto) {
+        var entity = childMapper.toEntity(leadQuestionnaireDto);
         var saved = childRepository.save(entity);
         return childMapper.toDto(saved);
     }
 
     @Override
-    public ChildDto findById(String id) {
+    public LeadQuestionnaireDto findById(String id) {
         var result = childRepository.findActiveById(id);
         if (result == null) {
             throw new ChildNotFoundException(id);
@@ -36,7 +36,7 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public List<ChildDto> findAll() {
+    public List<LeadQuestionnaireDto> findAll() {
         var list = childRepository.findAll();
         return list.stream()
                 .map(childMapper::toDto)
@@ -44,19 +44,19 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public ChildDto update(String id, ChildDto childDto) {
+    public LeadQuestionnaireDto update(String id, LeadQuestionnaireDto leadQuestionnaireDto) {
         var existing = childRepository.findActiveById(id);
         if (existing == null) {
             throw new ChildNotFoundException(id);
         }
-        childMapper.updateEntityFromDto(childDto, existing);
+        childMapper.updateEntityFromDto(leadQuestionnaireDto, existing);
         existing = childRepository.save(existing);
         return childMapper.toDto(existing);
     }
 
     @Override
     public void delete(String id) {
-        ChildEntity existing = childRepository.findActiveById(id);
+        QuestionnaireEntity existing = childRepository.findActiveById(id);
         if (existing == null) {
             throw new ChildNotFoundException(id);
         }

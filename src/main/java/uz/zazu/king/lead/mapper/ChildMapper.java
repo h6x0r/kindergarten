@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-import uz.zazu.king.lead.dto.ChildDto;
-import uz.zazu.king.lead.entity.ChildEntity;
+import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
+import uz.zazu.king.lead.entity.QuestionnaireEntity;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -14,9 +14,9 @@ public interface ChildMapper {
     ChildMapper INSTANCE = Mappers.getMapper(ChildMapper.class);
 
     @Mapping(target = "isActive", constant = "true")
-    ChildEntity toEntity(ChildDto dto);
+    QuestionnaireEntity toEntity(LeadQuestionnaireDto dto);
 
-    ChildDto toDto(ChildEntity entity);
+    LeadQuestionnaireDto toDto(QuestionnaireEntity entity);
 
-    void updateEntityFromDto(ChildDto dto, @MappingTarget ChildEntity entity);
+    void updateEntityFromDto(LeadQuestionnaireDto dto, @MappingTarget QuestionnaireEntity entity);
 }

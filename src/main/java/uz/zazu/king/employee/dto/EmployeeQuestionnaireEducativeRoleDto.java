@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonTypeName("educative")
-public class QuestionnaireEducativeRoleDto implements QuestionnaireDto {
+public class EmployeeQuestionnaireEducativeRoleDto implements EmployeeQuestionnaireDto {
     private String id;
     private String fullName;
     private LocalDateTime candidateEntryDate;

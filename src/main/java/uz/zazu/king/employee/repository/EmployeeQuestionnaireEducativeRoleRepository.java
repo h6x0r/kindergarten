@@ -8,7 +8,7 @@ import uz.zazu.king.employee.entity.QuestionnaireEducativeRoleEntity;
 import java.util.List;
 
 @Repository
-public interface QuestionnaireEducativeRoleRepository extends MongoRepository<QuestionnaireEducativeRoleEntity, String> {
+public interface EmployeeQuestionnaireEducativeRoleRepository extends MongoRepository<QuestionnaireEducativeRoleEntity, String> {
     @Query("{ '_id': ?0, 'isActive': true }")
     QuestionnaireEducativeRoleEntity findByIdAndIsActiveTrue(String id);
 

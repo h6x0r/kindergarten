@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ChildDto {
+public class LeadQuestionnaireDto {
     private String id;
     private long orgId;
     private String firstName;
