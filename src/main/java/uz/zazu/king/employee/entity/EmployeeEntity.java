@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uz.zazu.king.employee.common.enums.EmployeeState;
 import uz.zazu.king.employee.common.enums.Positions;
@@ -29,6 +28,7 @@ public class EmployeeEntity {
     private Set<Positions> positions;
     private LocalDateTime hireDate;
     private EmployeeState status;
+    private String phoneNumber;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

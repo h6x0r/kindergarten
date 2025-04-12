@@ -22,6 +22,7 @@ public class EmployeeDto {
     private Set<Positions> positions;
     private LocalDateTime hireDate;
     private EmployeeState status;
+    private String phoneNumber;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

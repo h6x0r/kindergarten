@@ -2,7 +2,6 @@ package uz.zazu.king.inventory.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.inventory.dto.InventoryDto;
 import uz.zazu.king.inventory.exception.InventoryNotFoundException;
 import uz.zazu.king.inventory.mapper.InventoryMapper;
@@ -44,18 +43,17 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    @Transactional
     public InventoryDto update(String id, InventoryDto inventoryDto) {
         var existing = inventoryRepository.findActiveById(id);
         if (existing == null) {
             throw new InventoryNotFoundException(id);
         }
         inventoryMapper.updateEntityFromDto(inventoryDto, existing);
+        existing = inventoryRepository.save(existing);
         return inventoryMapper.toDto(existing);
     }
 
     @Override
-    @Transactional
     public void delete(String id) {
         var existing = inventoryRepository.findActiveById(id);
         if (existing == null) {

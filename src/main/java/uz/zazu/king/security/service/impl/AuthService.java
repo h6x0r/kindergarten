@@ -6,15 +6,13 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.security.common.exception.IncorrectCredentialsException;
-import uz.zazu.king.security.common.exception.UserNotFoundException;
 import uz.zazu.king.security.dto.AuthGeneratedResponse;
 import uz.zazu.king.security.dto.LoginRequest;
 import uz.zazu.king.security.entity.UserEntity;
 import uz.zazu.king.security.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
 import java.time.Instant;
@@ -29,7 +27,7 @@ import static uz.zazu.king.security.common.enums.Role.ROLE_SUPER_ADMIN;
 @RequiredArgsConstructor
 public class AuthService {
 
-//    private final TokenRepository tokenRepository;
+    //    private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -62,23 +60,6 @@ public class AuthService {
                 .username(userName)
                 .build();
     }
-
-//    @Transactional
-//    public void blacklistToken(String token) {
-//        tokenRepository.findByToken(token).ifPresent(tokenEntity -> {
-//            tokenEntity.setBlacklisted(true);
-//        });
-//    }
-
-//    @Transactional
-//    @Scheduled(cron = "0 0/30 * * * ?")
-//    public void removeExpiredTokensScheduled() {
-//        var twoHoursAgo = Instant.now().minus(2, ChronoUnit.HOURS);
-//
-//        tokenRepository.deleteAllByUpdatedAtBefore(twoHoursAgo);
-//
-//        log.info("Expired tokens removed.");
-//    }
 
     private String generateToken(UserEntity user) {
         var now = Instant.now();

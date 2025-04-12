@@ -20,7 +20,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import uz.zazu.king.security.service.impl.CustomUserDetailsService;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -57,18 +56,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(AbstractHttpConfigurer::disable)
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
-                        // Доступ без аутентификации
-//                .requestMatchers("/public/**").permitAll()
-                        // Доступ только администраторам
-//                .requestMatchers("/admin/**").hasRole("ADMIN")
-//                .requestMatchers("/super/**").hasRole("SUPER_ADMIN")
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
                 .requestMatchers("/api/info/**").permitAll()
-                .requestMatchers("/api/**").hasRole("SUPER_ADMIN")
+                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
                 .anyRequest().authenticated()
         );
 
@@ -87,7 +82,7 @@ public class SecurityConfig {
 
         // Разрешаем запросы от 3001
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-        configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 

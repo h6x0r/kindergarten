@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModuleInfoDto {
+    List<InfoDto> infoList;
     private String moduleName;
     private String tableLink;
-    List<InfoDto> infoList;
 }

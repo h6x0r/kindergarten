@@ -3,7 +3,6 @@ package uz.zazu.king.security.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.security.common.exception.UserNotFoundException;
 import uz.zazu.king.security.dto.UserDto;
 import uz.zazu.king.security.mapper.UserMapper;
@@ -46,18 +45,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public UserDto update(String id, UserDto userDto) {
         var existing = userRepository.findActiveById(id);
         if (existing == null) {
             throw new UserNotFoundException(id);
         }
         userMapper.updateEntityFromDto(userDto, existing);
+        existing = userRepository.save(existing);
         return userMapper.toDto(existing);
     }
 
     @Override
-    @Transactional
     public void delete(String id) {
         var existing = userRepository.findActiveById(id);
         if (existing == null) {

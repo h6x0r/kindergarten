@@ -2,17 +2,13 @@ package uz.zazu.king.info.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.info.dto.InfoDto;
-import uz.zazu.king.info.dto.InfoLinkDto;
 import uz.zazu.king.info.dto.ModuleInfoDto;
-import uz.zazu.king.info.entity.InfoEntity;
 import uz.zazu.king.info.entity.InfoLinkEntity;
-import uz.zazu.king.info.entity.ModuleEntity;
+import uz.zazu.king.info.enums.Module;
 import uz.zazu.king.info.exception.ModuleNotFoundException;
 import uz.zazu.king.info.mapper.InfoMapper;
 import uz.zazu.king.info.repository.InfoRepository;
-import uz.zazu.king.info.enums.Module;
 import uz.zazu.king.info.repository.ModuleRepository;
 import uz.zazu.king.info.service.InfoService;
 
@@ -79,10 +75,10 @@ public class InfoServiceImpl implements InfoService {
     }
 
     @Override
-    @Transactional
     public void deleteInfo(String id) {
         var entity = infoRepository.findById(id)
                 .orElseThrow(() -> new ModuleNotFoundException(id));
         entity.setActive(false);
+        infoRepository.save(entity);
     }
 }

@@ -1,5 +1,6 @@
 package uz.zazu.king.employee.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,20 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.zazu.king.employee.dto.EmployeeDto;
-import uz.zazu.king.employee.service.EmployeeService;
+import uz.zazu.king.service.EmployeeService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @PostMapping
     public EmployeeDto create(@RequestBody EmployeeDto employee) {

@@ -24,6 +24,7 @@ public interface InfoMapper {
     InfoEntity toInfoEntity(InfoDto dto);
 
     List<InfoDto> toInfoDtoList(List<InfoEntity> entities);
+
     List<InfoEntity> toInfoEntityList(List<InfoDto> dtos);
 
     InfoLinkDto toInfoLinkDto(InfoLinkEntity entity);
@@ -32,6 +33,7 @@ public interface InfoMapper {
     InfoLinkEntity toInfoLinkEntity(InfoLinkDto dto);
 
     List<InfoLinkDto> toInfoLinkDtoList(List<InfoLinkEntity> entities);
+
     List<InfoLinkEntity> toInfoLinkEntityList(List<InfoLinkDto> dtos);
 
     @Mapping(target = "moduleName", source = "entity.moduleName")

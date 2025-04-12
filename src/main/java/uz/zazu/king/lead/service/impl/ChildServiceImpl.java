@@ -2,7 +2,6 @@ package uz.zazu.king.lead.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.lead.dto.ChildDto;
 import uz.zazu.king.lead.entity.ChildEntity;
 import uz.zazu.king.lead.exception.ChildNotFoundException;
@@ -45,18 +44,17 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    @Transactional
     public ChildDto update(String id, ChildDto childDto) {
         var existing = childRepository.findActiveById(id);
         if (existing == null) {
             throw new ChildNotFoundException(id);
         }
         childMapper.updateEntityFromDto(childDto, existing);
+        existing = childRepository.save(existing);
         return childMapper.toDto(existing);
     }
 
     @Override
-    @Transactional
     public void delete(String id) {
         ChildEntity existing = childRepository.findActiveById(id);
         if (existing == null) {

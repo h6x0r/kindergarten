@@ -2,7 +2,6 @@ package uz.zazu.king.lead.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uz.zazu.king.lead.dto.LeadDto;
 import uz.zazu.king.lead.exception.LeadNotFoundException;
 import uz.zazu.king.lead.mapper.LeadMapper;
@@ -44,18 +43,17 @@ public class LeadServiceImpl implements LeadService {
     }
 
     @Override
-    @Transactional
     public LeadDto update(String id, LeadDto leadDto) {
         var existing = leadRepository.findActiveById(id);
         if (existing == null) {
             throw new LeadNotFoundException(id);
         }
         leadMapper.updateEntityFromDto(leadDto, existing);
+        existing = leadRepository.save(existing);
         return leadMapper.toDto(existing);
     }
 
     @Override
-    @Transactional
     public void delete(String id) {
         var existing = leadRepository.findActiveById(id);
         if (existing == null) {
