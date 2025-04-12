@@ -2,7 +2,6 @@ package uz.zazu.king.employee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -25,17 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EmployeeQuestionnaireControllerIntegrationTest {
 
+    private static final String BASE_URL = "/api/questionnaire/employee";
+    private static EmployeeQuestionnaireBusinessRoleDto businessDto;
+    private static EmployeeQuestionnaireEducativeRoleDto educativeDto;
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-    private static final String BASE_URL = "/api/questionnaire/employee";
-
-    private static EmployeeQuestionnaireBusinessRoleDto businessDto;
-
-    private static EmployeeQuestionnaireEducativeRoleDto educativeDto;
 
     @BeforeAll
     static void setUp() {

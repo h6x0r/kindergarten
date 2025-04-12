@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
@@ -18,7 +17,6 @@ import uz.zazu.king.employee.repository.EmployeeQuestionnaireEducativeRoleReposi
 import uz.zazu.king.employee.service.impl.EmployeeEmployeeQuestionnaireServiceImpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

@@ -7,7 +7,6 @@ import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
 import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
-import uz.zazu.king.employee.entity.QuestionnaireEducativeRoleEntity;
 import uz.zazu.king.employee.mapper.EmployeeQuestionnaireMapper;
 import uz.zazu.king.employee.repository.EmployeeQuestionnaireBusinessRoleRepository;
 import uz.zazu.king.employee.repository.EmployeeQuestionnaireEducativeRoleRepository;
