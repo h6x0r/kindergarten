@@ -70,7 +70,7 @@ public class LeadQuestionnaireServiceImplTest {
     @Test
     void testDelete_InvalidId() {
         String id = "";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> leadQuestionnaireService.delete(id));
+        Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.delete(id));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class LeadQuestionnaireServiceImplTest {
     @Test
     void testFindById_InvalidId() {
         String id = "";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> leadQuestionnaireService.findById(id));
+        Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.findById(id));
     }
 
     @Test
@@ -163,6 +163,6 @@ public class LeadQuestionnaireServiceImplTest {
     @Test
     void testUpdate_InvalidInput() {
         String id = "";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> leadQuestionnaireService.update(id, null));
+        Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.update(id, null));
     }
 }
