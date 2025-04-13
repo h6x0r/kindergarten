@@ -67,7 +67,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/info/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
-                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
+//                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
                 .anyRequest().authenticated()
         );
 
