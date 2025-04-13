@@ -1,16 +1,16 @@
 server:
-  port: ${SERVER_PORT}
+  port: 8080
 
 spring:
   data:
     mongodb:
-      uri: ${MONGO_URL}
+      uri: mongodb://mongo:ruyAMGYZyJirRMIlKzWPtHqJCmvjwXWe@mongodb.railway.internal:27017/kindergarten
   application:
     name: kindergarten
 
-#front:
-#  service:
-#    url: ${FRONT_URL}
+front:
+  service:
+    url: ${FRONT_URL}
 
 king:
   jwt:
