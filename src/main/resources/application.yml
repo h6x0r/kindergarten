@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: ${MongoDB.MONGO_URL}
+      uri: ${MONGO_URL}
 
   application:
     name: kindergarten
