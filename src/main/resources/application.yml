@@ -8,9 +8,6 @@ spring:
   application:
     name: kindergarten
 
-flag:
-  dev: ${DEV_FLAG}
-
 king:
   jwt:
     secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
