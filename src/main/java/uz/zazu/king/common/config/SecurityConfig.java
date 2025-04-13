@@ -64,9 +64,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/info/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
-                .requestMatchers("/api/info/**").permitAll()
                 .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
                 .anyRequest().authenticated()
         );
