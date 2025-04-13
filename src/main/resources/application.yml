@@ -8,6 +8,10 @@ spring:
   application:
     name: kindergarten
 
+front:
+  service:
+    url: ${FRONT_URL}
+
 king:
   jwt:
     secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=

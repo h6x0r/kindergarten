@@ -12,6 +12,10 @@ spring:
   application:
     name: kindergarten
 
+front:
+  service:
+    url: ${FRONT_URL:http://localhost:3000}
+
 king:
   jwt:
     secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
