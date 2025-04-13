@@ -1,10 +1,10 @@
 server:
-  port: ${SERVER_PORT:8050}
+  port: ${SERVER_PORT:8050
 
 spring:
   data:
     mongodb:
-      uri: ${MONGO_URL}
+      uri: mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}/kindergarten
 
   application:
     name: kindergarten
