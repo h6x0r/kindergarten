@@ -1,14 +1,14 @@
 package uz.zazu.king.common.config.log;
 
-import io.micrometer.common.util.StringUtils;
-import org.zalando.logbook.*;
+import org.zalando.logbook.Correlation;
+import org.zalando.logbook.HttpLogFormatter;
 import org.zalando.logbook.HttpRequest;
 import org.zalando.logbook.HttpResponse;
+import org.zalando.logbook.Precorrelation;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class CustomLogFormatter implements HttpLogFormatter {
 
