@@ -6,6 +6,9 @@ spring:
     mongodb:
       uri: ${MONGO_URL}
 
+flag:
+  dev: ${DEV_FLAG}
+
   application:
     name: kindergarten
 
