@@ -5,12 +5,11 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_URL}
+  application:
+    name: kindergarten
 
 flag:
   dev: ${DEV_FLAG}
-
-  application:
-    name: kindergarten
 
 king:
   jwt:
