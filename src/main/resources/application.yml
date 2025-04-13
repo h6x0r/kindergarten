@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb://localhost:27017/kindergarten"
+      uri: mongodb://localhost:27017/kindergarten
 
   application:
     name: kindergarten
@@ -16,3 +16,4 @@ king:
 logging:
   level:
     root: INFO
+    org.zalando.logbook: TRACE
