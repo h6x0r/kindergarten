@@ -8,9 +8,9 @@ spring:
   application:
     name: kindergarten
 
-front:
-  service:
-    url: ${FRONT_URL}
+#front:
+#  service:
+#    url: ${FRONT_URL}
 
 king:
   jwt:
