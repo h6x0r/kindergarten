@@ -18,7 +18,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "employee")
+@Document(collection = "employees")
 public class EmployeeEntity {
     @Id
     private String id;

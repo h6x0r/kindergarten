@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "candidate_profile_nanny")
+@Document(collection = "candidate_nanny_profiles")
 public class CandidateProfileNannyRoleEntity {
     @Id
     private String id;
