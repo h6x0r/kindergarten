@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class CandidateProfileControllerIntegrationTest {
 
-    private static final String BASE_URL = "/api/questionnaire/employee";
+    private static final String BASE_URL = "/api/candidate";
     private static CandidateProfileBusinessDto businessDto;
     private static CandidateProfileEducatorDto educativeDto;
     private static CandidateProfileNannyDto nannyDto;

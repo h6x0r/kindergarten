@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/questionnaire/employee")
+@RequestMapping("/api/candidate/")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 public class CandidateProfileController {
 
