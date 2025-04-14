@@ -25,30 +25,30 @@ public class LeadQuestionnaireEntity {
 
     private long orgId;
     private Branch branch;
-    private String firstName;   // имя ребенка
-    private String lastName;   // фамилия ребенка
-    private String patronymic;   // отчество ребенка
-    private String groupAndTeacher; // группа и педагог
-    private long ltv;               // общее время пребывания в саду
-    private String childPickupPerson; // кто забирает ребенка
-    private String parentFullName;  // ФИО родителей
-    private String childAgeAndDOB;  // возраст и дата рождения ребенка
-    private String childSpecialNeeds; // особенности ребенка
-    private String parentContact;   // контакты родителя
-    private String parentAge;       // возраст родителей
-    private String sourceInfo;      // откуда узнали
-    private String parentJobAndPosition; // место и должность работы родителей
-    private String priorities;          // приоритеты выбора
-    private String leavingReason;       // причина покидания
-    private int rating;             // оценка от 1 до 10
-    private String improvementSuggestions;  // как улучшить оценку до 10
-    private String childSatisfactionLevel;  // уровень удовлетворенности ребенка
-    private String gardenSearchMethod;      // как нашли сад
-    private String psychologistTopics;      // темы для тренингов
-    private String parentAdvice;            // советы для новых родителей
-    private String recommendationImprovements; // что сделать для рекомендаций
-    private String reasonForChoosing;       // почему выбрали
-    private String uzbekBloggers;           // узбекские блогеры
+    private String firstName;
+    private String lastName;
+    private String patronymic;
+    private String groupAndTeacher;
+    private long ltv;
+    private String childPickupPerson;
+    private String parentFullName;
+    private String childAgeAndDOB;
+    private String childSpecialNeeds;
+    private String parentContact;
+    private String parentAge;
+    private String sourceInfo;
+    private String parentJobAndPosition;
+    private String priorities;
+    private String leavingReason;
+    private int rating;
+    private String improvementSuggestions;
+    private String childSatisfactionLevel;
+    private String gardenSearchMethod;
+    private String psychologistTopics;
+    private String parentAdvice;
+    private String recommendationImprovements;
+    private String reasonForChoosing;
+    private String uzbekBloggers;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

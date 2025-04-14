@@ -68,7 +68,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
 //                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
-                        .anyRequest().authenticated()
+//                        .anyRequest().authenticated()
         );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

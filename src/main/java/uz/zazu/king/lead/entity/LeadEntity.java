@@ -26,20 +26,20 @@ public class LeadEntity {
     private long orgId;
 
     private LocalDateTime leadFirstOccurrence;
-    private String leadSource;     // источник лида
-    private String parentName;     // имя родителя
-    private String parentPhone;    // номер телефона
-    private String childName;      // имя ребенка
+    private String leadSource;
+    private String parentName;
+    private String parentPhone;
+    private String childName;
     private int childAge;
-    private String childHobbies;   // увлечения ребенка
-    private String parentNeeds;    // потребность родителя
-    private String desiredBranch;  // желаемый филиал
-    private LeadState status;         // статус
+    private String childHobbies;
+    private String parentNeeds;
+    private String desiredBranch;
+    private LeadState status;
     private LocalDateTime tourTime;
-    private String comment;        // комментарий
-    private String paymentInfo;    // оплата
-    private String keyPoints;      // ключевые моменты
-    private String purchaseReason; // причина покупки/не покупки
+    private String comment;
+    private String paymentInfo;
+    private String keyPoints;
+    private String purchaseReason;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
