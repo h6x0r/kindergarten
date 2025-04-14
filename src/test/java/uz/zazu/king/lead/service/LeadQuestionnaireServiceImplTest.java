@@ -7,11 +7,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
-import uz.zazu.king.lead.entity.LeadQuestionnaireEntity;
-import uz.zazu.king.lead.mapper.LeadQuestionnaireMapper;
-import uz.zazu.king.lead.repository.LeadQuestionnaireRepository;
-import uz.zazu.king.lead.service.impl.LeadQuestionnaireServiceImpl;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.entity.LeadQuestionnaireEntity;
+import uz.zazu.king.questionnaire.mapper.LeadQuestionnaireMapper;
+import uz.zazu.king.questionnaire.repository.LeadQuestionnaireRepository;
+import uz.zazu.king.questionnaire.service.impl.LeadQuestionnaireServiceImpl;
 
 import java.util.List;
 

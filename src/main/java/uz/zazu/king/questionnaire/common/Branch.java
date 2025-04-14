@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.common;
+package uz.zazu.king.questionnaire.common;
 
 public enum Branch {
     KINDREGARDEN_MIRABAD,

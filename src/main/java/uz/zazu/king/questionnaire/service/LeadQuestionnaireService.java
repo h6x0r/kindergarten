@@ -1,6 +1,6 @@
-package uz.zazu.king.lead.service;
+package uz.zazu.king.questionnaire.service;
 
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
 
 import java.util.List;
 

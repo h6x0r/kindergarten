@@ -1,12 +1,12 @@
-package uz.zazu.king.lead.service.impl;
+package uz.zazu.king.questionnaire.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
-import uz.zazu.king.lead.mapper.LeadQuestionnaireMapper;
-import uz.zazu.king.lead.repository.LeadQuestionnaireRepository;
-import uz.zazu.king.lead.service.LeadQuestionnaireService;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.mapper.LeadQuestionnaireMapper;
+import uz.zazu.king.questionnaire.repository.LeadQuestionnaireRepository;
+import uz.zazu.king.questionnaire.service.LeadQuestionnaireService;
 
 import java.util.List;
 import java.util.stream.Collectors;

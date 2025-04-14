@@ -1,10 +1,10 @@
-package uz.zazu.king.lead.mapper;
+package uz.zazu.king.questionnaire.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
-import uz.zazu.king.lead.entity.LeadQuestionnaireEntity;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.entity.LeadQuestionnaireEntity;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 

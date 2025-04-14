@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
 
 import java.time.LocalDateTime;
 

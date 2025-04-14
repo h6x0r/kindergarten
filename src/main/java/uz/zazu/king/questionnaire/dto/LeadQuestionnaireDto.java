@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.dto;
+package uz.zazu.king.questionnaire.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

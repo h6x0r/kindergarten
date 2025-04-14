@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.entity;
+package uz.zazu.king.questionnaire.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uz.zazu.king.lead.common.Branch;
+import uz.zazu.king.questionnaire.common.Branch;
 
 import java.time.LocalDateTime;
 

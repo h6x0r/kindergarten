@@ -15,6 +15,14 @@ public interface LeadMapper {
 
     LeadMapper INSTANCE = Mappers.getMapper(LeadMapper.class);
 
+    @Named("capitalizeName")
+    static String capitalizeName(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
+    }
+
     @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "parentName", source = "parentName", qualifiedByName = "capitalizeName")
     LeadEntity toEntity(LeadDto dto);
@@ -23,12 +31,4 @@ public interface LeadMapper {
 
     @Mapping(target = "parentName", source = "parentName", qualifiedByName = "capitalizeName")
     void updateEntityFromDto(LeadDto dto, @MappingTarget LeadEntity entity);
-
-    @Named("capitalizeName")
-    static String capitalizeName(String name) {
-        if (name == null || name.isEmpty()) {
-            return name;
-        }
-        return name.substring(0, 1).toUpperCase() + name.substring(1);
-    }
 }

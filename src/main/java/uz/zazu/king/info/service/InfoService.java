@@ -7,15 +7,15 @@ import uz.zazu.king.info.enums.Module;
 import java.util.List;
 
 public interface InfoService {
-    List<InfoDto> getInfoByModule(Module module);
+    List<InfoDto> getByModule(Module module);
 
-    ModuleInfoDto getModuleInfo(Module module);
+    ModuleInfoDto getModule(Module module);
 
-    InfoDto createInfo(InfoDto infoDto);
+    InfoDto create(InfoDto infoDto);
 
-    InfoDto getInfoById(String id);
+    InfoDto getById(String id);
 
-    InfoDto updateInfo(String id, InfoDto infoDto);
+    InfoDto update(String id, InfoDto infoDto);
 
-    void deleteInfo(String id);
+    void remove(String id);
 }

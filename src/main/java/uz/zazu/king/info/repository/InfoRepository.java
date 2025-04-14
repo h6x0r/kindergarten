@@ -9,6 +9,13 @@ import java.util.List;
 
 @Repository
 public interface InfoRepository extends MongoRepository<InfoEntity, String> {
-    @Query("{ 'module' : ?0 }")
-    List<InfoEntity> findAllByModule(String module);
+    @Query("{ 'module' : ?0, 'isActive': true }")
+    List<InfoEntity> findAllActiveByModule(String module);
+
+    @Query("{ 'isActive': true }")
+    List<InfoEntity> findAllActive();
+
+    @Query("{ '_id': ?0, 'isActive': true }")
+    InfoEntity findActiveById(String id);
+
 }

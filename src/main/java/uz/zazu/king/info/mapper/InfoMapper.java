@@ -3,6 +3,7 @@ package uz.zazu.king.info.mapper;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import uz.zazu.king.info.dto.InfoDto;
 import uz.zazu.king.info.dto.InfoLinkDto;
@@ -24,6 +25,8 @@ public interface InfoMapper {
     InfoEntity toInfoEntity(InfoDto dto);
 
     List<InfoDto> toInfoDtoList(List<InfoEntity> entities);
+
+    void updateEntityFromDto(InfoDto dto, @MappingTarget InfoEntity entity);
 
     List<InfoEntity> toInfoEntityList(List<InfoDto> dtos);
 

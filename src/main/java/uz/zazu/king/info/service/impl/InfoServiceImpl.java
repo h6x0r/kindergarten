@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.zazu.king.info.dto.InfoDto;
 import uz.zazu.king.info.dto.ModuleInfoDto;
-import uz.zazu.king.info.entity.InfoLinkEntity;
 import uz.zazu.king.info.enums.Module;
 import uz.zazu.king.info.exception.ModuleNotFoundException;
 import uz.zazu.king.info.mapper.InfoMapper;
@@ -21,16 +20,15 @@ public class InfoServiceImpl implements InfoService {
     private final ModuleRepository moduleRepository;
     private final InfoMapper infoMapper;
 
-    // todo.. переписать в мапперы
     @Override
-    public List<InfoDto> getInfoByModule(Module module) {
-        var entities = infoRepository.findAllByModule(module.name());
+    public List<InfoDto> getByModule(Module module) {
+        var entities = infoRepository.findAllActiveByModule(module.name());
         return infoMapper.toInfoDtoList(entities);
     }
 
     @Override
-    public ModuleInfoDto getModuleInfo(Module module) {
-        var infoList = getInfoByModule(module);
+    public ModuleInfoDto getModule(Module module) {
+        var infoList = getByModule(module);
         var moduleEntity = moduleRepository.findAllByModuleName(module.name())
                 .stream()
                 .filter(m -> m.getModuleName() == module)
@@ -42,42 +40,53 @@ public class InfoServiceImpl implements InfoService {
 
 
     @Override
-    public InfoDto createInfo(InfoDto infoDto) {
+    public InfoDto create(InfoDto infoDto) {
         var entity = infoMapper.toInfoEntity(infoDto);
         var savedEntity = infoRepository.save(entity);
         return infoMapper.toInfoDto(savedEntity);
     }
 
     @Override
-    public InfoDto getInfoById(String id) {
-        var entity = infoRepository.findById(id)
-                .orElseThrow(() -> new ModuleNotFoundException(id));
+    public InfoDto getById(String id) {
+        var entity = infoRepository.findActiveById(id);
+        if (entity == null) {
+            throw new ModuleNotFoundException(id);
+        }
+
         return infoMapper.toInfoDto(entity);
     }
 
-    // todo.. mapping
     @Override
-    public InfoDto updateInfo(String id, InfoDto infoDto) {
-        var entity = infoRepository.findById(id)
-                .orElseThrow(() -> new ModuleNotFoundException("Info not found with ID: " + id));
-        entity.setTitle(infoDto.getTitle());
-        entity.setDescription(infoDto.getDescription());
-        entity.setLinks(infoDto.getLinks().stream()
-                .map(link -> {
-                    var newLink = new InfoLinkEntity();
-                    newLink.setName(link.getName());
-                    newLink.setUrl(link.getUrl());
-                    return newLink;
-                })
-                .toList());
+    public InfoDto update(String id, InfoDto infoDto) {
+        var entity = infoRepository.findActiveById(id);
+        if (entity == null) {
+            throw new ModuleNotFoundException(id);
+        }
+
+        infoMapper.updateEntityFromDto(infoDto, entity);
         var updatedEntity = infoRepository.save(entity);
         return infoMapper.toInfoDto(updatedEntity);
+
+//        entity.setTitle(infoDto.getTitle());
+//        entity.setDescription(infoDto.getDescription());
+//        entity.setLinks(infoDto.getLinks().stream()
+//                .map(link -> {
+//                    var newLink = new InfoLinkEntity();
+//                    newLink.setName(link.getName());
+//                    newLink.setUrl(link.getUrl());
+//                    return newLink;
+//                })
+//                .toList());
+//        var updatedEntity = infoRepository.save(entity);
+//        return infoMapper.toInfoDto(updatedEntity);
     }
 
     @Override
-    public void deleteInfo(String id) {
-        var entity = infoRepository.findById(id)
-                .orElseThrow(() -> new ModuleNotFoundException(id));
+    public void remove(String id) {
+        var entity = infoRepository.findActiveById(id);
+        if (entity == null) {
+            throw new ModuleNotFoundException(id);
+        }
         entity.setActive(false);
         infoRepository.save(entity);
     }

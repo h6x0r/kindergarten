@@ -1,9 +1,9 @@
-package uz.zazu.king.lead.repository;
+package uz.zazu.king.questionnaire.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import uz.zazu.king.lead.entity.LeadQuestionnaireEntity;
+import uz.zazu.king.questionnaire.entity.LeadQuestionnaireEntity;
 
 import java.util.List;
 

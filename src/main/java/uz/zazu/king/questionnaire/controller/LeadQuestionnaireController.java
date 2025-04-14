@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.controller;
+package uz.zazu.king.questionnaire.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.zazu.king.lead.dto.LeadQuestionnaireDto;
-import uz.zazu.king.lead.service.LeadQuestionnaireService;
+import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
+import uz.zazu.king.questionnaire.service.LeadQuestionnaireService;
 
 import java.util.List;
 
