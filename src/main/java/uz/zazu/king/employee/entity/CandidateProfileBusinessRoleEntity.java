@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "candidate_application_business")
-public class CandidateApplicationBusinessRoleEntity {
+@Document(collection = "candidate_profile_business")
+public class CandidateProfileBusinessRoleEntity {
     @Id
     private String id;
 

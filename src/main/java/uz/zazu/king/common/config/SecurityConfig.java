@@ -1,7 +1,6 @@
 package uz.zazu.king.common.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -64,12 +63,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/info/**").permitAll()
-                .requestMatchers("/api/users/**").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
+                        .requestMatchers("/api/info/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
 //                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
-                .anyRequest().authenticated()
+                        .anyRequest().authenticated()
         );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -2,24 +2,23 @@ package uz.zazu.king.employee.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
-import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
 import uz.zazu.king.employee.mapper.CandidateProfileMapper;
 import uz.zazu.king.employee.repository.CandidateProfileBusinessRoleRepository;
 import uz.zazu.king.employee.repository.CandidateProfileEducatorRoleRepository;
 import uz.zazu.king.employee.repository.CandidateProfileNannyRoleRepository;
-import uz.zazu.king.employee.service.EmployeeQuestionnaireService;
+import uz.zazu.king.employee.service.CandidateProfileService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestionnaireService {
+public class CandidateProfileServiceImpl implements CandidateProfileService {
 
     private final CandidateProfileMapper candidateProfileMapper;
     private final CandidateProfileBusinessRoleRepository businessRoleRepository;
@@ -58,6 +57,11 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
             return candidateProfileMapper.toEducativeRoleDto(educative);
         }
 
+        var nanny = nannyRoleRepository.findByIdAndIsActiveTrue(id);
+        if (nanny != null) {
+            return candidateProfileMapper.toNannyRoleDto(nanny);
+        }
+
         throw new QuestionnaireNotFoundException(id);
     }
 
@@ -93,6 +97,14 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
         var educativeList = educativeRoleRepository.findAllByIsActiveTrue();
         return educativeList.stream()
                 .map(candidateProfileMapper::toEducativeRoleDto)
+                .toList();
+    }
+
+    @Override
+    public List<CandidateProfileNannyDto> findAllNanny() {
+        var educativeList = nannyRoleRepository.findAllByIsActiveTrue();
+        return educativeList.stream()
+                .map(candidateProfileMapper::toNannyRoleDto)
                 .toList();
     }
 
@@ -137,6 +149,13 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
         if (educative != null) {
             educative.setActive(false);
             educativeRoleRepository.save(educative);
+            return;
+        }
+
+        var nanny = nannyRoleRepository.findByIdAndIsActiveTrue(id);
+        if (nanny != null) {
+            nanny.setActive(false);
+            nannyRoleRepository.save(nanny);
             return;
         }
 

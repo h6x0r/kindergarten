@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
-import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileDto;
-import uz.zazu.king.employee.service.EmployeeQuestionnaireService;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.service.CandidateProfileService;
 
 import java.util.List;
 
@@ -32,12 +32,12 @@ import java.util.List;
 @PreAuthorize("hasRole('SUPER_ADMIN')")
 public class CandidateProfileController {
 
-    private final EmployeeQuestionnaireService employeeQuestionnaireService;
+    private final CandidateProfileService candidateProfileService;
 
     @PostMapping
     public ResponseEntity<CandidateProfileDto> create(@NotNull @RequestBody CandidateProfileDto dto) {
         try {
-            var response = employeeQuestionnaireService.create(dto);
+            var response = candidateProfileService.create(dto);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -47,7 +47,7 @@ public class CandidateProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<CandidateProfileDto> getById(@NotBlank @PathVariable String id) {
         try {
-            var response = employeeQuestionnaireService.findById(id);
+            var response = candidateProfileService.findById(id);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -56,27 +56,27 @@ public class CandidateProfileController {
 
     @GetMapping
     public ResponseEntity<List<CandidateProfileDto>> getAll() {
-        return ResponseEntity.ok(employeeQuestionnaireService.findAll());
+        return ResponseEntity.ok(candidateProfileService.findAll());
     }
 
     @GetMapping("/business")
     public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusiness() {
-        return ResponseEntity.ok(employeeQuestionnaireService.findAllBusiness());
+        return ResponseEntity.ok(candidateProfileService.findAllBusiness());
     }
 
     @GetMapping("/educative")
     public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {
-        return ResponseEntity.ok(employeeQuestionnaireService.findAllEducative());
+        return ResponseEntity.ok(candidateProfileService.findAllEducative());
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public CandidateProfileDto update(@NotBlank @PathVariable String id, @Valid @RequestBody CandidateProfileDto dto) {
-        return employeeQuestionnaireService.update(id, dto);
+        return candidateProfileService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
     public void remove(@NotBlank @PathVariable String id) {
-        employeeQuestionnaireService.remove(id);
+        candidateProfileService.remove(id);
     }
 }

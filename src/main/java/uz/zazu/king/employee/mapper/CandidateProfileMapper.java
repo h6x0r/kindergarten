@@ -9,9 +9,9 @@ import org.mapstruct.ReportingPolicy;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
 import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
-import uz.zazu.king.employee.entity.CandidateApplicationBusinessRoleEntity;
-import uz.zazu.king.employee.entity.CandidateApplicationEducatorRoleEntity;
-import uz.zazu.king.employee.entity.CandidateApplicationNannyRoleEntity;
+import uz.zazu.king.employee.entity.CandidateProfileBusinessRoleEntity;
+import uz.zazu.king.employee.entity.CandidateProfileEducatorRoleEntity;
+import uz.zazu.king.employee.entity.CandidateProfileNannyRoleEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CandidateProfileMapper {
@@ -19,33 +19,33 @@ public interface CandidateProfileMapper {
     // ------------ Маппинг Business Role ------------
 
     @Mapping(target = "isActive", constant = "true")
-    CandidateApplicationBusinessRoleEntity toBusinessRoleEntity(CandidateProfileBusinessDto dto);
+    CandidateProfileBusinessRoleEntity toBusinessRoleEntity(CandidateProfileBusinessDto dto);
 
-    CandidateProfileBusinessDto toBusinessRoleDto(CandidateApplicationBusinessRoleEntity entity);
+    CandidateProfileBusinessDto toBusinessRoleDto(CandidateProfileBusinessRoleEntity entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateBusinessRoleEntityFromDto(CandidateProfileBusinessDto dto, @MappingTarget CandidateApplicationBusinessRoleEntity entity);
+    void updateBusinessRoleEntityFromDto(CandidateProfileBusinessDto dto, @MappingTarget CandidateProfileBusinessRoleEntity entity);
 
 
     // ------------ Маппинг Educator Role ------------
 
     @Mapping(target = "isActive", constant = "true")
-    CandidateApplicationEducatorRoleEntity toEducativeRoleEntity(CandidateProfileEducatorDto dto);
+    CandidateProfileEducatorRoleEntity toEducativeRoleEntity(CandidateProfileEducatorDto dto);
 
-    CandidateProfileEducatorDto toEducativeRoleDto(CandidateApplicationEducatorRoleEntity entity);
+    CandidateProfileEducatorDto toEducativeRoleDto(CandidateProfileEducatorRoleEntity entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateEducativeRoleEntityFromDto(CandidateProfileEducatorDto dto, @MappingTarget CandidateApplicationEducatorRoleEntity entity);
+    void updateEducativeRoleEntityFromDto(CandidateProfileEducatorDto dto, @MappingTarget CandidateProfileEducatorRoleEntity entity);
 
 
     // ------------ Маппинг Nanny Role ------------
 
     @Mapping(target = "isActive", constant = "true")
-    CandidateApplicationNannyRoleEntity toNannyRoleEntity(CandidateProfileNannyDto dto);
+    CandidateProfileNannyRoleEntity toNannyRoleEntity(CandidateProfileNannyDto dto);
 
-    CandidateProfileNannyDto toNannyRoleDto(CandidateApplicationNannyRoleEntity entity);
+    CandidateProfileNannyDto toNannyRoleDto(CandidateProfileNannyRoleEntity entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateNannyRoleEntityFromDto(CandidateProfileNannyDto dto, @MappingTarget CandidateApplicationNannyRoleEntity entity);
+    void updateNannyRoleEntityFromDto(CandidateProfileNannyDto dto, @MappingTarget CandidateProfileNannyRoleEntity entity);
 
 }

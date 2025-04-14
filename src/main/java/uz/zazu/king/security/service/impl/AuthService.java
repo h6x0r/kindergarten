@@ -14,7 +14,6 @@ import uz.zazu.king.security.dto.LoginRequest;
 import uz.zazu.king.security.entity.UserEntity;
 import uz.zazu.king.security.repository.UserRepository;
 
-import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;

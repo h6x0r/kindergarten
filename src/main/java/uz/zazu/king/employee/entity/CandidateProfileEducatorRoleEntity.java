@@ -10,8 +10,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uz.zazu.king.employee.common.enums.CandidateState;
-import uz.zazu.king.employee.common.enums.EmployeeState;
-import uz.zazu.king.employee.common.enums.Position;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "candidate_application_educator")
-public class CandidateApplicationEducatorRoleEntity {
+@Document(collection = "candidate_profile_educator")
+public class CandidateProfileEducatorRoleEntity {
     @Id
     private String id;
 
