@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
 import uz.zazu.king.employee.dto.CandidateProfileDto;
 import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
 import uz.zazu.king.employee.service.CandidateProfileService;
 
 import java.util.List;
@@ -67,6 +68,11 @@ public class CandidateProfileController {
     @GetMapping("/educative")
     public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {
         return ResponseEntity.ok(candidateProfileService.findAllEducative());
+    }
+
+    @GetMapping("/nanny")
+    public ResponseEntity<List<CandidateProfileNannyDto>> getAllNanny() {
+        return ResponseEntity.ok(candidateProfileService.findAllNanny());
     }
 
     @PutMapping("/{id}")

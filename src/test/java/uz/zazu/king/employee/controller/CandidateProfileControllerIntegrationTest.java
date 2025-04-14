@@ -13,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
 import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,8 +28,11 @@ public class CandidateProfileControllerIntegrationTest {
     private static final String BASE_URL = "/api/questionnaire/employee";
     private static CandidateProfileBusinessDto businessDto;
     private static CandidateProfileEducatorDto educativeDto;
+    private static CandidateProfileNannyDto nannyDto;
+
     @Autowired
     private MockMvc mockMvc;
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -43,11 +47,16 @@ public class CandidateProfileControllerIntegrationTest {
                 .fullName("Тестовый Пользователь (Educative)")
                 .age(28)
                 .build();
+
+        nannyDto = CandidateProfileNannyDto.builder()
+                .fullName("Тестовый Пользователь (Nanny)")
+                .age(25)
+                .build();
     }
 
     @Nested
     @WithMockUser(roles = "SUPER_ADMIN")
-    @DisplayName("Метод create()")
+    @DisplayName("Метод create() - Business")
     class CreateMethodTests {
 
         @Test
@@ -81,8 +90,25 @@ public class CandidateProfileControllerIntegrationTest {
 
     @Nested
     @WithMockUser(roles = "SUPER_ADMIN")
-    @DisplayName("Метод getById()")
-    class GetByIdMethodTests {
+    @DisplayName("Метод create() - Nanny")
+    class CreateNannyMethodTests {
+
+        @Test
+        @DisplayName("Позитивный сценарий создания (Nanny)")
+        void createPositiveNanny() throws Exception {
+            mockMvc.perform(post(BASE_URL)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(nannyDto)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Nanny)"))
+                    .andExpect(jsonPath("$.age").value(25));
+        }
+    }
+
+    @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
+    @DisplayName("Метод getById() - Business")
+    class GetByIdMethodTestsBusiness {
 
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Business)")
@@ -120,7 +146,7 @@ public class CandidateProfileControllerIntegrationTest {
     @Nested
     @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Метод getById() - Educative")
-    class GetByIdEducativeMethodTests {
+    class GetByIdMethodTestsEducative {
 
         @Test
         @DisplayName("Позитивный сценарий: найденный объект (Educative)")
@@ -150,6 +176,45 @@ public class CandidateProfileControllerIntegrationTest {
         @DisplayName("Негативный сценарий: несуществующий объект (Educative)")
         void getByIdNegativeEducative_NotFound() throws Exception {
             String invalidId = "non_existent_educative_id";
+
+            mockMvc.perform(get(BASE_URL + "/{id}", invalidId))
+                    .andExpect(status().is4xxClientError());
+        }
+    }
+
+    @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
+    @DisplayName("Метод getById() - Nanny")
+    class GetByIdMethodTestsNanny {
+
+        @Test
+        @DisplayName("Позитивный сценарий: найденный объект (Nanny)")
+        void getByIdPositiveNanny() throws Exception {
+            var savedEntity = mockMvc.perform(post(BASE_URL)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(nannyDto)))
+                    .andExpect(status().isOk())
+                    .andReturn()
+                    .getResponse()
+                    .getContentAsString();
+
+            var savedId = objectMapper.readTree(savedEntity).get("id").asText();
+
+            try {
+                mockMvc.perform(get(BASE_URL + "/{id}", savedId))
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.id").value(savedId))
+                        .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Nanny)"));
+            } finally {
+                mockMvc.perform(delete(BASE_URL + "/{id}", savedId))
+                        .andExpect(status().isOk());
+            }
+        }
+
+        @Test
+        @DisplayName("Негативный сценарий: несуществующий объект (Nanny)")
+        void getByIdNegativeNanny_NotFound() throws Exception {
+            String invalidId = "non_existent_nanny_id";
 
             mockMvc.perform(get(BASE_URL + "/{id}", invalidId))
                     .andExpect(status().is4xxClientError());
@@ -215,6 +280,27 @@ public class CandidateProfileControllerIntegrationTest {
         @DisplayName("Негативный сценарий: некорректный URL")
         void getAllEducativeNegative_BadRequest() throws Exception {
             mockMvc.perform(get(BASE_URL + "/educative_not_exists"))
+                    .andExpect(status().is4xxClientError());
+        }
+    }
+
+    @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
+    @DisplayName("Метод getAllNanny()")
+    class GetAllNannyMethodTests {
+
+        @Test
+        @DisplayName("Позитивный сценарий: возвращаем список нянь")
+        void getAllNannyPositive() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/nanny"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$").isArray());
+        }
+
+        @Test
+        @DisplayName("Негативный сценарий: некорректный URL")
+        void getAllNannyNegative_BadRequest() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/nanny_unavailable"))
                     .andExpect(status().is4xxClientError());
         }
     }
