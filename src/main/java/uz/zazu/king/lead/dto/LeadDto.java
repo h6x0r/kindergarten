@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.zazu.king.lead.common.LeadState;
 
 import java.time.LocalDateTime;
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LeadDto {
     private String id;
+    private LocalDateTime leadFirstOccurrence;
     private String leadSource;     // источник лида
     @NotBlank
     private String parentName;     // имя родителя
@@ -27,7 +29,7 @@ public class LeadDto {
     private String childHobbies;   // увлечения ребенка
     private String parentNeeds;    // потребность родителя
     private String desiredBranch;  // желаемый филиал
-    private String status;         // статус
+    private LeadState status;         // статус
     private LocalDateTime tourTime;
     private String comment;        // комментарий
     private String paymentInfo;    // оплата

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import uz.zazu.king.lead.common.LeadState;
 import uz.zazu.king.lead.dto.LeadDto;
 
 import java.time.LocalDateTime;
@@ -48,7 +49,7 @@ public class LeadControllerIntegrationTest {
                 .childName("Александр")
                 .childAge(3)
                 .leadSource("Instagram")
-                .status("NEW")
+                .status(LeadState.NEW_LEAD)
                 .createdAt(LocalDateTime.now())
                 .build();
     }
@@ -173,7 +174,7 @@ public class LeadControllerIntegrationTest {
                     .parentName("Updated Name")
                     .childName("Степан")
                     .childAge(6)
-                    .status("PROCESSED")
+                    .status(LeadState.TOUR_APPOINTMENT)
                     .leadSource("Website")
                     .build();
 

@@ -11,23 +11,28 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
+import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileDto;
 import uz.zazu.king.employee.service.EmployeeQuestionnaireService;
 
 import java.util.List;
 
+/**
+ * Контроллер для работы с данными опросников сотрудников.
+ * Поддерживает управление данными опросников для бизнес-ассистентов
+ * и менеджеров.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/questionnaire/employee")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
-public class EmployeeQuestionnaireController {
+public class CandidateProfileController {
 
     private final EmployeeQuestionnaireService employeeQuestionnaireService;
 
     @PostMapping
-    public ResponseEntity<EmployeeQuestionnaireDto> create(@RequestBody EmployeeQuestionnaireDto dto) {
+    public ResponseEntity<CandidateProfileDto> create(@RequestBody CandidateProfileDto dto) {
         try {
             var response = employeeQuestionnaireService.create(dto);
             return ResponseEntity.ok(response);
@@ -37,7 +42,7 @@ public class EmployeeQuestionnaireController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeQuestionnaireDto> getById(@PathVariable String id) {
+    public ResponseEntity<CandidateProfileDto> getById(@PathVariable String id) {
         try {
             var response = employeeQuestionnaireService.findById(id);
             return ResponseEntity.ok(response);
@@ -47,23 +52,23 @@ public class EmployeeQuestionnaireController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeQuestionnaireDto>> getAll() {
+    public ResponseEntity<List<CandidateProfileDto>> getAll() {
         return ResponseEntity.ok(employeeQuestionnaireService.findAll());
     }
 
     @GetMapping("/business")
-    public ResponseEntity<List<EmployeeQuestionnaireBusinessRoleDto>> getAllBusiness() {
+    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusiness() {
         return ResponseEntity.ok(employeeQuestionnaireService.findAllBusiness());
     }
 
     @GetMapping("/educative")
-    public ResponseEntity<List<EmployeeQuestionnaireEducativeRoleDto>> getAllEducative() {
+    public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {
         return ResponseEntity.ok(employeeQuestionnaireService.findAllEducative());
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public EmployeeQuestionnaireDto update(@PathVariable String id, @RequestBody EmployeeQuestionnaireDto dto) {
+    public CandidateProfileDto update(@PathVariable String id, @RequestBody CandidateProfileDto dto) {
         return employeeQuestionnaireService.update(id, dto);
     }
 

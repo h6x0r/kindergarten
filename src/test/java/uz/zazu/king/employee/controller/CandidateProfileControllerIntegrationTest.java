@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
+import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,11 +22,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeQuestionnaireControllerIntegrationTest {
+public class CandidateProfileControllerIntegrationTest {
 
     private static final String BASE_URL = "/api/questionnaire/employee";
-    private static EmployeeQuestionnaireBusinessRoleDto businessDto;
-    private static EmployeeQuestionnaireEducativeRoleDto educativeDto;
+    private static CandidateProfileBusinessDto businessDto;
+    private static CandidateProfileEducatorDto educativeDto;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -34,16 +34,14 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
 
     @BeforeAll
     static void setUp() {
-        businessDto = EmployeeQuestionnaireBusinessRoleDto.builder()
+        businessDto = CandidateProfileBusinessDto.builder()
                 .fullName("Тестовый Пользователь (Business)")
                 .age(30)
                 .build();
 
-        educativeDto = EmployeeQuestionnaireEducativeRoleDto.builder()
+        educativeDto = CandidateProfileEducatorDto.builder()
                 .fullName("Тестовый Пользователь (Educative)")
                 .age(28)
-                .education("Высшее педагогическое")
-                .reasonForWorkingInThisField("Люблю работать с детьми")
                 .build();
     }
 
@@ -77,9 +75,7 @@ public class EmployeeQuestionnaireControllerIntegrationTest {
                             .content(objectMapper.writeValueAsString(educativeDto)))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.fullName").value("Тестовый Пользователь (Educative)"))
-                    .andExpect(jsonPath("$.age").value(28))
-                    .andExpect(jsonPath("$.education").value("Высшее педагогическое"))
-                    .andExpect(jsonPath("$.reasonForWorkingInThisField").value("Люблю работать с детьми"));
+                    .andExpect(jsonPath("$.age").value(28));
         }
     }
 

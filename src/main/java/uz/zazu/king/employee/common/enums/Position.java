@@ -1,10 +1,13 @@
 package uz.zazu.king.employee.common.enums;
 
-public enum Positions {
+public enum Position {
     MANAGER,
     HR,
     SALESMAN,
-    TEACHER,
+    EDUCATOR,
     NANNY,
     BUSINESS_ASSISTANT,
+    DIRECTOR,
+    FOUNDER,
+    CO_FOUNDER
 }

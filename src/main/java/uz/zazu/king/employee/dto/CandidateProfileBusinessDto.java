@@ -1,32 +1,21 @@
-package uz.zazu.king.employee.entity;
+package uz.zazu.king.employee.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "employee_questionnaires_business")
-public class EmployeeQuestionnaireBusinessRoleEntity {
-    @Id
-    private String id;
-
-    private String fullName;
-    private LocalDateTime candidateEntryDate;
-    private Integer age;
-    private String contacts;
-    private String candidateStatus;
+@JsonTypeName("business")
+public class CandidateProfileBusinessDto extends CandidateProfileDto {
     private String resumeLink;
     private String previousCompanyName;
     private String previousPositionName;
@@ -91,9 +80,6 @@ public class EmployeeQuestionnaireBusinessRoleEntity {
     private String offlineInterviewMetrics;
     private String testTaskEfficiencyMetric;
     private String previousCompanyMetrics;
-    @CreatedDate
     private LocalDateTime createdAt;
-    @LastModifiedDate
     private LocalDateTime updatedAt;
-    private boolean isActive;
 }

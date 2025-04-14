@@ -27,7 +27,6 @@ import static uz.zazu.king.security.common.enums.Role.ROLE_SUPER_ADMIN;
 @RequiredArgsConstructor
 public class AuthService {
 
-    //    private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -84,11 +83,4 @@ public class AuthService {
                 .compact();
     }
 
-
-    private String generateRandomBase64Token() {
-        var random = new SecureRandom();
-        var bytes = new byte[32];
-        random.nextBytes(bytes);
-        return Base64.getEncoder().encodeToString(bytes);
-    }
 }

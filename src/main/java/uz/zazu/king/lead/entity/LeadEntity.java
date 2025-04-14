@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import uz.zazu.king.lead.common.LeadState;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class LeadEntity {
 
     private long orgId;
 
+    private LocalDateTime leadFirstOccurrence;
     private String leadSource;     // источник лида
     private String parentName;     // имя родителя
     private String parentPhone;    // номер телефона
@@ -32,7 +34,7 @@ public class LeadEntity {
     private String childHobbies;   // увлечения ребенка
     private String parentNeeds;    // потребность родителя
     private String desiredBranch;  // желаемый филиал
-    private String status;         // статус
+    private LeadState status;         // статус
     private LocalDateTime tourTime;
     private String comment;        // комментарий
     private String paymentInfo;    // оплата

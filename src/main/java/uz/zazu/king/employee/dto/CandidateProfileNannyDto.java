@@ -2,27 +2,20 @@ package uz.zazu.king.employee.dto;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.zazu.king.employee.common.enums.EmployeeState;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeName("educative")
-public class EmployeeQuestionnaireEducativeRoleDto implements EmployeeQuestionnaireDto {
-    private String id;
-    private String fullName;
-    private LocalDateTime candidateEntryDate;
-    private Integer age;
-    private String contacts;
-    private EmployeeState candidateStatus;
+@JsonTypeName("nanny")
+public class CandidateProfileNannyDto extends CandidateProfileDto {
     private Boolean punctuality;
     private String convenientBranch;
     private String howDidTheyHearAboutUs;

@@ -1,23 +1,23 @@
 package uz.zazu.king.employee.service;
 
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
+import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileDto;
 
 import java.util.List;
 
 public interface EmployeeQuestionnaireService {
-    EmployeeQuestionnaireDto create(EmployeeQuestionnaireDto employeeQuestionnaireDto);
+    CandidateProfileDto create(CandidateProfileDto candidateProfileDto);
 
-    EmployeeQuestionnaireDto findById(String id);
+    CandidateProfileDto findById(String id);
 
-    List<EmployeeQuestionnaireDto> findAll();
+    List<CandidateProfileDto> findAll();
 
-    List<EmployeeQuestionnaireBusinessRoleDto> findAllBusiness();
+    List<CandidateProfileBusinessDto> findAllBusiness();
 
-    List<EmployeeQuestionnaireEducativeRoleDto> findAllEducative();
+    List<CandidateProfileEducatorDto> findAllEducative();
 
-    EmployeeQuestionnaireDto update(String id, EmployeeQuestionnaireDto employeeQuestionnaireDto);
+    CandidateProfileDto update(String id, CandidateProfileDto candidateProfileDto);
 
     void remove(String id);
 }

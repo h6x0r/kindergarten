@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
-import uz.zazu.king.employee.mapper.EmployeeQuestionnaireMapper;
-import uz.zazu.king.employee.repository.EmployeeQuestionnaireBusinessRoleRepository;
-import uz.zazu.king.employee.repository.EmployeeQuestionnaireEducativeRoleRepository;
+import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileDto;
+import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
+import uz.zazu.king.employee.mapper.CandidateProfileMapper;
+import uz.zazu.king.employee.repository.CandidateProfileBusinessRoleRepository;
+import uz.zazu.king.employee.repository.CandidateProfileEducatorRoleRepository;
+import uz.zazu.king.employee.repository.CandidateProfileNannyRoleRepository;
 import uz.zazu.king.employee.service.EmployeeQuestionnaireService;
 
 import java.util.ArrayList;
@@ -19,57 +21,62 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestionnaireService {
 
-    private final EmployeeQuestionnaireMapper employeeQuestionnaireMapper;
-    private final EmployeeQuestionnaireBusinessRoleRepository businessRoleRepository;
-    private final EmployeeQuestionnaireEducativeRoleRepository educativeRoleRepository;
+    private final CandidateProfileMapper candidateProfileMapper;
+    private final CandidateProfileBusinessRoleRepository businessRoleRepository;
+    private final CandidateProfileEducatorRoleRepository educativeRoleRepository;
+    private final CandidateProfileNannyRoleRepository nannyRoleRepository;
 
     @Override
-    public EmployeeQuestionnaireDto create(EmployeeQuestionnaireDto employeeQuestionnaireDto) {
-        Assert.notNull(employeeQuestionnaireDto, "обьект не может быть null");
+    public CandidateProfileDto create(CandidateProfileDto candidateProfileDto) {
+        Assert.notNull(candidateProfileDto, "обьект не может быть null");
 
-        if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireBusinessRoleDto dto) {
-            var entity = employeeQuestionnaireMapper.toBusinessRoleEntity(dto);
+        if (candidateProfileDto instanceof CandidateProfileBusinessDto dto) {
+            var entity = candidateProfileMapper.toBusinessRoleEntity(dto);
             var saved = businessRoleRepository.save(entity);
-            return employeeQuestionnaireMapper.toBusinessRoleDto(saved);
+            return candidateProfileMapper.toBusinessRoleDto(saved);
 
-        } else if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireEducativeRoleDto dto) {
-            var entity = employeeQuestionnaireMapper.toEducativeRoleEntity(dto);
+        } else if (candidateProfileDto instanceof CandidateProfileEducatorDto dto) {
+            var entity = candidateProfileMapper.toEducativeRoleEntity(dto);
             entity = educativeRoleRepository.save(entity);
-            return employeeQuestionnaireMapper.toEducativeRoleDto(entity);
+            return candidateProfileMapper.toEducativeRoleDto(entity);
+        } else if (candidateProfileDto instanceof CandidateProfileNannyDto dto) {
+            var entity = candidateProfileMapper.toNannyRoleEntity(dto);
+            entity = nannyRoleRepository.save(entity);
+            return candidateProfileMapper.toNannyRoleDto(entity);
         }
 
         throw new IllegalArgumentException("Неизвестный тип DTO для создания записи.");
     }
 
     @Override
-    public EmployeeQuestionnaireDto findById(String id) {
+    public CandidateProfileDto findById(String id) {
         Assert.hasText(id, "id не может быть пустым");
 
         var business = businessRoleRepository.findByIdAndIsActiveTrue(id);
         if (business != null) {
-            return employeeQuestionnaireMapper.toBusinessRoleDto(business);
+            return candidateProfileMapper.toBusinessRoleDto(business);
         }
 
         var educative = educativeRoleRepository.findByIdAndIsActiveTrue(id);
         if (educative != null) {
-            return employeeQuestionnaireMapper.toEducativeRoleDto(educative);
+            return candidateProfileMapper.toEducativeRoleDto(educative);
         }
 
         throw new QuestionnaireNotFoundException(id);
     }
 
     @Override
-    public List<EmployeeQuestionnaireDto> findAll() {
+    public List<CandidateProfileDto> findAll() {
         var businessList = businessRoleRepository.findAll();
         var convertedBusinessList = businessList.stream()
-                .map(employeeQuestionnaireMapper::toBusinessRoleDto)
+                .map(candidateProfileMapper::toBusinessRoleDto)
                 .toList();
 
-        var results = new ArrayList<EmployeeQuestionnaireDto>(convertedBusinessList);
+        var results = new ArrayList<CandidateProfileDto>(convertedBusinessList);
 
         var educativeList = educativeRoleRepository.findAll();
         var convertedEducativeList = educativeList.stream()
-                .map(employeeQuestionnaireMapper::toEducativeRoleDto)
+                .map(candidateProfileMapper::toEducativeRoleDto)
                 .toList();
 
         results.addAll(convertedEducativeList);
@@ -78,39 +85,46 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
     }
 
     @Override
-    public List<EmployeeQuestionnaireBusinessRoleDto> findAllBusiness() {
+    public List<CandidateProfileBusinessDto> findAllBusiness() {
         var businessList = businessRoleRepository.findAllByIsActiveTrue();
         return businessList.stream()
-                .map(employeeQuestionnaireMapper::toBusinessRoleDto)
+                .map(candidateProfileMapper::toBusinessRoleDto)
                 .toList();
     }
 
     @Override
-    public List<EmployeeQuestionnaireEducativeRoleDto> findAllEducative() {
+    public List<CandidateProfileEducatorDto> findAllEducative() {
         var educativeList = educativeRoleRepository.findAllByIsActiveTrue();
         return educativeList.stream()
-                .map(employeeQuestionnaireMapper::toEducativeRoleDto)
+                .map(candidateProfileMapper::toEducativeRoleDto)
                 .toList();
     }
 
     @Override
-    public EmployeeQuestionnaireDto update(String id, EmployeeQuestionnaireDto employeeQuestionnaireDto) {
+    public CandidateProfileDto update(String id, CandidateProfileDto candidateProfileDto) {
         Assert.hasText(id, "id не может быть пустым");
-        Assert.notNull(employeeQuestionnaireDto, "обьект не может быть пустым");
+        Assert.notNull(candidateProfileDto, "обьект не может быть пустым");
 
-        if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireBusinessRoleDto dto) {
+        if (candidateProfileDto instanceof CandidateProfileBusinessDto dto) {
             var existingEntity = businessRoleRepository.findByIdAndIsActiveTrue(id);
             if (existingEntity != null) {
-                employeeQuestionnaireMapper.updateBusinessRoleEntityFromDto(dto, existingEntity);
+                candidateProfileMapper.updateBusinessRoleEntityFromDto(dto, existingEntity);
                 var updatedEntity = businessRoleRepository.save(existingEntity);
-                return employeeQuestionnaireMapper.toBusinessRoleDto(updatedEntity);
+                return candidateProfileMapper.toBusinessRoleDto(updatedEntity);
             }
-        } else if (employeeQuestionnaireDto instanceof EmployeeQuestionnaireEducativeRoleDto dto) {
+        } else if (candidateProfileDto instanceof CandidateProfileEducatorDto dto) {
             var existingEntity = educativeRoleRepository.findByIdAndIsActiveTrue(id);
             if (existingEntity != null) {
-                employeeQuestionnaireMapper.updateEducativeRoleEntityFromDto(dto, existingEntity);
+                candidateProfileMapper.updateEducativeRoleEntityFromDto(dto, existingEntity);
                 var updatedEntity = educativeRoleRepository.save(existingEntity);
-                return employeeQuestionnaireMapper.toEducativeRoleDto(updatedEntity);
+                return candidateProfileMapper.toEducativeRoleDto(updatedEntity);
+            }
+        } else if (candidateProfileDto instanceof CandidateProfileNannyDto dto) {
+            var existingEntity = nannyRoleRepository.findByIdAndIsActiveTrue(id);
+            if (existingEntity != null) {
+                candidateProfileMapper.updateNannyRoleEntityFromDto(dto, existingEntity);
+                var updatedEntity = nannyRoleRepository.save(existingEntity);
+                return candidateProfileMapper.toNannyRoleDto(updatedEntity);
             }
         }
 

@@ -18,6 +18,14 @@ import uz.zazu.king.lead.service.LeadQuestionnaireService;
 
 import java.util.List;
 
+
+/**
+ * Обрабатывает операции, связанные с опросниками по анкете custdev.
+ * Включает следующие опросники:
+ * - ДОУ АлАнга
+ * - ДОУ Мирабад
+ * - Почемучка АлАнга
+ */
 @RestController
 @RequestMapping("/api/leads/questionnaire")
 @RequiredArgsConstructor

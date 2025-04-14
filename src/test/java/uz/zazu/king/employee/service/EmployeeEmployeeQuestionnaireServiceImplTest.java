@@ -6,14 +6,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireBusinessRoleDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireDto;
-import uz.zazu.king.employee.dto.EmployeeQuestionnaireEducativeRoleDto;
-import uz.zazu.king.employee.entity.EmployeeQuestionnaireBusinessRoleEntity;
-import uz.zazu.king.employee.entity.QuestionnaireEducativeRoleEntity;
-import uz.zazu.king.employee.mapper.EmployeeQuestionnaireMapper;
-import uz.zazu.king.employee.repository.EmployeeQuestionnaireBusinessRoleRepository;
-import uz.zazu.king.employee.repository.EmployeeQuestionnaireEducativeRoleRepository;
+import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
+import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
+import uz.zazu.king.employee.dto.CandidateProfileDto;
+import uz.zazu.king.employee.entity.CandidateApplicationBusinessRoleEntity;
+import uz.zazu.king.employee.entity.CandidateApplicationEducatorRoleEntity;
+import uz.zazu.king.employee.entity.CandidateApplicationNannyRoleEntity;
+import uz.zazu.king.employee.mapper.CandidateProfileMapper;
+import uz.zazu.king.employee.repository.CandidateProfileBusinessRoleRepository;
+import uz.zazu.king.employee.repository.CandidateProfileEducatorRoleRepository;
+import uz.zazu.king.employee.repository.CandidateProfileNannyRoleRepository;
 import uz.zazu.king.employee.service.impl.EmployeeEmployeeQuestionnaireServiceImpl;
 
 import java.util.List;
@@ -33,13 +35,13 @@ import static org.mockito.Mockito.when;
 public class EmployeeEmployeeQuestionnaireServiceImplTest {
 
     @Mock
-    private EmployeeQuestionnaireMapper employeeQuestionnaireMapper;
+    private CandidateProfileMapper candidateProfileMapper;
 
     @Mock
-    private EmployeeQuestionnaireBusinessRoleRepository businessRoleRepository;
+    private CandidateProfileBusinessRoleRepository businessRoleRepository;
 
     @Mock
-    private EmployeeQuestionnaireEducativeRoleRepository educativeRoleRepository;
+    private CandidateProfileEducatorRoleRepository educativeRoleRepository;
 
     @InjectMocks
     private EmployeeEmployeeQuestionnaireServiceImpl questionnaireService;
@@ -47,11 +49,11 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
     @Test
     void create_shouldSaveBusinessRoleSuccessfully() {
         // Arrange
-        var businessRoleDto = new EmployeeQuestionnaireBusinessRoleDto();
-        var businessRoleEntity = new EmployeeQuestionnaireBusinessRoleEntity();
-        when(employeeQuestionnaireMapper.toBusinessRoleEntity(businessRoleDto)).thenReturn(businessRoleEntity);
+        var businessRoleDto = new CandidateProfileBusinessDto();
+        var businessRoleEntity = new CandidateApplicationBusinessRoleEntity();
+        when(candidateProfileMapper.toBusinessRoleEntity(businessRoleDto)).thenReturn(businessRoleEntity);
         when(businessRoleRepository.save(businessRoleEntity)).thenReturn(businessRoleEntity);
-        when(employeeQuestionnaireMapper.toBusinessRoleDto(businessRoleEntity)).thenReturn(businessRoleDto);
+        when(candidateProfileMapper.toBusinessRoleDto(businessRoleEntity)).thenReturn(businessRoleDto);
 
         // Act
         var result = questionnaireService.create(businessRoleDto);
@@ -59,19 +61,19 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         // Assert
         assertNotNull(result);
         assertSame(businessRoleDto, result);
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleEntity(businessRoleDto);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleEntity(businessRoleDto);
         verify(businessRoleRepository, times(1)).save(businessRoleEntity);
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleDto(businessRoleEntity);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleDto(businessRoleEntity);
     }
 
     @Test
     void create_shouldSaveEducativeRoleSuccessfully() {
         // Arrange
-        var educativeRoleDto = new EmployeeQuestionnaireEducativeRoleDto();
-        var educativeRoleEntity = new QuestionnaireEducativeRoleEntity();
-        when(employeeQuestionnaireMapper.toEducativeRoleEntity(educativeRoleDto)).thenReturn(educativeRoleEntity);
+        var educativeRoleDto = new CandidateProfileEducatorDto();
+        var educativeRoleEntity = new CandidateApplicationEducatorRoleEntity();
+        when(candidateProfileMapper.toEducativeRoleEntity(educativeRoleDto)).thenReturn(educativeRoleEntity);
         when(educativeRoleRepository.save(educativeRoleEntity)).thenReturn(educativeRoleEntity);
-        when(employeeQuestionnaireMapper.toEducativeRoleDto(educativeRoleEntity)).thenReturn(educativeRoleDto);
+        when(candidateProfileMapper.toEducativeRoleDto(educativeRoleEntity)).thenReturn(educativeRoleDto);
 
         // Act
         var result = questionnaireService.create(educativeRoleDto);
@@ -79,37 +81,37 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         // Assert
         assertNotNull(result);
         assertSame(educativeRoleDto, result);
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleEntity(educativeRoleDto);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleEntity(educativeRoleDto);
         verify(educativeRoleRepository, times(1)).save(educativeRoleEntity);
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleDto(educativeRoleEntity);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleDto(educativeRoleEntity);
     }
 
     @Test
     void create_shouldThrowExceptionForUnknownDtoType() {
         // Arrange
-        var unknownDto = mock(EmployeeQuestionnaireDto.class);
+        var unknownDto = mock(CandidateProfileDto.class);
 
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> questionnaireService.create(unknownDto));
-        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, employeeQuestionnaireMapper);
+        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, candidateProfileMapper);
     }
 
     @Test
     void create_shouldThrowExceptionWhenDtoIsNull() {
         // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> questionnaireService.create(null));
-        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, employeeQuestionnaireMapper);
+        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, candidateProfileMapper);
     }
 
     @Test
     void findById_shouldReturnBusinessRoleSuccessfully() {
         // Arrange
         var id = "business123";
-        var businessRoleEntity = new EmployeeQuestionnaireBusinessRoleEntity();
-        var businessRoleDto = new EmployeeQuestionnaireBusinessRoleDto();
+        var businessRoleEntity = new CandidateApplicationBusinessRoleEntity();
+        var businessRoleDto = new CandidateProfileBusinessDto();
 
         when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(businessRoleEntity);
-        when(employeeQuestionnaireMapper.toBusinessRoleDto(businessRoleEntity)).thenReturn(businessRoleDto);
+        when(candidateProfileMapper.toBusinessRoleDto(businessRoleEntity)).thenReturn(businessRoleDto);
 
         // Act
         var result = questionnaireService.findById(id);
@@ -118,7 +120,7 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertNotNull(result);
         assertSame(businessRoleDto, result);
         verify(businessRoleRepository, times(1)).findByIdAndIsActiveTrue(id);
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleDto(businessRoleEntity);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleDto(businessRoleEntity);
         verifyNoInteractions(educativeRoleRepository);
     }
 
@@ -126,11 +128,11 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
     void findById_shouldReturnEducativeRoleSuccessfully() {
         // Arrange
         var id = "educative456";
-        var educativeRoleEntity = new QuestionnaireEducativeRoleEntity();
-        var educativeRoleDto = new EmployeeQuestionnaireEducativeRoleDto();
+        var educativeRoleEntity = new CandidateApplicationEducatorRoleEntity();
+        var educativeRoleDto = new CandidateProfileEducatorDto();
 
         when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(educativeRoleEntity);
-        when(employeeQuestionnaireMapper.toEducativeRoleDto(educativeRoleEntity)).thenReturn(educativeRoleDto);
+        when(candidateProfileMapper.toEducativeRoleDto(educativeRoleEntity)).thenReturn(educativeRoleDto);
 
         // Act
         var result = questionnaireService.findById(id);
@@ -139,7 +141,7 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertNotNull(result);
         assertSame(educativeRoleDto, result);
         verify(educativeRoleRepository, times(1)).findByIdAndIsActiveTrue(id);
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleDto(educativeRoleEntity);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleDto(educativeRoleEntity);
     }
 
     @Test
@@ -163,27 +165,27 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertThrows(IllegalArgumentException.class, () -> questionnaireService.findById(null));
         assertThrows(IllegalArgumentException.class, () -> questionnaireService.findById(""));
 
-        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, employeeQuestionnaireMapper);
+        verifyNoInteractions(businessRoleRepository, educativeRoleRepository, candidateProfileMapper);
     }
 
     @Test
     void findAll_shouldReturnAllQuestionnairesSuccessfully() {
         // Arrange
-        var businessEntity = EmployeeQuestionnaireBusinessRoleEntity.builder()
+        var businessEntity = CandidateApplicationBusinessRoleEntity.builder()
                 .isActive(true)
                 .build();
-        var educativeEntity = QuestionnaireEducativeRoleEntity.builder()
+        var educativeEntity = CandidateApplicationEducatorRoleEntity.builder()
                 .isActive(true)
                 .build();
 
-        var businessDto = new EmployeeQuestionnaireBusinessRoleDto();
-        var educativeDto = new EmployeeQuestionnaireEducativeRoleDto();
+        var businessDto = new CandidateProfileBusinessDto();
+        var educativeDto = new CandidateProfileEducatorDto();
 
         when(businessRoleRepository.findAll()).thenReturn(List.of(businessEntity));
         when(educativeRoleRepository.findAll()).thenReturn(List.of(educativeEntity));
 
-        when(employeeQuestionnaireMapper.toBusinessRoleDto(businessEntity)).thenReturn(businessDto);
-        when(employeeQuestionnaireMapper.toEducativeRoleDto(educativeEntity)).thenReturn(educativeDto);
+        when(candidateProfileMapper.toBusinessRoleDto(businessEntity)).thenReturn(businessDto);
+        when(candidateProfileMapper.toEducativeRoleDto(educativeEntity)).thenReturn(educativeDto);
 
         // Act
         var result = questionnaireService.findAll();
@@ -195,8 +197,8 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertTrue(result.contains(educativeDto));
         verify(businessRoleRepository, times(1)).findAll();
         verify(educativeRoleRepository, times(1)).findAll();
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleDto(businessEntity);
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleDto(educativeEntity);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleDto(businessEntity);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleDto(educativeEntity);
     }
 
     @Test
@@ -213,21 +215,21 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertTrue(result.isEmpty());
         verify(businessRoleRepository, times(1)).findAll();
         verify(educativeRoleRepository, times(1)).findAll();
-        verifyNoInteractions(employeeQuestionnaireMapper);
+        verifyNoInteractions(candidateProfileMapper);
     }
 
     @Test
     void findAllBusiness_shouldReturnAllBusinessRolesSuccessfully() {
         // Arrange
-        var businessEntity1 = new EmployeeQuestionnaireBusinessRoleEntity();
-        var businessEntity2 = new EmployeeQuestionnaireBusinessRoleEntity();
+        var businessEntity1 = new CandidateApplicationBusinessRoleEntity();
+        var businessEntity2 = new CandidateApplicationBusinessRoleEntity();
 
-        var businessDto1 = new EmployeeQuestionnaireBusinessRoleDto();
-        var businessDto2 = new EmployeeQuestionnaireBusinessRoleDto();
+        var businessDto1 = new CandidateProfileBusinessDto();
+        var businessDto2 = new CandidateProfileBusinessDto();
 
         when(businessRoleRepository.findAllByIsActiveTrue()).thenReturn(List.of(businessEntity1, businessEntity2));
-        when(employeeQuestionnaireMapper.toBusinessRoleDto(businessEntity1)).thenReturn(businessDto1);
-        when(employeeQuestionnaireMapper.toBusinessRoleDto(businessEntity2)).thenReturn(businessDto2);
+        when(candidateProfileMapper.toBusinessRoleDto(businessEntity1)).thenReturn(businessDto1);
+        when(candidateProfileMapper.toBusinessRoleDto(businessEntity2)).thenReturn(businessDto2);
 
         // Act
         var result = questionnaireService.findAllBusiness();
@@ -238,8 +240,8 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertTrue(result.contains(businessDto1));
         assertTrue(result.contains(businessDto2));
         verify(businessRoleRepository, times(1)).findAllByIsActiveTrue();
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleDto(businessEntity1);
-        verify(employeeQuestionnaireMapper, times(1)).toBusinessRoleDto(businessEntity2);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleDto(businessEntity1);
+        verify(candidateProfileMapper, times(1)).toBusinessRoleDto(businessEntity2);
     }
 
     @Test
@@ -254,21 +256,21 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(businessRoleRepository, times(1)).findAllByIsActiveTrue();
-        verifyNoInteractions(employeeQuestionnaireMapper);
+        verifyNoInteractions(candidateProfileMapper);
     }
 
     @Test
     void findAllEducative_shouldReturnAllEducativeRolesSuccessfully() {
         // Arrange
-        var educativeEntity1 = new QuestionnaireEducativeRoleEntity();
-        var educativeEntity2 = new QuestionnaireEducativeRoleEntity();
+        var educativeEntity1 = new CandidateApplicationEducatorRoleEntity();
+        var educativeEntity2 = new CandidateApplicationEducatorRoleEntity();
 
-        var educativeDto1 = new EmployeeQuestionnaireEducativeRoleDto();
-        var educativeDto2 = new EmployeeQuestionnaireEducativeRoleDto();
+        var educativeDto1 = new CandidateProfileEducatorDto();
+        var educativeDto2 = new CandidateProfileEducatorDto();
 
         when(educativeRoleRepository.findAllByIsActiveTrue()).thenReturn(List.of(educativeEntity1, educativeEntity2));
-        when(employeeQuestionnaireMapper.toEducativeRoleDto(educativeEntity1)).thenReturn(educativeDto1);
-        when(employeeQuestionnaireMapper.toEducativeRoleDto(educativeEntity2)).thenReturn(educativeDto2);
+        when(candidateProfileMapper.toEducativeRoleDto(educativeEntity1)).thenReturn(educativeDto1);
+        when(candidateProfileMapper.toEducativeRoleDto(educativeEntity2)).thenReturn(educativeDto2);
 
         // Act
         var result = questionnaireService.findAllEducative();
@@ -279,8 +281,8 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertTrue(result.contains(educativeDto1));
         assertTrue(result.contains(educativeDto2));
         verify(educativeRoleRepository, times(1)).findAllByIsActiveTrue();
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleDto(educativeEntity1);
-        verify(employeeQuestionnaireMapper, times(1)).toEducativeRoleDto(educativeEntity2);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleDto(educativeEntity1);
+        verify(candidateProfileMapper, times(1)).toEducativeRoleDto(educativeEntity2);
     }
 
     @Test
@@ -295,6 +297,6 @@ public class EmployeeEmployeeQuestionnaireServiceImplTest {
         assertNotNull(result);
         assertTrue(result.isEmpty());
         verify(educativeRoleRepository, times(1)).findAllByIsActiveTrue();
-        verifyNoInteractions(employeeQuestionnaireMapper);
+        verifyNoInteractions(candidateProfileMapper);
     }
 }
