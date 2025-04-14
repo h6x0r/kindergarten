@@ -1,5 +1,8 @@
 package uz.zazu.king.employee.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +35,7 @@ public class CandidateProfileController {
     private final EmployeeQuestionnaireService employeeQuestionnaireService;
 
     @PostMapping
-    public ResponseEntity<CandidateProfileDto> create(@RequestBody CandidateProfileDto dto) {
+    public ResponseEntity<CandidateProfileDto> create(@NotNull @RequestBody CandidateProfileDto dto) {
         try {
             var response = employeeQuestionnaireService.create(dto);
             return ResponseEntity.ok(response);
@@ -42,7 +45,7 @@ public class CandidateProfileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateProfileDto> getById(@PathVariable String id) {
+    public ResponseEntity<CandidateProfileDto> getById(@NotBlank @PathVariable String id) {
         try {
             var response = employeeQuestionnaireService.findById(id);
             return ResponseEntity.ok(response);
@@ -68,12 +71,12 @@ public class CandidateProfileController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public CandidateProfileDto update(@PathVariable String id, @RequestBody CandidateProfileDto dto) {
+    public CandidateProfileDto update(@NotBlank @PathVariable String id, @Valid @RequestBody CandidateProfileDto dto) {
         return employeeQuestionnaireService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable String id) {
+    public void remove(@NotBlank @PathVariable String id) {
         employeeQuestionnaireService.remove(id);
     }
 }

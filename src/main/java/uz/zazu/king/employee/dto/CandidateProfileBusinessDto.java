@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import uz.zazu.king.employee.common.enums.Position;
 
 import java.time.LocalDateTime;
 
@@ -80,6 +81,7 @@ public class CandidateProfileBusinessDto extends CandidateProfileDto {
     private String offlineInterviewMetrics;
     private String testTaskEfficiencyMetric;
     private String previousCompanyMetrics;
+    private Position position;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -31,7 +31,6 @@ public class CandidateApplicationEducatorRoleEntity {
     private String contacts;
     private CandidateState candidateStatus;
     private String interviewComments;
-    private Position position;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate

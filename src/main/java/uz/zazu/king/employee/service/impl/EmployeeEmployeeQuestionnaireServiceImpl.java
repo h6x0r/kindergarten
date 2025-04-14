@@ -28,8 +28,6 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
 
     @Override
     public CandidateProfileDto create(CandidateProfileDto candidateProfileDto) {
-        Assert.notNull(candidateProfileDto, "обьект не может быть null");
-
         if (candidateProfileDto instanceof CandidateProfileBusinessDto dto) {
             var entity = candidateProfileMapper.toBusinessRoleEntity(dto);
             var saved = businessRoleRepository.save(entity);
@@ -50,8 +48,6 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
 
     @Override
     public CandidateProfileDto findById(String id) {
-        Assert.hasText(id, "id не может быть пустым");
-
         var business = businessRoleRepository.findByIdAndIsActiveTrue(id);
         if (business != null) {
             return candidateProfileMapper.toBusinessRoleDto(business);
@@ -102,9 +98,6 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
 
     @Override
     public CandidateProfileDto update(String id, CandidateProfileDto candidateProfileDto) {
-        Assert.hasText(id, "id не может быть пустым");
-        Assert.notNull(candidateProfileDto, "обьект не может быть пустым");
-
         if (candidateProfileDto instanceof CandidateProfileBusinessDto dto) {
             var existingEntity = businessRoleRepository.findByIdAndIsActiveTrue(id);
             if (existingEntity != null) {
@@ -133,8 +126,6 @@ public class EmployeeEmployeeQuestionnaireServiceImpl implements EmployeeQuestio
 
     @Override
     public void remove(String id) {
-        Assert.hasText(id, "id не может быть пустым");
-
         var business = businessRoleRepository.findByIdAndIsActiveTrue(id);
         if (business != null) {
             business.setActive(false);

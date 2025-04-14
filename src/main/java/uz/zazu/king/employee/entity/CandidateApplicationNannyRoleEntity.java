@@ -52,7 +52,6 @@ public class CandidateApplicationNannyRoleEntity {
     private Integer suitabilityRating;
     private String interviewComments;
     private String finalDecisionAfterInterview;
-    private Position position;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
