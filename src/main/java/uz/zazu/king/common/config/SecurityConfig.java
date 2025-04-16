@@ -20,7 +20,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import uz.zazu.king.security.service.impl.CustomUserDetailsService;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
@@ -46,12 +49,17 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
+        return new JwtAuthenticationFilter(inactiveTokens());
     }
 
     @Bean
     public AuthenticationManager authenticationManager(DaoAuthenticationProvider provider) {
         return new ProviderManager(provider);
+    }
+
+    @Bean
+    public Map<String, LocalDateTime> inactiveTokens() {
+        return new HashMap<>();
     }
 
     @Bean
@@ -66,7 +74,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
 //                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
-//                        .anyRequest().authenticated()
+                        .anyRequest().authenticated()
         );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

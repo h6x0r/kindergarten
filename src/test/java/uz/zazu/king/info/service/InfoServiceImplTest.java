@@ -10,17 +10,20 @@ import uz.zazu.king.info.dto.ModuleInfoDto;
 import uz.zazu.king.info.entity.InfoEntity;
 import uz.zazu.king.info.entity.ModuleEntity;
 import uz.zazu.king.info.enums.Module;
+import uz.zazu.king.info.exception.InfoNotFoundException;
 import uz.zazu.king.info.exception.ModuleNotFoundException;
 import uz.zazu.king.info.mapper.InfoMapper;
 import uz.zazu.king.info.repository.InfoRepository;
 import uz.zazu.king.info.repository.ModuleRepository;
 import uz.zazu.king.info.service.impl.InfoServiceImpl;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -44,8 +47,24 @@ public class InfoServiceImplTest {
     @Test
     public void testGetByModule_returnsDtoList() {
         var module = Module.EDUCATOR;
-        var entities = new ArrayList<InfoEntity>();
-        var dtoList = Collections.singletonList(new InfoDto());
+        var entities = Collections.singletonList(
+                InfoEntity.builder()
+                        .id("infoId1")
+                        .title("Test Title")
+                        .description("Test Description")
+                        .module(Module.EDUCATOR)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now())
+                        .build()
+        );
+        var dtoList = Collections.singletonList(
+                InfoDto.builder()
+                        .id("infoId1")
+                        .title("Test Title")
+                        .description("Test Description")
+                        .index(1)
+                        .build()
+        );
 
         when(infoRepository.findAllActiveByModule(module.name())).thenReturn(entities);
         when(infoMapper.toInfoDtoList(entities)).thenReturn(dtoList);
@@ -58,9 +77,120 @@ public class InfoServiceImplTest {
     }
 
     @Test
+    public void testGetByModule_noEntitiesFound_returnsEmptyList() {
+        var module = Module.EDUCATOR;
+
+        when(infoRepository.findAllActiveByModule(module.name())).thenReturn(Collections.emptyList());
+
+        var result = infoService.getByModule(module);
+
+        assertEquals(Collections.emptyList(), result);
+        verify(infoRepository, times(1)).findAllActiveByModule(module.name());
+        verify(infoMapper, times(0)).toInfoDtoList(anyList());
+    }
+
+    @Test
+    public void testGetByModule_threeToFiveRecords_returnsDtoList() {
+        var module = Module.EDUCATOR;
+        var entities = List.of(
+                InfoEntity.builder()
+                        .id("infoId1")
+                        .title("Title 1")
+                        .description("Description 1")
+                        .module(module)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now().minusDays(3))
+                        .build(),
+                InfoEntity.builder()
+                        .id("infoId2")
+                        .title("Title 2")
+                        .description("Description 2")
+                        .module(module)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now().minusDays(2))
+                        .build(),
+                InfoEntity.builder()
+                        .id("infoId3")
+                        .title("Title 3")
+                        .description("Description 3")
+                        .module(module)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now().minusDays(1))
+                        .build()
+        );
+
+        var dtoList = List.of(
+                InfoDto.builder()
+                        .id("infoId1")
+                        .title("Title 1")
+                        .description("Description 1")
+                        .index(1)
+                        .build(),
+                InfoDto.builder()
+                        .id("infoId2")
+                        .title("Title 2")
+                        .description("Description 2")
+                        .index(2)
+                        .build(),
+                InfoDto.builder()
+                        .id("infoId3")
+                        .title("Title 3")
+                        .description("Description 3")
+                        .index(3)
+                        .build()
+        );
+
+        when(infoRepository.findAllActiveByModule(module.name())).thenReturn(entities);
+        when(infoMapper.toInfoDtoList(entities)).thenReturn(dtoList);
+
+        var result = infoService.getByModule(module);
+
+        assertEquals(dtoList, result);
+        verify(infoRepository, times(1)).findAllActiveByModule(module.name());
+        verify(infoMapper, times(1)).toInfoDtoList(entities);
+    }
+
+    @Test
+    public void testGetByModule_nullModule_throwsException() {
+        assertThrows(ModuleNotFoundException.class, () -> infoService.getByModule(null));
+        verify(infoRepository, times(0)).findAllActiveByModule("");
+        verify(infoMapper, times(0)).toInfoDtoList(anyList());
+    }
+
+    @Test
     public void testGetModule_returnsModuleInfoDto() {
-        var entities = new ArrayList<InfoEntity>();
-        var infoList = Collections.singletonList(new InfoDto());
+        var entities = List.of(
+                InfoEntity.builder()
+                        .id("infoId1")
+                        .title("Manager Title 1")
+                        .description("Manager Description 1")
+                        .module(Module.MANAGER)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now().minusDays(2))
+                        .build(),
+                InfoEntity.builder()
+                        .id("infoId2")
+                        .title("Manager Title 2")
+                        .description("Manager Description 2")
+                        .module(Module.MANAGER)
+                        .isActive(true)
+                        .createdAt(LocalDateTime.now().minusDays(1))
+                        .build()
+        );
+        var infoList = List.of(
+                InfoDto.builder()
+                        .id("infoId1")
+                        .title("Manager Title 1")
+                        .description("Manager Description 1")
+                        .index(1)
+                        .build(),
+                InfoDto.builder()
+                        .id("infoId2")
+                        .title("Manager Title 2")
+                        .description("Manager Description 2")
+                        .index(2)
+                        .build()
+        );
 
         when(infoRepository.findAllActiveByModule(Module.MANAGER.name())).thenReturn(entities);
         when(infoMapper.toInfoDtoList(entities)).thenReturn(infoList);
@@ -70,7 +200,11 @@ public class InfoServiceImplTest {
         when(moduleRepository.findAllByModuleName(Module.MANAGER.name()))
                 .thenReturn(Collections.singletonList(dummyModuleEntity));
 
-        var expectedModuleInfoDto = new ModuleInfoDto();
+        var expectedModuleInfoDto = ModuleInfoDto.builder()
+                .moduleName(dummyModuleEntity.getModuleName().name())
+                .infoList(infoList)
+                .build();
+
         when(infoMapper.toModuleInfoDto(dummyModuleEntity, infoList)).thenReturn(expectedModuleInfoDto);
 
         var result = infoService.getModule(Module.MANAGER);
@@ -80,10 +214,6 @@ public class InfoServiceImplTest {
 
     @Test
     public void testGetModule_moduleNotFound_exception() {
-        var entities = new ArrayList<InfoEntity>();
-        when(infoRepository.findAllActiveByModule(Module.BUSINESS_ASSISTANT.name())).thenReturn(entities);
-        when(infoMapper.toInfoDtoList(entities)).thenReturn(Collections.singletonList(new InfoDto()));
-
         when(moduleRepository.findAllByModuleName(Module.BUSINESS_ASSISTANT.name())).thenReturn(Collections.emptyList());
 
         assertThrows(ModuleNotFoundException.class, () -> infoService.getModule(Module.BUSINESS_ASSISTANT));
@@ -121,7 +251,7 @@ public class InfoServiceImplTest {
     public void testGetById_notFound_exception() {
         var id = "123";
         when(infoRepository.findActiveById(id)).thenReturn(null);
-        assertThrows(ModuleNotFoundException.class, () -> infoService.getById(id));
+        assertThrows(InfoNotFoundException.class, () -> infoService.getById(id));
     }
 
     @Test
@@ -146,7 +276,7 @@ public class InfoServiceImplTest {
         var id = "123";
         var inputDto = new InfoDto();
         when(infoRepository.findActiveById(id)).thenReturn(null);
-        assertThrows(ModuleNotFoundException.class, () -> infoService.update(id, inputDto));
+        assertThrows(InfoNotFoundException.class, () -> infoService.update(id, inputDto));
     }
 
     @Test
@@ -166,7 +296,7 @@ public class InfoServiceImplTest {
     public void testRemove_notFound_exception() {
         var id = "123";
         when(infoRepository.findActiveById(id)).thenReturn(null);
-        assertThrows(ModuleNotFoundException.class, () -> infoService.remove(id));
+        assertThrows(InfoNotFoundException.class, () -> infoService.remove(id));
     }
 
 }

@@ -4,7 +4,6 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 import uz.zazu.king.info.dto.InfoDto;
 import uz.zazu.king.info.dto.InfoLinkDto;
 import uz.zazu.king.info.dto.ModuleInfoDto;
@@ -17,7 +16,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface InfoMapper {
 
-    InfoMapper INSTANCE = Mappers.getMapper(InfoMapper.class);
 
     InfoDto toInfoDto(InfoEntity entity);
 
@@ -43,4 +41,5 @@ public interface InfoMapper {
     @Mapping(target = "tableLink", source = "entity.tableLink")
     @Mapping(target = "infoList", source = "infoList")
     ModuleInfoDto toModuleInfoDto(ModuleEntity entity, List<InfoDto> infoList);
+
 }

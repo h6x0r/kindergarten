@@ -5,7 +5,7 @@ public class ModuleNotFoundException extends RuntimeException {
         super("Module not found with the specified name");
     }
 
-    public ModuleNotFoundException(String id) {
-        super("Info not found with ID: " + id);
+    public ModuleNotFoundException(String name) {
+        super("Module not found with name: " + name);
     }
 }

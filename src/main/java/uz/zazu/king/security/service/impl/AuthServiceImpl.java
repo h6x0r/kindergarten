@@ -3,6 +3,7 @@ package uz.zazu.king.security.service.impl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.scheduling.annotation.Scheduled;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +14,17 @@ import uz.zazu.king.security.dto.AuthGeneratedResponse;
 import uz.zazu.king.security.dto.LoginRequest;
 import uz.zazu.king.security.entity.UserEntity;
 import uz.zazu.king.security.repository.UserRepository;
+import uz.zazu.king.security.service.AuthService;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static uz.zazu.king.security.common.enums.Role.ROLE_SUPER_ADMIN;
 
@@ -24,22 +32,15 @@ import static uz.zazu.king.security.common.enums.Role.ROLE_SUPER_ADMIN;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthService {
-
+public class AuthServiceImpl implements AuthService {
+    private final Map<String, LocalDateTime> inactiveTokens;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Value("${king.jwt.secret}")
     private String secretBase64;
 
-    public void verifyUser(LoginRequest loginRequest) {
-        var user = userRepository.findByUserNameAndIsActive(loginRequest.getUsername());
-        if (user == null || !user.isActive()) {
-            throw new IncorrectCredentialsException();
-        }
-    }
-
-    public AuthGeneratedResponse authorizeUser(LoginRequest loginRequest) {
+    public AuthGeneratedResponse login(LoginRequest loginRequest) {
         verifyUser(loginRequest);
         var userName = loginRequest.getUsername();
         var user = userRepository.findByUserNameAndIsActive(userName);
@@ -57,6 +58,19 @@ public class AuthService {
                 .jwtToken(token)
                 .username(userName)
                 .build();
+    }
+
+    @Override
+    public void logout(String token) {
+        inactiveTokens.put(token, LocalDateTime.now());
+        log.info("Token invalidated successfully: {}", token);
+    }
+
+    private void verifyUser(LoginRequest loginRequest) {
+        var user = userRepository.findByUserNameAndIsActive(loginRequest.getUsername());
+        if (user == null || !user.isActive()) {
+            throw new IncorrectCredentialsException();
+        }
     }
 
     private String generateToken(UserEntity user) {
@@ -82,4 +96,10 @@ public class AuthService {
                 .compact();
     }
 
+    @Scheduled(fixedRate = 600_000) // Runs every 10 minutes
+    public void cleanUpInactiveTokens() {
+        var oneHourAgo = LocalDateTime.now().minusHours(1);
+        inactiveTokens.entrySet().removeIf(entry -> entry.getValue().isBefore(oneHourAgo));
+        log.info("Cleaned up expired inactive tokens.");
+    }
 }

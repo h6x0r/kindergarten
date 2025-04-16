@@ -14,19 +14,19 @@ import uz.zazu.king.security.dto.AuthFailedResponse;
 import uz.zazu.king.security.dto.AuthResponse;
 import uz.zazu.king.security.dto.AuthSuccessResponse;
 import uz.zazu.king.security.dto.LoginRequest;
-import uz.zazu.king.security.service.impl.AuthService;
+import uz.zazu.king.security.service.impl.AuthServiceImpl;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthServiceImpl authService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
-            var authResponse = authService.authorizeUser(loginRequest);
+            var authResponse = authService.login(loginRequest);
             var response = AuthSuccessResponse.builder()
                     .username(authResponse.getUsername())
                     .roles(authResponse.getRoles())
@@ -42,4 +42,11 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        // Additional actions, such as token invalidation, can be added here if needed
+        return ResponseEntity.ok("Successfully logged out");
+    }
+
 }

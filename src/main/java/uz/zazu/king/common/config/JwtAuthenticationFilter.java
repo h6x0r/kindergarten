@@ -6,22 +6,36 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import uz.zazu.king.common.exception.InvalidTokenException;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Value("${king.jwt.secret}")
     private String secretBase64;
+
+    private final Map<String, LocalDateTime> inactiveTokens;
 
     @Override
     protected void doFilterInternal(
@@ -34,6 +48,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
             try {
+                // todo..
+                if (inactiveTokens.containsKey(jwt)) {
+                    throw new InvalidTokenException();
+                }
+
                 var secret = Base64.getDecoder().decode(secretBase64);
 
                 var claims = Jwts.parserBuilder()

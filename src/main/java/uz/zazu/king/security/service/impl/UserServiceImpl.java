@@ -3,6 +3,7 @@ package uz.zazu.king.security.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uz.zazu.king.security.common.exception.UserAlreadyExistException;
 import uz.zazu.king.security.common.exception.UserNotFoundException;
 import uz.zazu.king.security.dto.UserDto;
 import uz.zazu.king.security.mapper.UserMapper;
@@ -22,6 +23,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(UserDto userDto) {
+        var userName = userDto.getUsername();
+        if (userRepository.findByUserNameAndIsActive(userName) != null) {
+            throw new UserAlreadyExistException(userName);
+        }
         var entity = userMapper.toEntity(userDto, passwordEncoder);
         var saved = userRepository.save(entity);
         return userMapper.toDto(saved);
@@ -46,6 +51,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(String id, UserDto userDto) {
+        var userName = userDto.getUsername();
+        if (userRepository.findByUserNameAndIsActive(userName) != null) {
+            throw new UserAlreadyExistException(userName);
+        }
+
         var existing = userRepository.findActiveById(id);
         if (existing == null) {
             throw new UserNotFoundException(id);
@@ -56,10 +66,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String id) {
-        var existing = userRepository.findActiveById(id);
+    public void remove(String userName) {
+        var existing = userRepository.findByUserNameAndIsActive(userName);
         if (existing == null) {
-            throw new UserNotFoundException(id);
+            throw new UserNotFoundException(userName);
         }
         existing.setActive(false);
         userRepository.save(existing);

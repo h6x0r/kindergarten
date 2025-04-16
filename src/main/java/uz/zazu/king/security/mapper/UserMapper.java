@@ -18,6 +18,7 @@ public interface UserMapper {
     @Mapping(target = "isActive", constant = "true")
     UserEntity toEntity(UserDto dto, PasswordEncoder passwordEncoder);
 
+    @Mapping(target = "id", source = "id")
     UserDto toDto(UserEntity entity);
 
     void updateEntityFromDto(UserDto dto, @MappingTarget UserEntity entity);
