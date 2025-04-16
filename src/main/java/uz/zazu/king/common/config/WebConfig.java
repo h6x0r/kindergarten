@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**")
 //                .allowedOrigins(frontServiceUrl)
-                .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("http://localhost:5173/", "https://kindergarten-frontend.netlify.app/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Origin")
                 .exposedHeaders("Authorization")
