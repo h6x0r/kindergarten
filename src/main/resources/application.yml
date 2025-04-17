@@ -4,13 +4,13 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo:ruyAMGYZyJirRMIlKzWPtHqJCmvjwXWe@mongodb.railway.internal:27017/kindergarten
+      uri: ${SPRING_DATASOURCE_URL}
   application:
     name: kindergarten
 
 king:
   jwt:
-    secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
+    secret: ${KING_JWT_SECRET}
 
 logging:
   level:

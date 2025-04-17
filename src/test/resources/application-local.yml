@@ -1,0 +1,18 @@
+server:
+  port: 8050
+
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://localhost:27017/kindergarten_test"
+
+  application:
+    name: kindergarten
+
+king:
+  jwt:
+    secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
+
+logging:
+  level:
+    root: INFO
