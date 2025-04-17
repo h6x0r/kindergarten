@@ -16,6 +16,8 @@ import uz.zazu.king.info.dto.ModuleInfoDto;
 import uz.zazu.king.info.enums.Module;
 import uz.zazu.king.info.service.InfoService;
 
+import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
+
 @RestController
 @RequestMapping("/api/info")
 @PreAuthorize("hasRole('SUPER_ADMIN')")
@@ -24,42 +26,24 @@ public class InfoController {
 
     private final InfoService infoService;
 
-//    @GetMapping("/hr")
-//    public String getHrInfo() {
-//        return "HR";
-//    }
-//
-//    @GetMapping("/hr2")
-
-    /// /    @PreAuthorize("hasRole('SUPER_ADMIN')")
-//    public String getHrInfo2() {
-//        return "HR";
-//    }
     @PostMapping("/create")
-//    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public InfoDto create(@RequestBody InfoDto infoDto) {
         return infoService.create(infoDto);
     }
 
     @PutMapping("/update/{id}")
-//    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public InfoDto update(@PathVariable String id, @RequestBody InfoDto infoDto) {
+    public InfoDto update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @RequestBody InfoDto infoDto) {
         return infoService.update(id, infoDto);
     }
 
     @DeleteMapping("/remove/{id}")
-//    @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public void remove(@NotBlank @PathVariable String id) {
+    public void remove(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         infoService.remove(id);
     }
 
     @GetMapping("/main")
     public ModuleInfoDto getMainInfo() {
-        try {
-            return infoService.getModule(Module.MAIN);
-        } catch (Exception e) {
-            throw e;
-        }
+        return infoService.getModule(Module.MAIN);
     }
 
     @GetMapping("/base")

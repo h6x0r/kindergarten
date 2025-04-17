@@ -26,6 +26,8 @@ import uz.zazu.king.employee.service.CandidateProfileService;
 
 import java.util.List;
 
+import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
+
 /**
  * Контроллер для работы с данными опросников сотрудников.
  * Поддерживает управление данными опросников для бизнес-ассистентов
@@ -134,7 +136,7 @@ public class CandidateProfileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateProfileDto> getById(@NotBlank @PathVariable String id) {
+    public ResponseEntity<CandidateProfileDto> getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         try {
             var response = candidateProfileService.findById(id);
             return ResponseEntity.ok(response);
@@ -165,12 +167,12 @@ public class CandidateProfileController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
-    public CandidateProfileDto update(@NotBlank @PathVariable String id, @Valid @RequestBody CandidateProfileDto dto) {
+    public CandidateProfileDto update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @Valid @RequestBody CandidateProfileDto dto) {
         return candidateProfileService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@NotBlank @PathVariable String id) {
+    public void remove(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         candidateProfileService.remove(id);
     }
 }

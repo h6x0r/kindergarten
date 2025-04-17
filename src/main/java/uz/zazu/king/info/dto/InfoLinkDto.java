@@ -13,8 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InfoLinkDto {
-    @NotBlank
+    @NotBlank(message = "Название ссылки не должно быть пустым")
     private String name;
-    @NotBlank
+    @NotBlank(message = "URL ссылки не должен быть пустым")
     private String url;
 }

@@ -27,15 +27,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CandidateProfileDto {
     private String id;
-    @NotBlank
+    @NotBlank(message = "Поле 'Полное имя' не должно быть пустым")
     private String fullName;
-    @NotBlank
+    @NotBlank(message = "Поле 'Дата входа кандидата' не должно быть пустым")
     private LocalDateTime candidateEntryDate;
-    @NotBlank
+    @NotBlank(message = "Поле 'Возраст' не должно быть пустым")
     private Integer age;
-    @NotBlank
+    @NotBlank(message = "Поле 'Контакты' не должно быть пустым")
     private String contacts;
-    @NotBlank
+    @NotBlank(message = "Поле 'Статус кандидата' не должно быть пустым")
     private CandidateState candidateStatus;
     private String interviewComments;
     private LocalDateTime createdAt;

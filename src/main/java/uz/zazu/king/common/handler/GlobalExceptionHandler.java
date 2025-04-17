@@ -3,6 +3,7 @@ package uz.zazu.king.common.handler;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -57,7 +58,7 @@ public class GlobalExceptionHandler {
             InvalidTokenException.class, QuestionnaireNotFoundException.class,
             InfoNotFoundException.class, ModuleNotFoundException.class, IncorrectCredentialsException.class,
             UserAlreadyExistException.class, UserNotFoundException.class, EmployeeNotFoundException.class,
-            LeadNotFoundException.class
+            LeadNotFoundException.class, MethodArgumentNotValidException.class
     })
     public ResponseEntity<ApiError> handleInvalidTokenException(
             RuntimeException ex, HttpServletRequest request) {

@@ -19,11 +19,11 @@ public class LeadDto {
     private String id;
     private LocalDateTime leadFirstOccurrence;
     private String leadSource;     // источник лида
-    @NotBlank
+    @NotBlank(message = "Имя родителя не должно быть пустым")
     private String parentName;     // имя родителя
-    @NotBlank
+    @NotBlank(message = "Номер телефона не должен быть пустым")
     private String parentPhone;    // номер телефона
-    @NotBlank
+    @NotBlank(message = "Имя ребенка не должно быть пустым")
     private String childName;      // имя ребенка
     private int childAge;
     private String childHobbies;   // увлечения ребенка

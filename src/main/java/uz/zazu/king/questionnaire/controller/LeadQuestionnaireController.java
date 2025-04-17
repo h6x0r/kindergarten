@@ -18,6 +18,8 @@ import uz.zazu.king.questionnaire.service.LeadQuestionnaireService;
 
 import java.util.List;
 
+import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
+
 
 /**
  * Обрабатывает операции, связанные с опросниками по анкете custdev.
@@ -39,7 +41,7 @@ public class LeadQuestionnaireController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LeadQuestionnaireDto> getById(@NotBlank @PathVariable String id) {
+    public ResponseEntity<LeadQuestionnaireDto> getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         try {
             return ResponseEntity.ok(leadQuestionnaireService.findById(id));
         } catch (Exception e) {
@@ -53,7 +55,7 @@ public class LeadQuestionnaireController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LeadQuestionnaireDto> update(@NotBlank @PathVariable String id, @NotNull @RequestBody LeadQuestionnaireDto lead) {
+    public ResponseEntity<LeadQuestionnaireDto> update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @NotNull @RequestBody LeadQuestionnaireDto lead) {
         try {
             return ResponseEntity.ok(leadQuestionnaireService.update(id, lead));
         } catch (Exception e) {
@@ -62,7 +64,7 @@ public class LeadQuestionnaireController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@NotBlank @PathVariable String id) {
+    public ResponseEntity<Void> delete(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         try {
             leadQuestionnaireService.delete(id);
             return ResponseEntity.ok().build();

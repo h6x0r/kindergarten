@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ModuleInfoDto {
-    @NotBlank
+    @NotBlank(message = "Название модуля не должно быть пустым")
     private String moduleName;
     private String tableLink;
     private List<InfoDto> infoList;

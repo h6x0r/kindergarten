@@ -17,16 +17,16 @@ import java.time.LocalDateTime;
 public class LeadQuestionnaireDto {
     private String id;
     private long orgId;
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть пустым")
     private String firstName;
     private String lastName;
     private String patronymic;
-    @NotBlank
+    @NotBlank(message = "Группа и преподаватель не должны быть пустыми")
     private String groupAndTeacher;
     private long ltv;
-    @NotBlank
+    @NotBlank(message = "ФИО ответственного за забор ребенка не должно быть пустым")
     private String childPickupPerson;
-    @NotBlank
+    @NotBlank(message = "ФИО родителя не должно быть пустым")
     private String parentFullName;
     private String childAgeAndDOB;
     private String childSpecialNeeds;
