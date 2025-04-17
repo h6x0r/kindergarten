@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongo:PRHJgQPaSjvfwizYhvbIkyKXclrdwFYM@trolley.proxy.rlwy.net:41673/kindergarten
+      uri: mongodb://mongo:PRHJgQPaSjvfwizYhvbIkyKXclrdwFYM@mongodb.railway.internal:27017/kindergarten
   application:
     name: kindergarten
 
