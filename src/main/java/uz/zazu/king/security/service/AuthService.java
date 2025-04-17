@@ -5,5 +5,6 @@ import uz.zazu.king.security.dto.LoginRequest;
 
 public interface AuthService {
     AuthGeneratedResponse login(LoginRequest loginRequest);
+
     void logout(String token);
 }

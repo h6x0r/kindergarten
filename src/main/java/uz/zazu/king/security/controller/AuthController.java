@@ -44,8 +44,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
-        // Additional actions, such as token invalidation, can be added here if needed
+    public ResponseEntity<String> logout(@RequestBody String token) {
+        authService.logout(token);
         return ResponseEntity.ok("Successfully logged out");
     }
 

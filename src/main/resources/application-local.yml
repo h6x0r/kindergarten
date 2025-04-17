@@ -4,9 +4,6 @@ server:
 spring:
   data:
     mongodb:
-      # Рекомендуется использовать полноценную строку подключения, включая пользователя и пароль (если они есть).
-      # Пример: mongodb://<user>:<password>@localhost:27017/your_database_name
-      #      uri: "mongodb://myUser:myPassword@localhost:27017/kindergarten"
       uri: "mongodb://localhost:27017/kindergarten"
 
   application:

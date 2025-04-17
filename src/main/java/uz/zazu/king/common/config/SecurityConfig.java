@@ -33,7 +33,6 @@ public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -69,11 +68,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/info/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
+//                        .requestMatchers("/api/info/**").permitAll()
+//                        .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/questionnaire/**").permitAll() // todo.. remove the line
-//                .requestMatchers("/api/**").hasRole("SUPER_ADMIN") // todo.. remove the line
                         .anyRequest().authenticated()
         );
 
@@ -90,7 +87,6 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
 
-//        configuration.setAllowedOrigins(List.of(frontServiceUrl));
         configuration.setAllowedOrigins(List.of("http://localhost:5173/", "https://kindergarten-frontend.netlify.app"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));

@@ -7,14 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Value("${front.service.url}")
-//    private String frontServiceUrl;
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-//                .allowedOrigins(frontServiceUrl)
                 .allowedOrigins("http://localhost:5173/", "https://kindergarten-frontend.netlify.app/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("Content-Type", "Authorization", "Accept", "X-Requested-With", "Origin")

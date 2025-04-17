@@ -1,8 +1,6 @@
 package uz.zazu.king.security.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -19,28 +17,32 @@ import uz.zazu.king.security.common.enums.Role;
 import uz.zazu.king.security.dto.LoginRequest;
 import uz.zazu.king.security.dto.UserDto;
 
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthControllerIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private static String jwtToken;
     private static final String userName = "testSuperAdmin" + UUID.randomUUID().toString().substring(0, 8);
     private static final String password = "testSuperAdminPass";
     private static final Set<String> roles = Set.of(Role.ROLE_ADMIN.name(), Role.ROLE_USER.name());
+    private static String jwtToken;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private Map<String, LocalDateTime> inactiveTokens;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     @Order(1)
@@ -80,30 +82,33 @@ public class AuthControllerIntegrationTest {
     @DisplayName("Логаут SUPER_ADMIN")
     void logoutSuccess() throws Exception {
         mockMvc.perform(post("/api/auth/logout")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken))
-                .andExpect(status().isOk());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jwtToken))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Successfully logged out"));
     }
 
-//    @Test
-//    @Order(4)
-//    @DisplayName("Создание пользователя после логаута с тем же токеном должно возвращать 401")
-//    void createUserShouldFailAfterLogout() throws Exception {
-//        var userDto = UserDto.builder()
-//                .username(userName)
-//                .password(password)
-//                .roles(roles)
-//                .build();
-//        var response = mockMvc.perform(post("/api/users")
-//                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(userDto)));
-//        response.andExpect(status().isUnauthorized());
-//    }
+    @Test
+    @Order(4)
+    @DisplayName("Создание пользователя после логаута с тем же токеном должно возвращать 401")
+    void createUserShouldFailAfterLogout() throws Exception {
+        var userDto = UserDto.builder()
+                .username(userName)
+                .password(password)
+                .roles(roles)
+                .build();
+        var response = mockMvc.perform(post("/api/users")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(userDto)));
+        response.andExpect(status().isUnauthorized());
+    }
 
     @Test
     @Order(5)
+    @WithMockUser(roles = "SUPER_ADMIN")
     @DisplayName("Удаление тестового пользователя")
-    void deleteUser () throws Exception {
+    void deleteUser() throws Exception {
         mockMvc.perform(delete("/api/users/{name}", userName))
                 .andExpect(status().isOk());
     }
