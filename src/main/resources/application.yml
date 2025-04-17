@@ -4,13 +4,13 @@ server:
 spring:
   data:
     mongodb:
-      uri: ${SPRING_DATASOURCE_URL}
+      uri: mongodb://mongo:PRHJgQPaSjvfwizYhvbIkyKXclrdwFYM@trolley.proxy.rlwy.net:41673/kindergarten
   application:
     name: kindergarten
 
 king:
   jwt:
-    secret: ${KING_JWT_SECRET}
+    secret: OK9SBV/0HRurtEw3umYg5pgTwzN97EBAylK0I4cJ+M0=
 
 logging:
   level:
