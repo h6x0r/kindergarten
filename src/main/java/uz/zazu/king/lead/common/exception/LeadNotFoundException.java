@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.exception;
+package uz.zazu.king.lead.common.exception;
 
 public class LeadNotFoundException extends RuntimeException {
     public LeadNotFoundException(String id) {

@@ -1,4 +1,4 @@
-package uz.zazu.king.lead.common;
+package uz.zazu.king.lead.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

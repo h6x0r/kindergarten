@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.zazu.king.security.common.exception.IncorrectCredentialsException;
-import uz.zazu.king.security.dto.AuthGeneratedResponse;
 import uz.zazu.king.security.dto.LoginRequest;
+import uz.zazu.king.security.dto.LoginResponse;
 import uz.zazu.king.security.entity.UserEntity;
 import uz.zazu.king.security.repository.UserRepository;
 import uz.zazu.king.security.service.AuthService;
@@ -36,7 +36,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${king.jwt.secret}")
     private String secretBase64;
 
-    public AuthGeneratedResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) {
         verifyUser(loginRequest);
         var userName = loginRequest.getUsername();
         var user = userRepository.findByUserNameAndIsActive(userName);
@@ -49,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
                 .map(Enum::name)
                 .toList();
 
-        return AuthGeneratedResponse.builder()
+        return LoginResponse.builder()
                 .roles(roles)
                 .jwtToken(token)
                 .username(userName)

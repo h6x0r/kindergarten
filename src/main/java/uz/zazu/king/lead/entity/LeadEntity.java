@@ -9,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uz.zazu.king.lead.common.LeadState;
+import uz.zazu.king.lead.common.enums.LeadState;
 
 import java.time.LocalDateTime;
 

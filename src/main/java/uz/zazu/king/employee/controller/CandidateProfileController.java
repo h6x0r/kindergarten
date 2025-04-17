@@ -1,5 +1,9 @@
 package uz.zazu.king.employee.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,6 +39,90 @@ public class CandidateProfileController {
 
     private final CandidateProfileService candidateProfileService;
 
+    @Operation(
+            summary = "Создание кандидата любого типа",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    oneOf = {
+                                            CandidateProfileBusinessDto.class,
+                                            CandidateProfileEducatorDto.class,
+                                            CandidateProfileNannyDto.class
+                                    },
+                                    discriminatorProperty = "type"
+                            ),
+                            examples = {
+                                    @ExampleObject(
+                                            name = "business",
+                                            summary = "Кандидат типа 'business' (type = \"business\")",
+                                            value = """
+                                                    {
+                                                      "type": "business",
+                                                      "fullName": "Иванов Иван",
+                                                      "candidateEntryDate": "2025-01-15T10:00:00",
+                                                      "age": 30,
+                                                      "contacts": "+7 (999) 123-45-67",
+                                                      "candidateStatus": "NEW",
+                                                      "resumeLink": "https://example.com/resume/ivanov",
+                                                      "previousCompanyName": "ООО Пример",
+                                                      "previousPositionName": "Менеджер",
+                                                      "responsibilities": "Ведение переговоров...",
+                                                      "workingRelationsWithColleagues": "Всегда помогал команде...",
+                                                      "multitaskingAndProjectManagement": "Успешно вёл несколько проектов",
+                                                      "responsibilityScore": 8,
+                                                      "examplesOfLeadership": "Организовывал собственный отдел...",
+                                                      "pastSalary": "60 000 руб.",
+                                                      "motivationFactors": "Профессиональный рост...",
+                                                      "handlingCriticism": "Спокойно воспринимаю...",
+                                                      "willingnessToLearnAndDevelop": "Постоянно прохожу курсы...",
+                                                      "createdAt": "2025-01-15T10:00:00",
+                                                      "updatedAt": "2025-02-01T09:00:00"
+                                                    }
+                                                    """),
+                                    @ExampleObject(
+                                            name = "educator",
+                                            summary = "Кандидат типа 'educator' (type = \"educator\")",
+                                            value = """
+                                                    {
+                                                      "type": "educator",
+                                                      "fullName": "Петров Пётр",
+                                                      "candidateEntryDate": "2025-03-10T09:00:00",
+                                                      "age": 28,
+                                                      "contacts": "+7 (999) 333-22-11",
+                                                      "candidateStatus": "IN_PROGRESS"
+                                                    }
+                                                    """
+                                    ),
+                                    @ExampleObject(
+                                            name = "nanny",
+                                            summary = "Класс для кандидата-няни (type = \"nanny\")",
+                                            value = """
+                                                    {
+                                                      "type": "nanny",
+                                                      "fullName": "Петрова Анна",
+                                                      "candidateEntryDate": "2025-05-10T10:00:00",
+                                                      "age": 35,
+                                                      "contacts": "+7 (999) 123-45-67",
+                                                      "candidateStatus": "NEW",
+                                                      "punctuality": true,
+                                                      "education": "Высшее педагогическое",
+                                                      "salaryExpectations": "50 000 - 60 000 руб.",
+                                                      "idealJobDescription": "Работа с детьми 2-3 лет...",
+                                                      "thingsThatBringJoy": "Смотреть, как дети развиваются",
+                                                      "hasChildren": true,
+                                                      "personalInterests": "Психология, чтение",
+                                                      "suitabilityRating": 9,
+                                                      "finalDecisionAfterInterview": "Кандидат показал...",
+                                                      "createdAt": "2025-05-10T10:00:00",
+                                                      "updatedAt": "2025-05-10T10:00:00"
+                                                    }
+                                                    """
+                                    )
+                            }
+                    )
+            )
+    )
     @PostMapping
     public ResponseEntity<CandidateProfileDto> create(@NotNull @RequestBody CandidateProfileDto dto) {
         try {
@@ -65,7 +153,7 @@ public class CandidateProfileController {
         return ResponseEntity.ok(candidateProfileService.findAllBusiness());
     }
 
-    @GetMapping("/educative")
+    @GetMapping("/educator")
     public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {
         return ResponseEntity.ok(candidateProfileService.findAllEducative());
     }

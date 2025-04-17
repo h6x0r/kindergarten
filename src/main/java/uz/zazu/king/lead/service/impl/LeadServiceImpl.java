@@ -2,8 +2,8 @@ package uz.zazu.king.lead.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import uz.zazu.king.lead.common.exception.LeadNotFoundException;
 import uz.zazu.king.lead.dto.LeadDto;
-import uz.zazu.king.lead.exception.LeadNotFoundException;
 import uz.zazu.king.lead.mapper.LeadMapper;
 import uz.zazu.king.lead.repository.LeadRepository;
 import uz.zazu.king.lead.service.LeadService;

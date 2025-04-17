@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import uz.zazu.king.lead.common.LeadState;
+import uz.zazu.king.lead.common.enums.LeadState;
 import uz.zazu.king.lead.dto.LeadDto;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package uz.zazu.king.common.config;
+package uz.zazu.king.common.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -62,16 +62,24 @@ public class SecurityConfig {
     }
 
     @Bean
+    public String[] whiteList() {
+        return new String[]{
+                "/api/auth/**",
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+        };
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/info/**").permitAll()
-//                        .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                .requestMatchers(whiteList()).permitAll()
+                .anyRequest().authenticated()
         );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -271,7 +271,7 @@ public class CandidateProfileControllerIntegrationTest {
         @Test
         @DisplayName("Позитивный сценарий: возвращаем список образовательных опросников")
         void getAllEducativePositive() throws Exception {
-            mockMvc.perform(get(BASE_URL + "/educative"))
+            mockMvc.perform(get(BASE_URL + "/educator"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
         }

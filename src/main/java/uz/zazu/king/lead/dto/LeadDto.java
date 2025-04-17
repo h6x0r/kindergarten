@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.zazu.king.lead.common.LeadState;
+import uz.zazu.king.lead.common.enums.LeadState;
 
 import java.time.LocalDateTime;
 
