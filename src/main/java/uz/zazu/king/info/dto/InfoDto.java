@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.zazu.king.info.enums.Module;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class InfoDto {
     @NotBlank(message = "Описание не должно быть пустым")
     private String description;
     @NotBlank(message = "Модуль не должен быть пустым")
-    private String module;
+    private Module module;
     private List<InfoLinkDto> links;
     private int index;
 }

@@ -19,6 +19,8 @@ public interface InfoMapper {
     InfoDto toInfoDto(InfoEntity entity);
 
     @InheritInverseConfiguration
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "isActive", constant = "true")
     InfoEntity toInfoEntity(InfoDto dto);
 
     List<InfoDto> toInfoDtoList(List<InfoEntity> entities);
