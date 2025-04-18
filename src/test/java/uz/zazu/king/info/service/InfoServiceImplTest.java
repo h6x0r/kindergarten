@@ -8,13 +8,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uz.zazu.king.info.dto.InfoDto;
 import uz.zazu.king.info.dto.ModuleInfoDto;
 import uz.zazu.king.info.entity.InfoEntity;
-import uz.zazu.king.info.entity.ModuleEntity;
 import uz.zazu.king.info.enums.Module;
 import uz.zazu.king.info.exception.InfoNotFoundException;
 import uz.zazu.king.info.exception.ModuleNotFoundException;
 import uz.zazu.king.info.mapper.InfoMapper;
 import uz.zazu.king.info.repository.InfoRepository;
-import uz.zazu.king.info.repository.ModuleRepository;
 import uz.zazu.king.info.service.impl.InfoServiceImpl;
 
 import java.time.LocalDateTime;
@@ -34,9 +32,6 @@ public class InfoServiceImplTest {
 
     @Mock
     private InfoRepository infoRepository;
-
-    @Mock
-    private ModuleRepository moduleRepository;
 
     @Mock
     private InfoMapper infoMapper;
@@ -195,17 +190,15 @@ public class InfoServiceImplTest {
         when(infoRepository.findAllActiveByModule(Module.MANAGER.name())).thenReturn(entities);
         when(infoMapper.toInfoDtoList(entities)).thenReturn(infoList);
 
-        var dummyModuleEntity = new ModuleEntity();
-        dummyModuleEntity.setModuleName(Module.MANAGER);
-        when(moduleRepository.findAllByModuleName(Module.MANAGER.name()))
-                .thenReturn(Collections.singletonList(dummyModuleEntity));
-
+        var moduleName = Module.MANAGER.name();
+        var link = "https://youtube.com";
         var expectedModuleInfoDto = ModuleInfoDto.builder()
-                .moduleName(dummyModuleEntity.getModuleName().name())
+                .moduleName(moduleName)
+                .tableLink(link)
                 .infoList(infoList)
                 .build();
 
-        when(infoMapper.toModuleInfoDto(dummyModuleEntity, infoList)).thenReturn(expectedModuleInfoDto);
+        when(infoMapper.toModuleInfoDto(moduleName, link, infoList)).thenReturn(expectedModuleInfoDto);
 
         var result = infoService.getModule(Module.MANAGER);
 
@@ -214,9 +207,7 @@ public class InfoServiceImplTest {
 
     @Test
     public void testGetModule_moduleNotFound_exception() {
-        when(moduleRepository.findAllByModuleName(Module.BUSINESS_ASSISTANT.name())).thenReturn(Collections.emptyList());
-
-        assertThrows(ModuleNotFoundException.class, () -> infoService.getModule(Module.BUSINESS_ASSISTANT));
+        assertThrows(ModuleNotFoundException.class, () -> infoService.getModule(null));
     }
 
     @Test

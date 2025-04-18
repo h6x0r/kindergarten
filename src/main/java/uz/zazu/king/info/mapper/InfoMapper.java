@@ -9,7 +9,6 @@ import uz.zazu.king.info.dto.InfoLinkDto;
 import uz.zazu.king.info.dto.ModuleInfoDto;
 import uz.zazu.king.info.entity.InfoEntity;
 import uz.zazu.king.info.entity.InfoLinkEntity;
-import uz.zazu.king.info.entity.ModuleEntity;
 
 import java.util.List;
 
@@ -37,9 +36,9 @@ public interface InfoMapper {
 
     List<InfoLinkEntity> toInfoLinkEntityList(List<InfoLinkDto> dtos);
 
-    @Mapping(target = "moduleName", source = "entity.moduleName")
-    @Mapping(target = "tableLink", source = "entity.tableLink")
+    @Mapping(target = "moduleName", source = "moduleName")
+    @Mapping(target = "tableLink", source = "tableLink")
     @Mapping(target = "infoList", source = "infoList")
-    ModuleInfoDto toModuleInfoDto(ModuleEntity entity, List<InfoDto> infoList);
+    ModuleInfoDto toModuleInfoDto(String moduleName, String tableLink, List<InfoDto> infoList);
 
 }

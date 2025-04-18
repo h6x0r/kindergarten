@@ -26,17 +26,17 @@ public class InfoController {
 
     private final InfoService infoService;
 
-    @PostMapping("/create")
+    @PostMapping
     public InfoDto create(@RequestBody InfoDto infoDto) {
         return infoService.create(infoDto);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public InfoDto update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @RequestBody InfoDto infoDto) {
         return infoService.update(id, infoDto);
     }
 
-    @DeleteMapping("/remove/{id}")
+    @DeleteMapping("/{id}")
     public void remove(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         infoService.remove(id);
     }

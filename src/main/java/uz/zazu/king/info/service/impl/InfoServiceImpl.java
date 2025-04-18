@@ -10,19 +10,26 @@ import uz.zazu.king.info.exception.InfoNotFoundException;
 import uz.zazu.king.info.exception.ModuleNotFoundException;
 import uz.zazu.king.info.mapper.InfoMapper;
 import uz.zazu.king.info.repository.InfoRepository;
-import uz.zazu.king.info.repository.ModuleRepository;
 import uz.zazu.king.info.service.InfoService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
 public class InfoServiceImpl implements InfoService {
+    private static final Map<Module, String> moduleLinksMap = new HashMap<>() {{
+        put(Module.MAIN, "https://google.com");
+        put(Module.BASE, "https://amazon.com");
+        put(Module.EDUCATOR, "https://uber.com");
+        put(Module.MANAGER, "https://youtube.com");
+        put(Module.BUSINESS_ASSISTANT, "https://linkedin.com");
+    }};
     private final InfoRepository infoRepository;
-    private final ModuleRepository moduleRepository;
     private final InfoMapper infoMapper;
 
     @Override
@@ -48,14 +55,10 @@ public class InfoServiceImpl implements InfoService {
 
     @Override
     public ModuleInfoDto getModule(Module module) {
-        var moduleEntity = moduleRepository.findAllByModuleName(module.name())
-                .stream()
-                .filter(m -> m.getModuleName() == module)
-                .findFirst()
-                .orElseThrow(ModuleNotFoundException::new);
         var infoList = getByModule(module);
-
-        return infoMapper.toModuleInfoDto(moduleEntity, infoList);
+        var moduleName = module.name();
+        var moduleLink = moduleLinksMap.get(module);
+        return infoMapper.toModuleInfoDto(moduleName, moduleLink, infoList);
     }
 
 
