@@ -20,7 +20,7 @@ import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
 
 @RestController
 @RequestMapping("/api/info")
-//@PreAuthorize("hasRole('SUPER_ADMIN')")
+@PreAuthorize("hasRole('SUPER_ADMIN')")
 @RequiredArgsConstructor
 public class InfoController {
 
