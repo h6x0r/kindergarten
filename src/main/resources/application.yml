@@ -14,5 +14,4 @@ king:
 
 logging:
   level:
-    root: TRACE
-    org.zalando.logbook: TRACE
+    root: INFO
