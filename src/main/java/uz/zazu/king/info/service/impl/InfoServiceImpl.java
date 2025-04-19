@@ -41,15 +41,11 @@ public class InfoServiceImpl implements InfoService {
         if (entities.isEmpty()) {
             return new ArrayList<>();
         }
-        var index = new AtomicInteger(1);
-        var sorted = entities
+
+        return entities
                 .stream()
                 .sorted(Comparator.comparing(InfoEntity::getCreatedAt))
-                .toList();
-
-        return infoMapper.toInfoDtoList(sorted)
-                .stream()
-                .peek(i -> i.setIndex(index.getAndIncrement()))
+                .map(infoMapper::toInfoDto)
                 .toList();
     }
 

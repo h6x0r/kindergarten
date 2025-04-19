@@ -24,5 +24,4 @@ public class InfoDto {
     @NotBlank(message = "Модуль не должен быть пустым")
     private Module module;
     private List<InfoLinkDto> links;
-    private int index;
 }
