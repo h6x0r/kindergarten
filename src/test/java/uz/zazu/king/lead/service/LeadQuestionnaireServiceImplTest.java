@@ -14,6 +14,7 @@ import uz.zazu.king.questionnaire.repository.LeadQuestionnaireRepository;
 import uz.zazu.king.questionnaire.service.impl.LeadQuestionnaireServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,9 +61,10 @@ public class LeadQuestionnaireServiceImplTest {
     void testDelete_Success() {
         // Arrange
         var id = "validId";
-        var entity = new LeadQuestionnaireEntity();
+        var opt = Optional.of(new LeadQuestionnaireEntity());
+        var entity = opt.get();
         entity.setActive(true);
-        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(entity);
+        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(opt);
 
         // Act
         leadQuestionnaireService.delete(id);
@@ -76,7 +78,7 @@ public class LeadQuestionnaireServiceImplTest {
     @Test
     void testDelete_NotFound() {
         String id = "invalidId";
-        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(null);
+        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(Optional.empty());
         Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.delete(id));
         verify(leadQuestionnaireRepository).findActiveById(id);
     }
@@ -91,16 +93,16 @@ public class LeadQuestionnaireServiceImplTest {
     void testFindById_Success() {
         // Arrange
         var id = "validId";
-        var entity = LeadQuestionnaireEntity.builder()
+        var entity = Optional.of(LeadQuestionnaireEntity.builder()
                 .firstName("John")
                 .lastName("Doe")
-                .build();
+                .build());
         var expectedDto = LeadQuestionnaireDto.builder()
                 .firstName("John")
                 .lastName("Doe")
                 .build();
         when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(entity);
-        when(leadQuestionnaireMapper.toDto(entity)).thenReturn(expectedDto);
+        when(leadQuestionnaireMapper.toDto(entity.get())).thenReturn(expectedDto);
 
         // Act
         var actualDto = leadQuestionnaireService.findById(id);
@@ -108,14 +110,14 @@ public class LeadQuestionnaireServiceImplTest {
         // Assert
         assertEquals(expectedDto, actualDto);
         verify(leadQuestionnaireRepository).findActiveById(id);
-        verify(leadQuestionnaireMapper).toDto(entity);
+        verify(leadQuestionnaireMapper).toDto(entity.get());
     }
 
     @Test
     void testFindById_NotFound() {
         // Arrange
         var id = "invalidId";
-        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(null);
+        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(Optional.empty());
 
         // Act & Assert
         Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.findById(id));
@@ -171,10 +173,11 @@ public class LeadQuestionnaireServiceImplTest {
         // Arrange
         var id = "validId";
         var inputDto = LeadQuestionnaireDto.builder().build();
-        var entity = new LeadQuestionnaireEntity();
+        var opt = Optional.of(new LeadQuestionnaireEntity());
+        var entity = opt.get();
         var updatedEntity = new LeadQuestionnaireEntity();
         var expectedDto = LeadQuestionnaireDto.builder().build();
-        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(entity);
+        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(opt);
         doNothing().when(leadQuestionnaireMapper).updateEntityFromDto(inputDto, entity);
         when(leadQuestionnaireRepository.save(entity)).thenReturn(updatedEntity);
         when(leadQuestionnaireMapper.toDto(updatedEntity)).thenReturn(expectedDto);
@@ -195,7 +198,7 @@ public class LeadQuestionnaireServiceImplTest {
         // Arrange
         var id = "invalidId";
         var inputDto = LeadQuestionnaireDto.builder().build();
-        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(null);
+        when(leadQuestionnaireRepository.findActiveById(id)).thenReturn(Optional.empty());
 
         // Act & Assert
         Assertions.assertThrows(QuestionnaireNotFoundException.class, () -> leadQuestionnaireService.update(id, inputDto));

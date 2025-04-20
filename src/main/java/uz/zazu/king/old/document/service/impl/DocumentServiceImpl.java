@@ -28,10 +28,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public DocumentDto findById(String id) {
-        var result = documentRepository.findActiveById(id);
-        if (result == null) {
-            throw new DocumentNotFoundException(id);
-        }
+        var result = documentRepository.findActiveById(id)
+                .orElseThrow(() -> new DocumentNotFoundException(id));
+
         return documentMapper.toDto(result);
     }
 
@@ -45,10 +44,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public DocumentDto update(String id, DocumentDto documentDto) {
-        var existing = documentRepository.findActiveById(id);
-        if (existing == null) {
-            throw new DocumentNotFoundException(id);
-        }
+        var existing = documentRepository.findActiveById(id)
+                .orElseThrow(() -> new DocumentNotFoundException(id));
+
         documentMapper.updateEntityFromDto(documentDto, existing);
         var updatedEntity = documentRepository.save(existing);
         return documentMapper.toDto(updatedEntity);
@@ -56,10 +54,9 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void delete(String id) {
-        var existing = documentRepository.findActiveById(id);
-        if (existing == null) {
-            throw new DocumentNotFoundException(id);
-        }
+        var existing = documentRepository.findActiveById(id)
+                .orElseThrow(() -> new DocumentNotFoundException(id));
+
         existing.setActive(false);
         documentRepository.save(existing);
     }

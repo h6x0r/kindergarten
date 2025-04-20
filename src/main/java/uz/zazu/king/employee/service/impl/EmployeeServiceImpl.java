@@ -7,6 +7,7 @@ import uz.zazu.king.employee.dto.EmployeeDto;
 import uz.zazu.king.employee.mapper.EmployeeMapper;
 import uz.zazu.king.employee.repository.EmployeeRepository;
 import uz.zazu.king.employee.service.EmployeeService;
+import uz.zazu.king.info.exception.InfoNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto findById(String id) {
-        var result = employeeRepository.findActiveById(id);
-        if (result == null) {
-            throw new EmployeeNotFoundException(id);
-        }
+        var result = employeeRepository.findActiveById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+
         return employeeMapper.toDto(result);
     }
 
@@ -44,10 +44,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDto update(String id, EmployeeDto employeeDto) {
-        var existing = employeeRepository.findActiveById(id);
-        if (existing == null) {
-            throw new EmployeeNotFoundException(id);
-        }
+        var existing = employeeRepository.findActiveById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+
         employeeMapper.updateEntityFromDto(employeeDto, existing);
         existing = employeeRepository.save(existing);
         return employeeMapper.toDto(existing);
@@ -55,10 +54,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void remove(String id) {
-        var existing = employeeRepository.findActiveById(id);
-        if (existing == null) {
-            throw new EmployeeNotFoundException(id);
-        }
+        var existing = employeeRepository.findActiveById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+
         existing.setActive(false);
         employeeRepository.save(existing);
     }

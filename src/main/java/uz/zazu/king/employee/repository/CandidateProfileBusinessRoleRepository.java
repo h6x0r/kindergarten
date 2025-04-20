@@ -6,12 +6,13 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.employee.entity.CandidateProfileBusinessRoleEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CandidateProfileBusinessRoleRepository extends MongoRepository<CandidateProfileBusinessRoleEntity, String> {
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    CandidateProfileBusinessRoleEntity findByIdAndIsActiveTrue(String id);
+    Optional<CandidateProfileBusinessRoleEntity> findByIdAndIsActiveTrue(String id);
 
     @Query(value = "{ 'isActive': true }")
     List<CandidateProfileBusinessRoleEntity> findAllByIsActiveTrue();

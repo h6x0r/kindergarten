@@ -27,10 +27,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDto findById(String id) {
-        var result = inventoryRepository.findActiveById(id);
-        if (result == null) {
-            throw new InventoryNotFoundException(id);
-        }
+        var result = inventoryRepository.findActiveById(id)
+                .orElseThrow(() -> new InventoryNotFoundException(id));
+
         return inventoryMapper.toDto(result);
     }
 
@@ -44,10 +43,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public InventoryDto update(String id, InventoryDto inventoryDto) {
-        var existing = inventoryRepository.findActiveById(id);
-        if (existing == null) {
-            throw new InventoryNotFoundException(id);
-        }
+        var existing = inventoryRepository.findActiveById(id)
+                .orElseThrow(() -> new InventoryNotFoundException(id));
+
         inventoryMapper.updateEntityFromDto(inventoryDto, existing);
         existing = inventoryRepository.save(existing);
         return inventoryMapper.toDto(existing);
@@ -55,10 +53,9 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public void delete(String id) {
-        var existing = inventoryRepository.findActiveById(id);
-        if (existing == null) {
-            throw new InventoryNotFoundException(id);
-        }
+        var existing = inventoryRepository.findActiveById(id)
+                .orElseThrow(() -> new InventoryNotFoundException(id));
+
         existing.setActive(false);
         inventoryRepository.save(existing);
     }

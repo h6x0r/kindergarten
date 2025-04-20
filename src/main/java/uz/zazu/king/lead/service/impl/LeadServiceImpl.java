@@ -7,6 +7,7 @@ import uz.zazu.king.lead.dto.LeadDto;
 import uz.zazu.king.lead.mapper.LeadMapper;
 import uz.zazu.king.lead.repository.LeadRepository;
 import uz.zazu.king.lead.service.LeadService;
+import uz.zazu.king.old.document.commons.exception.DocumentNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +28,9 @@ public class LeadServiceImpl implements LeadService {
 
     @Override
     public LeadDto findById(String id) {
-        var result = leadRepository.findActiveById(id);
-        if (result == null) {
-            throw new LeadNotFoundException(id);
-        }
+        var result = leadRepository.findActiveById(id)
+                .orElseThrow(() -> new LeadNotFoundException(id));
+
         return leadMapper.toDto(result);
     }
 
@@ -44,10 +44,9 @@ public class LeadServiceImpl implements LeadService {
 
     @Override
     public LeadDto update(String id, LeadDto leadDto) {
-        var existing = leadRepository.findActiveById(id);
-        if (existing == null) {
-            throw new LeadNotFoundException(id);
-        }
+        var existing = leadRepository.findActiveById(id)
+                .orElseThrow(() -> new LeadNotFoundException(id));
+
         leadMapper.updateEntityFromDto(leadDto, existing);
         existing = leadRepository.save(existing);
         return leadMapper.toDto(existing);
@@ -55,10 +54,9 @@ public class LeadServiceImpl implements LeadService {
 
     @Override
     public void delete(String id) {
-        var existing = leadRepository.findActiveById(id);
-        if (existing == null) {
-            throw new LeadNotFoundException(id);
-        }
+        var existing = leadRepository.findActiveById(id)
+                .orElseThrow(() -> new LeadNotFoundException(id));
+
         existing.setActive(false);
         leadRepository.save(existing);
     }

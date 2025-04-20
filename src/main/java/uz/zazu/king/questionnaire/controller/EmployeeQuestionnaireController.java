@@ -8,7 +8,7 @@ import uz.zazu.king.questionnaire.service.EmployeeQuestionnaireService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employee-questionnaires")
+@RequestMapping("/api/employee/questionnaire")
 @RequiredArgsConstructor
 public class EmployeeQuestionnaireController {
 

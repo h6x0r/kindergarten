@@ -27,12 +27,9 @@ public class LeadQuestionnaireServiceImpl implements LeadQuestionnaireService {
 
     @Override
     public LeadQuestionnaireDto findById(String id) {
-        var result = leadQuestionnaireRepository.findActiveById(id);
-        if (result != null) {
-            return leadQuestionnaireMapper.toDto(result);
-        }
-
-        throw new QuestionnaireNotFoundException(id);
+        var result = leadQuestionnaireRepository.findActiveById(id)
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
+        return leadQuestionnaireMapper.toDto(result);
     }
 
     @Override
@@ -45,25 +42,20 @@ public class LeadQuestionnaireServiceImpl implements LeadQuestionnaireService {
 
     @Override
     public LeadQuestionnaireDto update(String id, LeadQuestionnaireDto leadQuestionnaireDto) {
-        var existing = leadQuestionnaireRepository.findActiveById(id);
-        if (existing != null) {
-            leadQuestionnaireMapper.updateEntityFromDto(leadQuestionnaireDto, existing);
-            existing = leadQuestionnaireRepository.save(existing);
-            return leadQuestionnaireMapper.toDto(existing);
-        }
+        var existing = leadQuestionnaireRepository.findActiveById(id)
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
 
-        throw new QuestionnaireNotFoundException(id);
+        leadQuestionnaireMapper.updateEntityFromDto(leadQuestionnaireDto, existing);
+        existing = leadQuestionnaireRepository.save(existing);
+        return leadQuestionnaireMapper.toDto(existing);
     }
 
     @Override
     public void delete(String id) {
-        var existing = leadQuestionnaireRepository.findActiveById(id);
-        if (existing != null) {
-            existing.setActive(false);
-            leadQuestionnaireRepository.save(existing);
-            return;
-        }
+        var existing = leadQuestionnaireRepository.findActiveById(id)
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
 
-        throw new QuestionnaireNotFoundException(id);
+        existing.setActive(false);
+        leadQuestionnaireRepository.save(existing);
     }
 }

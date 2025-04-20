@@ -39,7 +39,8 @@ public class AuthServiceImpl implements AuthService {
     public LoginResponse login(LoginRequest loginRequest) {
         verifyUser(loginRequest);
         var userName = loginRequest.getUsername();
-        var user = userRepository.findByUserNameAndIsActive(userName);
+        var user = userRepository.findByUserNameAndIsActive(userName)
+                .orElseThrow(IncorrectCredentialsException::new);
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new IncorrectCredentialsException();
         }
@@ -63,10 +64,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void verifyUser(LoginRequest loginRequest) {
-        var user = userRepository.findByUserNameAndIsActive(loginRequest.getUsername());
-        if (user == null || !user.isActive()) {
-            throw new IncorrectCredentialsException();
-        }
+        userRepository.findByUserNameAndIsActive(loginRequest.getUsername())
+                .orElseThrow(IncorrectCredentialsException::new);
     }
 
     private String generateToken(UserEntity user) {

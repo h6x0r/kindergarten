@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import uz.zazu.king.security.common.exception.UserNotFoundException;
 import uz.zazu.king.security.repository.UserRepository;
 
 import java.util.stream.Collectors;
@@ -19,11 +20,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByUserNameAndIsActive(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found!");
-        }
+        var user = userRepository.findByUserNameAndIsActive(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
 
         var authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))

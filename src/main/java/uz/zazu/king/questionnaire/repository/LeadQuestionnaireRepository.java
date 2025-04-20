@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.questionnaire.entity.LeadQuestionnaireEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LeadQuestionnaireRepository extends MongoRepository<LeadQuestionnaireEntity, String> {
@@ -14,5 +15,5 @@ public interface LeadQuestionnaireRepository extends MongoRepository<LeadQuestio
     List<LeadQuestionnaireEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    LeadQuestionnaireEntity findActiveById(String id);
+    Optional<LeadQuestionnaireEntity> findActiveById(String id);
 }

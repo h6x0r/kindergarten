@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.security.entity.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<UserEntity, String> {
@@ -14,10 +15,10 @@ public interface UserRepository extends MongoRepository<UserEntity, String> {
     List<UserEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    UserEntity findActiveById(String id);
+    Optional<UserEntity> findActiveById(String id);
 
     @Query("{ 'username': ?0, 'isActive': true }")
-    UserEntity findByUserNameAndIsActive(String userName);
+    Optional<UserEntity> findByUserNameAndIsActive(String userName);
 
 
 }

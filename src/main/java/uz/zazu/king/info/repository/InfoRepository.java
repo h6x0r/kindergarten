@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.info.entity.InfoEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InfoRepository extends MongoRepository<InfoEntity, String> {
@@ -16,6 +17,6 @@ public interface InfoRepository extends MongoRepository<InfoEntity, String> {
     List<InfoEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    InfoEntity findActiveById(String id);
+    Optional<InfoEntity> findActiveById(String id);
 
 }

@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto create(UserDto userDto) {
         var userName = userDto.getUsername();
-        if (userRepository.findByUserNameAndIsActive(userName) != null) {
+        if (userRepository.findByUserNameAndIsActive(userName).isPresent()) {
             throw new UserAlreadyExistException(userName);
         }
         var entity = userMapper.toEntity(userDto, passwordEncoder);
@@ -34,10 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findById(String id) {
-        var result = userRepository.findActiveById(id);
-        if (result == null) {
-            throw new UserNotFoundException(id);
-        }
+        var result = userRepository.findActiveById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
         return userMapper.toDto(result);
     }
 
@@ -52,14 +51,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(String id, UserDto userDto) {
         var userName = userDto.getUsername();
-        if (userRepository.findByUserNameAndIsActive(userName) != null) {
+        if (userRepository.findByUserNameAndIsActive(userName).isPresent()) {
             throw new UserAlreadyExistException(userName);
         }
 
-        var existing = userRepository.findActiveById(id);
-        if (existing == null) {
-            throw new UserNotFoundException(id);
-        }
+        var existing = userRepository.findActiveById(id).orElseThrow(() -> new UserNotFoundException(id));
         userMapper.updateEntityFromDto(userDto, existing);
         existing = userRepository.save(existing);
         return userMapper.toDto(existing);
@@ -67,10 +63,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void remove(String userName) {
-        var existing = userRepository.findByUserNameAndIsActive(userName);
-        if (existing == null) {
-            throw new UserNotFoundException(userName);
-        }
+        var existing = userRepository.findByUserNameAndIsActive(userName)
+                .orElseThrow(() -> new UserNotFoundException(userName));
+
         existing.setActive(false);
         userRepository.save(existing);
     }

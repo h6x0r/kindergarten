@@ -49,18 +49,18 @@ public class CandidateProfileServiceImpl implements CandidateProfileService {
     @Override
     public CandidateProfileDto findById(String id) {
         var business = businessRoleRepository.findByIdAndIsActiveTrue(id);
-        if (business != null) {
-            return candidateProfileMapper.toBusinessRoleDto(business);
+        if (business.isPresent()) {
+            return candidateProfileMapper.toBusinessRoleDto(business.get());
         }
 
         var educative = educativeRoleRepository.findByIdAndIsActiveTrue(id);
-        if (educative != null) {
-            return candidateProfileMapper.toEducativeRoleDto(educative);
+        if (educative.isPresent()) {
+            return candidateProfileMapper.toEducativeRoleDto(educative.get());
         }
 
         var nanny = nannyRoleRepository.findByIdAndIsActiveTrue(id);
-        if (nanny != null) {
-            return candidateProfileMapper.toNannyRoleDto(nanny);
+        if (nanny.isPresent()) {
+            return candidateProfileMapper.toNannyRoleDto(nanny.get());
         }
 
         throw new QuestionnaireNotFoundException(id);
@@ -130,21 +130,21 @@ public class CandidateProfileServiceImpl implements CandidateProfileService {
     @Override
     public CandidateProfileDto update(String id, CandidateProfileDto candidateProfileDto) {
         if (candidateProfileDto instanceof CandidateProfileBusinessDto dto) {
-            var existingEntity = businessRoleRepository.findByIdAndIsActiveTrue(id);
+            var existingEntity = businessRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
             if (existingEntity != null) {
                 candidateProfileMapper.updateBusinessRoleEntityFromDto(dto, existingEntity);
                 var updatedEntity = businessRoleRepository.save(existingEntity);
                 return candidateProfileMapper.toBusinessRoleDto(updatedEntity);
             }
         } else if (candidateProfileDto instanceof CandidateProfileEducatorDto dto) {
-            var existingEntity = educativeRoleRepository.findByIdAndIsActiveTrue(id);
+            var existingEntity = educativeRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
             if (existingEntity != null) {
                 candidateProfileMapper.updateEducativeRoleEntityFromDto(dto, existingEntity);
                 var updatedEntity = educativeRoleRepository.save(existingEntity);
                 return candidateProfileMapper.toEducativeRoleDto(updatedEntity);
             }
         } else if (candidateProfileDto instanceof CandidateProfileNannyDto dto) {
-            var existingEntity = nannyRoleRepository.findByIdAndIsActiveTrue(id);
+            var existingEntity = nannyRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
             if (existingEntity != null) {
                 candidateProfileMapper.updateNannyRoleEntityFromDto(dto, existingEntity);
                 var updatedEntity = nannyRoleRepository.save(existingEntity);
@@ -157,21 +157,21 @@ public class CandidateProfileServiceImpl implements CandidateProfileService {
 
     @Override
     public void remove(String id) {
-        var business = businessRoleRepository.findByIdAndIsActiveTrue(id);
+        var business = businessRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
         if (business != null) {
             business.setActive(false);
             businessRoleRepository.save(business);
             return;
         }
 
-        var educative = educativeRoleRepository.findByIdAndIsActiveTrue(id);
+        var educative = educativeRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
         if (educative != null) {
             educative.setActive(false);
             educativeRoleRepository.save(educative);
             return;
         }
 
-        var nanny = nannyRoleRepository.findByIdAndIsActiveTrue(id);
+        var nanny = nannyRoleRepository.findByIdAndIsActiveTrue(id).orElse(null);
         if (nanny != null) {
             nanny.setActive(false);
             nannyRoleRepository.save(nanny);

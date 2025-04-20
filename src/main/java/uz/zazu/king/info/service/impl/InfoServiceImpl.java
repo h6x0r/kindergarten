@@ -66,20 +66,16 @@ public class InfoServiceImpl implements InfoService {
 
     @Override
     public InfoDto getById(String id) {
-        var entity = infoRepository.findActiveById(id);
-        if (entity == null) {
-            throw new InfoNotFoundException(id);
-        }
+        var entity = infoRepository.findActiveById(id)
+                .orElseThrow(() -> new InfoNotFoundException(id));
 
         return infoMapper.toInfoDto(entity);
     }
 
     @Override
     public InfoDto update(String id, InfoDto infoDto) {
-        var entity = infoRepository.findActiveById(id);
-        if (entity == null) {
-            throw new InfoNotFoundException(id);
-        }
+        var entity = infoRepository.findActiveById(id)
+                .orElseThrow(() -> new InfoNotFoundException(id));
 
         infoMapper.updateEntityFromDto(infoDto, entity);
         var updatedEntity = infoRepository.save(entity);
@@ -88,10 +84,9 @@ public class InfoServiceImpl implements InfoService {
 
     @Override
     public void remove(String id) {
-        var entity = infoRepository.findActiveById(id);
-        if (entity == null) {
-            throw new InfoNotFoundException(id);
-        }
+        var entity = infoRepository.findActiveById(id)
+                .orElseThrow(() -> new InfoNotFoundException(id));
+
         entity.setActive(false);
         infoRepository.save(entity);
     }

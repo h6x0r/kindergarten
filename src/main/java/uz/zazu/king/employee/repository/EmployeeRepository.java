@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.employee.entity.EmployeeEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends MongoRepository<EmployeeEntity, String> {
@@ -14,5 +15,5 @@ public interface EmployeeRepository extends MongoRepository<EmployeeEntity, Stri
     List<EmployeeEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    EmployeeEntity findActiveById(String id);
+    Optional<EmployeeEntity> findActiveById(String id);
 }

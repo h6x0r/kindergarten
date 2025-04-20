@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.old.document.entity.DocumentEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends MongoRepository<DocumentEntity, String> {
@@ -14,6 +15,6 @@ public interface DocumentRepository extends MongoRepository<DocumentEntity, Stri
     List<DocumentEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    DocumentEntity findActiveById(String id);
+    Optional<DocumentEntity> findActiveById(String id);
 
 }

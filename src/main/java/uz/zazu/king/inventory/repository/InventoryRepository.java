@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import uz.zazu.king.inventory.entity.InventoryEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface InventoryRepository extends MongoRepository<InventoryEntity, String> {
@@ -14,5 +15,5 @@ public interface InventoryRepository extends MongoRepository<InventoryEntity, St
     List<InventoryEntity> findAllActive();
 
     @Query("{ '_id': ?0, 'isActive': true }")
-    InventoryEntity findActiveById(String id);
+    Optional<InventoryEntity> findActiveById(String id);
 }

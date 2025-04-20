@@ -20,6 +20,7 @@ import uz.zazu.king.employee.repository.CandidateProfileNannyRoleRepository;
 import uz.zazu.king.employee.service.impl.CandidateProfileServiceImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -112,10 +113,11 @@ public class CandidateProfileServiceImplTest {
     void findById_shouldReturnBusinessRoleSuccessfully() {
         // Arrange
         var id = "business123";
-        var businessRoleEntity = new CandidateProfileBusinessRoleEntity();
+        var opt = Optional.of(new CandidateProfileBusinessRoleEntity());
+        var businessRoleEntity = opt.get();
         var businessRoleDto = new CandidateProfileBusinessDto();
 
-        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(businessRoleEntity);
+        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(opt);
         when(candidateProfileMapper.toBusinessRoleDto(businessRoleEntity)).thenReturn(businessRoleDto);
 
         // Act
@@ -133,10 +135,11 @@ public class CandidateProfileServiceImplTest {
     void findById_shouldReturnEducativeRoleSuccessfully() {
         // Arrange
         var id = "educative456";
-        var educativeRoleEntity = new CandidateProfileEducatorRoleEntity();
+        var opt = Optional.of(new CandidateProfileEducatorRoleEntity());
+        var educativeRoleEntity = opt.get();
         var educativeRoleDto = new CandidateProfileEducatorDto();
 
-        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(educativeRoleEntity);
+        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(opt);
         when(candidateProfileMapper.toEducativeRoleDto(educativeRoleEntity)).thenReturn(educativeRoleDto);
 
         // Act
@@ -153,8 +156,8 @@ public class CandidateProfileServiceImplTest {
     void findById_shouldThrowExceptionWhenNotFound() {
         // Arrange
         var id = "unknownId";
-        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(null);
-        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(null);
+        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(Optional.empty());
+        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(Optional.empty());
 
         // Act & Assert
         var exception = assertThrows(QuestionnaireNotFoundException.class, () -> questionnaireService.findById(id));
@@ -329,11 +332,12 @@ public class CandidateProfileServiceImplTest {
     void findById_shouldReturnNannyRoleSuccessfully() {
         // Arrange
         var id = "nanny123";
-        var nannyEntity = new CandidateProfileNannyRoleEntity();
+        var opt = Optional.of(new CandidateProfileNannyRoleEntity());
+        var nannyEntity = opt.get();
         var nannyDto = new CandidateProfileNannyDto();
 
         // Act
-        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(nannyEntity);
+        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(opt);
         when(candidateProfileMapper.toNannyRoleDto(nannyEntity)).thenReturn(nannyDto);
 
         var result = questionnaireService.findById(id);
@@ -394,14 +398,16 @@ public class CandidateProfileServiceImplTest {
                 .handlingChildRefusalToEat("Объяснить и показать пример")
                 .build();
 
-        var existingEntity = CandidateProfileNannyRoleEntity.builder()
+        var opt = Optional.of(CandidateProfileNannyRoleEntity.builder()
                 .id(id)
                 .fullName("Старая Няня")
                 .isActive(true)
-                .build();
+                .build()
+        );
+        var existingEntity = opt.get();
 
         // Act
-        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(existingEntity);
+        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(opt);
         when(nannyRoleRepository.save(existingEntity)).thenReturn(existingEntity);
         when(candidateProfileMapper.toNannyRoleDto(existingEntity)).thenReturn(dto);
 
@@ -418,10 +424,10 @@ public class CandidateProfileServiceImplTest {
     void removeNanny_shouldDeactivateSuccessfully() {
         // Arrange
         var id = "nannyToRemove";
-        var entity = CandidateProfileNannyRoleEntity.builder().id(id).isActive(true).build();
-
+        var opt = Optional.of(CandidateProfileNannyRoleEntity.builder().id(id).isActive(true).build());
+        var entity = opt.get();
         // Act
-        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(entity);
+        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(opt);
 
         questionnaireService.remove(id);
 
@@ -436,9 +442,9 @@ public class CandidateProfileServiceImplTest {
         var id = "notFound";
 
         // Act
-        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(null);
-        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(null);
-        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(null);
+        when(nannyRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(Optional.empty());
+        when(businessRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(Optional.empty());
+        when(educativeRoleRepository.findByIdAndIsActiveTrue(id)).thenReturn(Optional.empty());
 
         // Assert
         var exception = assertThrows(QuestionnaireNotFoundException.class,
