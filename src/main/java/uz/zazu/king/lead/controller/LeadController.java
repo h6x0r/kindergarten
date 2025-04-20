@@ -2,7 +2,6 @@ package uz.zazu.king.lead.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +30,8 @@ public class LeadController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LeadDto> getById(@PathVariable String id) {
-        try {
-            return ResponseEntity.ok(leadService.findById(id));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public LeadDto getById(@PathVariable String id) {
+        return leadService.findById(id);
     }
 
     @GetMapping
@@ -45,21 +40,12 @@ public class LeadController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LeadDto> update(@PathVariable String id, @RequestBody LeadDto lead) {
-        try {
-            return ResponseEntity.ok(leadService.update(id, lead));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public LeadDto update(@PathVariable String id, @RequestBody LeadDto lead) {
+        return leadService.update(id, lead);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        try {
-            leadService.delete(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public void delete(@PathVariable String id) {
+        leadService.delete(id);
     }
 }

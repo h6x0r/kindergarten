@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -157,49 +156,39 @@ public class CandidateProfileController {
             )
     )
     @PostMapping
-    public ResponseEntity<CandidateProfileDto> create(@NotNull @RequestBody CandidateProfileDto dto) {
-        try {
-            var response = candidateProfileService.create(dto);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public CandidateProfileDto create(@NotNull @RequestBody CandidateProfileDto dto) {
+        return candidateProfileService.create(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateProfileDto> getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
-        try {
-            var response = candidateProfileService.findById(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+    public CandidateProfileDto getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
+        return candidateProfileService.findById(id);
     }
 
     @GetMapping
-    public ResponseEntity<List<CandidateProfileDto>> getAll() {
-        return ResponseEntity.ok(candidateProfileService.findAll());
+    public List<CandidateProfileDto> getAll() {
+        return candidateProfileService.findAll();
     }
 
     @GetMapping("/business_assistant")
-    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusinessByBusinessAssistant() {
-        return ResponseEntity.ok(candidateProfileService.findAllByBusinessAssistant());
+    public List<CandidateProfileBusinessDto> getAllBusinessByBusinessAssistant() {
+        return candidateProfileService.findAllByBusinessAssistant();
     }
 
     @GetMapping("/manager")
-    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusinessByManager() {
-        return ResponseEntity.ok(candidateProfileService.findAllBusinessByManager());
+    public List<CandidateProfileBusinessDto> getAllBusinessByManager() {
+        return candidateProfileService.findAllBusinessByManager();
     }
 
 
     @GetMapping("/educator")
-    public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {
-        return ResponseEntity.ok(candidateProfileService.findAllEducative());
+    public List<CandidateProfileEducatorDto> getAllEducative() {
+        return candidateProfileService.findAllEducative();
     }
 
     @GetMapping("/nanny")
-    public ResponseEntity<List<CandidateProfileNannyDto>> getAllNanny() {
-        return ResponseEntity.ok(candidateProfileService.findAllNanny());
+    public List<CandidateProfileNannyDto> getAllNanny() {
+        return candidateProfileService.findAllNanny();
     }
 
     @PutMapping("/{id}")

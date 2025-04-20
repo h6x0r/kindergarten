@@ -12,50 +12,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
-import uz.zazu.king.questionnaire.service.LeadQuestionnaireService;
+import uz.zazu.king.questionnaire.dto.LeadExcursionQuestionnaireDto;
+import uz.zazu.king.questionnaire.service.LeadExcursionQuestionnaireService;
 
 import java.util.List;
 
 import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
 
 
-/**
- * Обрабатывает операции, связанные с опросниками по анкете custdev.
- * Включает следующие опросники:
- * - ДОУ АлАнга
- * - ДОУ Мирабад
- * - Почемучка АлАнга
- */
 @RestController
-@RequestMapping("/api/leads/questionnaire")
+@RequestMapping("/api/leads/excursion/questionnaire")
 @RequiredArgsConstructor
-public class LeadQuestionnaireController {
+public class LeadExcursionQuestionnaireController {
 
-    private final LeadQuestionnaireService leadQuestionnaireService;
+    private final LeadExcursionQuestionnaireService leadQuestionnaireService;
 
     @PostMapping
-    public LeadQuestionnaireDto create(@Valid @RequestBody LeadQuestionnaireDto lead) {
+    public LeadExcursionQuestionnaireDto create(@Valid @RequestBody LeadExcursionQuestionnaireDto lead) {
         return leadQuestionnaireService.create(lead);
     }
 
     @GetMapping("/{id}")
-    public LeadQuestionnaireDto getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
+    public LeadExcursionQuestionnaireDto getById(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
         return leadQuestionnaireService.findById(id);
     }
 
     @GetMapping
-    public List<LeadQuestionnaireDto> getAll() {
+    public List<LeadExcursionQuestionnaireDto> getAll() {
         return leadQuestionnaireService.findAll();
     }
 
     @PutMapping("/{id}")
-    public LeadQuestionnaireDto update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @NotNull @RequestBody LeadQuestionnaireDto lead) {
+    public LeadExcursionQuestionnaireDto update(
+            @NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id,
+            @NotNull @RequestBody LeadExcursionQuestionnaireDto lead) {
         return leadQuestionnaireService.update(id, lead);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id) {
-        leadQuestionnaireService.delete(id);
+        leadQuestionnaireService.remove(id);
     }
 }
