@@ -23,6 +23,12 @@ public class LeadQuestionnaireEntity {
     @Id
     private String id;
 
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+    private boolean isActive;
+
     private long orgId;
     private Branch branch;
     private String firstName;
@@ -49,9 +55,4 @@ public class LeadQuestionnaireEntity {
     private String recommendationImprovements;
     private String reasonForChoosing;
     private String uzbekBloggers;
-    @CreatedDate
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-    private boolean isActive;
 }

@@ -2,7 +2,7 @@ package uz.zazu.king.questionnaire.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.zazu.king.questionnaire.common.exception.LeadExcursionQuestionnaireNotFoundException;
+import uz.zazu.king.common.exception.QuestionnaireNotFoundException;
 import uz.zazu.king.questionnaire.dto.LeadExcursionQuestionnaireDto;
 import uz.zazu.king.questionnaire.mapper.LeadExcursionQuestionnaireMapper;
 import uz.zazu.king.questionnaire.repository.LeadExcursionQuestionnaireRepository;
@@ -29,7 +29,7 @@ public class LeadExcursionQuestionnaireServiceImpl implements LeadExcursionQuest
     @Override
     public LeadExcursionQuestionnaireDto findById(String id) {
         var entity = repository.findActiveById(id)
-                .orElseThrow(() -> new LeadExcursionQuestionnaireNotFoundException(id));
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
         return mapper.toDto(entity);
     }
 
@@ -43,7 +43,7 @@ public class LeadExcursionQuestionnaireServiceImpl implements LeadExcursionQuest
     @Override
     public LeadExcursionQuestionnaireDto update(String id, LeadExcursionQuestionnaireDto dto) {
         var existing = repository.findActiveById(id)
-                .orElseThrow(() -> new LeadExcursionQuestionnaireNotFoundException(id));
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
         mapper.updateEntityFromDto(dto, existing);
 
         var saved = repository.save(existing);
@@ -53,7 +53,7 @@ public class LeadExcursionQuestionnaireServiceImpl implements LeadExcursionQuest
     @Override
     public void remove(String id) {
         var existing = repository.findActiveById(id)
-                .orElseThrow(() -> new LeadExcursionQuestionnaireNotFoundException(id));
+                .orElseThrow(() -> new QuestionnaireNotFoundException(id));
         existing.setActive(false);
         repository.save(existing);
     }

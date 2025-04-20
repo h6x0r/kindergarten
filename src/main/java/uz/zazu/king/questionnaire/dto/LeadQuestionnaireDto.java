@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.zazu.king.questionnaire.common.enums.Branch;
 
 import java.time.LocalDateTime;
 
@@ -45,6 +46,7 @@ public class LeadQuestionnaireDto {
     private String recommendationImprovements;
     private String reasonForChoosing;
     private String uzbekBloggers;
+    private Branch branch;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
