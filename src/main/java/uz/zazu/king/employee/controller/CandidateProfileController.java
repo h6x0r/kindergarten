@@ -56,11 +56,11 @@ public class CandidateProfileController {
                             ),
                             examples = {
                                     @ExampleObject(
-                                            name = "business",
-                                            summary = "Кандидат типа 'business' (type = \"business\")",
+                                            name = "business assistant",
+                                            summary = "Кандидат типа 'business' (type = \"business assistant\")",
                                             value = """
                                                     {
-                                                      "type": "business",
+                                                      "type": "business assistant",
                                                       "fullName": "Иванов Иван",
                                                       "candidateEntryDate": "2025-01-15T10:00:00",
                                                       "age": 30,
@@ -79,7 +79,36 @@ public class CandidateProfileController {
                                                       "handlingCriticism": "Спокойно воспринимаю...",
                                                       "willingnessToLearnAndDevelop": "Постоянно прохожу курсы...",
                                                       "createdAt": "2025-01-15T10:00:00",
-                                                      "updatedAt": "2025-02-01T09:00:00"
+                                                      "updatedAt": "2025-02-01T09:00:00",
+                                                      "module": "BUSINESS_ASSISTANT"
+                                                    }
+                                                    """),
+                                    @ExampleObject(
+                                            name = "manager",
+                                            summary = "Кандидат типа 'business' (type = \"manager\")",
+                                            value = """
+                                                    {
+                                                      "type": "manager",
+                                                      "fullName": "Иванов Иван",
+                                                      "candidateEntryDate": "2025-01-15T10:00:00",
+                                                      "age": 30,
+                                                      "contacts": "+7 (999) 123-45-67",
+                                                      "candidateStatus": "NEW",
+                                                      "resumeLink": "https://example.com/resume/ivanov",
+                                                      "previousCompanyName": "ООО Пример",
+                                                      "previousPositionName": "Менеджер",
+                                                      "responsibilities": "Ведение переговоров...",
+                                                      "workingRelationsWithColleagues": "Всегда помогал команде...",
+                                                      "multitaskingAndProjectManagement": "Успешно вёл несколько проектов",
+                                                      "responsibilityScore": 8,
+                                                      "examplesOfLeadership": "Организовывал собственный отдел...",
+                                                      "pastSalary": "60 000 руб.",
+                                                      "motivationFactors": "Профессиональный рост...",
+                                                      "handlingCriticism": "Спокойно воспринимаю...",
+                                                      "willingnessToLearnAndDevelop": "Постоянно прохожу курсы...",
+                                                      "createdAt": "2025-01-15T10:00:00",
+                                                      "updatedAt": "2025-02-01T09:00:00",
+                                                      "module": "MANAGER"
                                                     }
                                                     """),
                                     @ExampleObject(
@@ -92,7 +121,8 @@ public class CandidateProfileController {
                                                       "candidateEntryDate": "2025-03-10T09:00:00",
                                                       "age": 28,
                                                       "contacts": "+7 (999) 333-22-11",
-                                                      "candidateStatus": "IN_PROGRESS"
+                                                      "candidateStatus": "IN_PROGRESS",
+                                                      "module": "EDUCATOR"
                                                     }
                                                     """
                                     ),
@@ -117,7 +147,8 @@ public class CandidateProfileController {
                                                       "suitabilityRating": 9,
                                                       "finalDecisionAfterInterview": "Кандидат показал...",
                                                       "createdAt": "2025-05-10T10:00:00",
-                                                      "updatedAt": "2025-05-10T10:00:00"
+                                                      "updatedAt": "2025-05-10T10:00:00",
+                                                      "module": "NANNY"
                                                     }
                                                     """
                                     )
@@ -150,10 +181,16 @@ public class CandidateProfileController {
         return ResponseEntity.ok(candidateProfileService.findAll());
     }
 
-    @GetMapping("/business")
-    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusiness() {
-        return ResponseEntity.ok(candidateProfileService.findAllBusiness());
+    @GetMapping("/business_assistant")
+    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusinessByBusinessAssistant() {
+        return ResponseEntity.ok(candidateProfileService.findAllByBusinessAssistant());
     }
+
+    @GetMapping("/manager")
+    public ResponseEntity<List<CandidateProfileBusinessDto>> getAllBusinessByManager() {
+        return ResponseEntity.ok(candidateProfileService.findAllBusinessByManager());
+    }
+
 
     @GetMapping("/educator")
     public ResponseEntity<List<CandidateProfileEducatorDto>> getAllEducative() {

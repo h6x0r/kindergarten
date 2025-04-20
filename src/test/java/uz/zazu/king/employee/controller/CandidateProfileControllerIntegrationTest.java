@@ -244,21 +244,42 @@ public class CandidateProfileControllerIntegrationTest {
 
     @Nested
     @WithMockUser(roles = "SUPER_ADMIN")
-    @DisplayName("Метод getAllBusiness()")
-    class GetAllBusinessMethodTests {
+    @DisplayName("Метод getAllBusinessByBusinessAssistant()")
+    class GetAllBusinessByBusinessAssistantMethodTests {
 
         @Test
-        @DisplayName("Позитивный сценарий: возвращаем список бизнес-опросников")
-        void getAllBusinessPositive() throws Exception {
-            mockMvc.perform(get(BASE_URL + "/business"))
+        @DisplayName("Позитивный сценарий: список бизнес-ассистентов возвращается")
+        void getAllBusinessByBusinessAssistantPositive() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/business_assistant"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
         }
 
         @Test
         @DisplayName("Негативный сценарий: некорректный путь")
-        void getAllBusinessNegative_BadRequest() throws Exception {
-            mockMvc.perform(get(BASE_URL + "/business123"))
+        void getAllBusinessByBusinessAssistantNegative_BadRequest() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/business_assistant123"))
+                    .andExpect(status().is4xxClientError());
+        }
+    }
+
+    @Nested
+    @WithMockUser(roles = "SUPER_ADMIN")
+    @DisplayName("Метод getAllBusinessByManager()")
+    class GetAllBusinessByManagerMethodTests {
+
+        @Test
+        @DisplayName("Позитивный сценарий: список бизнес-опросников менеджера возвращается")
+        void getAllBusinessByManagerPositive() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/manager"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$").isArray());
+        }
+
+        @Test
+        @DisplayName("Негативный сценарий: некорректный путь")
+        void getAllBusinessByManagerNegative_BadRequest() throws Exception {
+            mockMvc.perform(get(BASE_URL + "/manager123"))
                     .andExpect(status().is4xxClientError());
         }
     }

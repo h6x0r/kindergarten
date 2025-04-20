@@ -5,5 +5,6 @@ public enum Module {
     BASE,
     MANAGER,
     BUSINESS_ASSISTANT,
-    EDUCATOR
+    EDUCATOR,
+    NANNY
 }

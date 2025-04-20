@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uz.zazu.king.employee.common.enums.Position;
+import uz.zazu.king.info.enums.Module;
 
 import java.time.LocalDateTime;
 
@@ -98,4 +99,5 @@ public class CandidateProfileBusinessRoleEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
     private boolean isActive;
+    private Module module;
 }

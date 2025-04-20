@@ -12,6 +12,7 @@ import uz.zazu.king.employee.repository.CandidateProfileBusinessRoleRepository;
 import uz.zazu.king.employee.repository.CandidateProfileEducatorRoleRepository;
 import uz.zazu.king.employee.repository.CandidateProfileNannyRoleRepository;
 import uz.zazu.king.employee.service.CandidateProfileService;
+import uz.zazu.king.info.enums.Module;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,24 @@ public class CandidateProfileServiceImpl implements CandidateProfileService {
     public List<CandidateProfileBusinessDto> findAllBusiness() {
         var businessList = businessRoleRepository.findAllByIsActiveTrue();
         return businessList.stream()
+                .map(candidateProfileMapper::toBusinessRoleDto)
+                .toList();
+    }
+
+    @Override
+    public List<CandidateProfileBusinessDto> findAllByBusinessAssistant() {
+        var businessList = businessRoleRepository.findAllByIsActiveTrue();
+        return businessList.stream()
+                .filter(a -> a.getModule() == Module.BUSINESS_ASSISTANT)
+                .map(candidateProfileMapper::toBusinessRoleDto)
+                .toList();
+    }
+
+    @Override
+    public List<CandidateProfileBusinessDto> findAllBusinessByManager() {
+        var businessList = businessRoleRepository.findAllByIsActiveTrue();
+        return businessList.stream()
+                .filter(a -> a.getModule() == Module.MANAGER)
                 .map(candidateProfileMapper::toBusinessRoleDto)
                 .toList();
     }

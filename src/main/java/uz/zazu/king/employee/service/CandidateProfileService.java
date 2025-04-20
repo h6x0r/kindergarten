@@ -16,6 +16,10 @@ public interface CandidateProfileService {
 
     List<CandidateProfileBusinessDto> findAllBusiness();
 
+    List<CandidateProfileBusinessDto> findAllBusinessByManager();
+
+    List<CandidateProfileBusinessDto> findAllByBusinessAssistant();
+
     List<CandidateProfileEducatorDto> findAllEducative();
 
     List<CandidateProfileNannyDto> findAllNanny();

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import uz.zazu.king.employee.common.enums.CandidateState;
+import uz.zazu.king.info.enums.Module;
 
 import java.time.LocalDateTime;
 
@@ -40,4 +41,5 @@ public class CandidateProfileDto {
     private String interviewComments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Module module;
 }
