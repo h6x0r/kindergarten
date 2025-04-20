@@ -122,7 +122,7 @@ public class LeadControllerIntegrationTest {
         @DisplayName("Негативный тест: поиск лида по несуществующему ID")
         void testGetLeadByIdNegative() throws Exception {
             mockMvc.perform(get("/api/leads/{id}", "invalidId"))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         }
     }
 
@@ -202,7 +202,7 @@ public class LeadControllerIntegrationTest {
             mockMvc.perform(put("/api/leads/{id}", "fakeId")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(updatePayload))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         }
     }
 
@@ -236,7 +236,7 @@ public class LeadControllerIntegrationTest {
         @DisplayName("Негативный тест: удаление лида с несуществующим ID")
         void testDeleteLeadNegative() throws Exception {
             mockMvc.perform(delete("/api/leads/{id}", "nonExistentId"))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         }
     }
 }

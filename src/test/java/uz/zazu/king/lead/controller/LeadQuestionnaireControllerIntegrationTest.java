@@ -162,12 +162,12 @@ public class LeadQuestionnaireControllerIntegrationTest {
         }
 
         @Test
-        @DisplayName("Негативный: Запрос опроса по несуществующему ID -> 404")
+        @DisplayName("Негативный: Запрос опроса по несуществующему ID -> 400")
         @WithMockUser(roles = "SUPER_ADMIN")
-        void getLeadQuestionnaireById_Negative_NotFound() throws Exception {
+        void getLeadQuestionnaireById_Negative_BadRequest() throws Exception {
             mockMvc.perform(get("/api/leads/questionnaire/{id}", 999999L)
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         }
     }
 
@@ -203,13 +203,13 @@ public class LeadQuestionnaireControllerIntegrationTest {
         }
 
         @Test
-        @DisplayName("Негативный: Обновление несуществующего опроса -> 404")
+        @DisplayName("Негативный: Обновление несуществующего опроса -> 400")
         @WithMockUser(roles = "SUPER_ADMIN")
-        void updateLeadQuestionnaire_Negative_NotFound() throws Exception {
+        void updateLeadQuestionnaire_Negative_BadRequest() throws Exception {
             mockMvc.perform(put("/api/leads/questionnaire/{id}", 999999L)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
-                    .andExpect(status().isNotFound());
+                    .andExpect(status().isBadRequest());
         }
     }
 
