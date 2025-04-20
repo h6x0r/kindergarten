@@ -21,7 +21,7 @@ import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
 
 
 @RestController
-@RequestMapping("/api/leads/excursion/questionnaire")
+@RequestMapping("/api/questionnaire/leads/excursion")
 @RequiredArgsConstructor
 public class LeadExcursionQuestionnaireController {
 

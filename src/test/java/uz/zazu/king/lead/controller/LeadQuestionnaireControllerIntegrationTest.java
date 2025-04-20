@@ -77,7 +77,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Позитивный: Создание нового опроса")
         @WithMockUser(roles = "SUPER_ADMIN")
         void createLeadQuestionnaire_Positive() throws Exception {
-            mockMvc.perform(post("/api/leads/questionnaire")
+            mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isOk())
@@ -88,7 +88,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Негативный: Создание нового опроса без авторизации -> ожидаем 403")
         void createLeadQuestionnaire_Negative_Unauthorized() throws Exception {
-            mockMvc.perform(post("/api/leads/questionnaire")
+            mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isForbidden());
@@ -103,7 +103,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
                     LeadQuestionnaireDto.class
             );
 
-            mockMvc.perform(post("/api/leads/questionnaire")
+            mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(invalidDto)))
                     .andExpect(status().isBadRequest());
@@ -118,7 +118,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Позитивный: Получение всех опросов")
         @WithMockUser(roles = "SUPER_ADMIN")
         void getAllLeadQuestionnaires_Positive() throws Exception {
-            mockMvc.perform(get("/api/leads/questionnaire")
+            mockMvc.perform(get("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray());
@@ -127,7 +127,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @Test
         @DisplayName("Негативный: Попытка получить все опросы без авторизации -> 403")
         void getAllLeadQuestionnaires_Negative_Unauthorized() throws Exception {
-            mockMvc.perform(get("/api/leads/questionnaire")
+            mockMvc.perform(get("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isForbidden());
         }
@@ -141,7 +141,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Позитивный: Получение опроса по ID")
         @WithMockUser(roles = "SUPER_ADMIN")
         void getLeadQuestionnaireById_Positive() throws Exception {
-            var createdResponse = mockMvc.perform(post("/api/leads/questionnaire")
+            var createdResponse = mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isOk())
@@ -151,13 +151,13 @@ public class LeadQuestionnaireControllerIntegrationTest {
             var createdDto = objectMapper.readValue(createdJson, LeadQuestionnaireDto.class);
             var id = createdDto.getId();
 
-            mockMvc.perform(get("/api/leads/questionnaire/{id}", id)
+            mockMvc.perform(get("/api/questionnaire/leads/{id}", id)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(id));
 
             // Чистим за собой
-            mockMvc.perform(delete("/api/leads/questionnaire/{id}", id))
+            mockMvc.perform(delete("/api/questionnaire/leads/{id}", id))
                     .andExpect(status().isOk());
         }
 
@@ -165,7 +165,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Негативный: Запрос опроса по несуществующему ID -> 400")
         @WithMockUser(roles = "SUPER_ADMIN")
         void getLeadQuestionnaireById_Negative_BadRequest() throws Exception {
-            mockMvc.perform(get("/api/leads/questionnaire/{id}", 999999L)
+            mockMvc.perform(get("/api/questionnaire/leads/{id}", 999999L)
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
@@ -179,7 +179,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Позитивный: Обновление опроса")
         @WithMockUser(roles = "SUPER_ADMIN")
         void updateLeadQuestionnaire_Positive() throws Exception {
-            var savedEntity = mockMvc.perform(post("/api/leads/questionnaire")
+            var savedEntity = mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isOk())
@@ -191,14 +191,14 @@ public class LeadQuestionnaireControllerIntegrationTest {
 
             testDto.setFirstName("Jane");
 
-            mockMvc.perform(put("/api/leads/questionnaire/{id}", savedId)
+            mockMvc.perform(put("/api/questionnaire/leads/{id}", savedId)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.firstName").value("Jane"));
 
             // Чистим за собой
-            mockMvc.perform(delete("/api/leads/questionnaire/{id}", savedId))
+            mockMvc.perform(delete("/api/questionnaire/leads/{id}", savedId))
                     .andExpect(status().isOk());
         }
 
@@ -206,7 +206,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Негативный: Обновление несуществующего опроса -> 400")
         @WithMockUser(roles = "SUPER_ADMIN")
         void updateLeadQuestionnaire_Negative_BadRequest() throws Exception {
-            mockMvc.perform(put("/api/leads/questionnaire/{id}", 999999L)
+            mockMvc.perform(put("/api/questionnaire/leads/{id}", 999999L)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isBadRequest());
@@ -221,7 +221,7 @@ public class LeadQuestionnaireControllerIntegrationTest {
         @DisplayName("Позитивный: Удаление опроса")
         @WithMockUser(roles = "SUPER_ADMIN")
         void deleteLeadQuestionnaire_Positive() throws Exception {
-            var createdResponse = mockMvc.perform(post("/api/leads/questionnaire")
+            var createdResponse = mockMvc.perform(post("/api/questionnaire/leads")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(testDto)))
                     .andExpect(status().isOk())
@@ -231,14 +231,14 @@ public class LeadQuestionnaireControllerIntegrationTest {
             var createdDto = objectMapper.readValue(createdJson, LeadQuestionnaireDto.class);
             var id = createdDto.getId();
 
-            mockMvc.perform(delete("/api/leads/questionnaire/{id}", id))
+            mockMvc.perform(delete("/api/questionnaire/leads/{id}", id))
                     .andExpect(status().isOk());
         }
 
         @Test
         @DisplayName("Негативный: Удаление опроса без авторизации -> 403")
         void deleteLeadQuestionnaire_Negative_Unauthorized() throws Exception {
-            mockMvc.perform(delete("/api/leads/questionnaire/{id}", 1L))
+            mockMvc.perform(delete("/api/questionnaire/leads/{id}", 1L))
                     .andExpect(status().isForbidden());
         }
     }

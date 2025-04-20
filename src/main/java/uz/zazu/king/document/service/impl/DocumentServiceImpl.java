@@ -1,12 +1,12 @@
-package uz.zazu.king.old.document.service.impl;
+package uz.zazu.king.document.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.zazu.king.old.document.commons.exception.DocumentNotFoundException;
-import uz.zazu.king.old.document.dto.DocumentDto;
-import uz.zazu.king.old.document.mapper.DocumentMapper;
-import uz.zazu.king.old.document.repository.DocumentRepository;
-import uz.zazu.king.old.document.service.DocumentService;
+import uz.zazu.king.document.commons.exception.DocumentNotFoundException;
+import uz.zazu.king.document.dto.DocumentDto;
+import uz.zazu.king.document.mapper.DocumentMapper;
+import uz.zazu.king.document.repository.DocumentRepository;
+import uz.zazu.king.document.service.DocumentService;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/leads")
-@PreAuthorize("hasAnyRole('SUPER_ADMIN')")
 public class LeadController {
 
     private final LeadService leadService;

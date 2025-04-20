@@ -7,7 +7,6 @@ import uz.zazu.king.lead.dto.LeadDto;
 import uz.zazu.king.lead.mapper.LeadMapper;
 import uz.zazu.king.lead.repository.LeadRepository;
 import uz.zazu.king.lead.service.LeadService;
-import uz.zazu.king.old.document.commons.exception.DocumentNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;

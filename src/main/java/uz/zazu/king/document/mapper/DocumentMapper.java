@@ -1,11 +1,11 @@
-package uz.zazu.king.old.document.mapper;
+package uz.zazu.king.document.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-import uz.zazu.king.old.document.dto.DocumentDto;
-import uz.zazu.king.old.document.entity.DocumentEntity;
+import uz.zazu.king.document.dto.DocumentDto;
+import uz.zazu.king.document.entity.DocumentEntity;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 

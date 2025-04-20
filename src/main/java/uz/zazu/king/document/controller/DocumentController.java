@@ -1,4 +1,4 @@
-package uz.zazu.king.old.document.controller;
+package uz.zazu.king.document.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uz.zazu.king.old.document.dto.DocumentDto;
-import uz.zazu.king.old.document.service.DocumentService;
+import uz.zazu.king.document.dto.DocumentDto;
+import uz.zazu.king.document.service.DocumentService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/documents")
-@PreAuthorize("hasRole('ADMIN')")
 public class DocumentController {
 
     private final DocumentService documentService;

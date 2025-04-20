@@ -1,11 +1,13 @@
-package uz.zazu.king.old.document.dto;
+package uz.zazu.king.document.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.zazu.king.old.document.commons.enums.DocType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import uz.zazu.king.document.commons.enums.DocType;
 
 import java.time.LocalDateTime;
 
@@ -14,12 +16,16 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentDto {
+@Document(collection = "documents")
+public class DocumentEntity {
+    @Id
     private String id;
+
     private long orgId;
     private DocType docType;
     private String title;
     private String contentPath;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isActive;
 }

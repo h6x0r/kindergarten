@@ -35,7 +35,6 @@ import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/candidates")
-@PreAuthorize("hasRole('SUPER_ADMIN')")
 public class CandidateProfileController {
 
     private final CandidateProfileService candidateProfileService;
@@ -192,7 +191,6 @@ public class CandidateProfileController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
     public CandidateProfileDto update(@NotBlank(message = ID_MUST_NOT_BE_NULL_MSG) @PathVariable String id, @Valid @RequestBody CandidateProfileDto dto) {
         return candidateProfileService.update(id, dto);
     }

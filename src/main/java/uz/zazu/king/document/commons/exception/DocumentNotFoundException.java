@@ -1,4 +1,4 @@
-package uz.zazu.king.old.document.commons.exception;
+package uz.zazu.king.document.commons.exception;
 
 public class DocumentNotFoundException extends RuntimeException {
 

@@ -7,7 +7,7 @@ import uz.zazu.king.questionnaire.service.MarketingQuestionnaireService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/marketing/questionnaire")
+@RequestMapping("/api/questionnaire/marketing")
 public class MarketingQuestionnaireController {
 
     private final MarketingQuestionnaireService service;

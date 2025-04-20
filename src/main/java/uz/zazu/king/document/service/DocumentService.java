@@ -1,6 +1,6 @@
-package uz.zazu.king.old.document.service;
+package uz.zazu.king.document.service;
 
-import uz.zazu.king.old.document.dto.DocumentDto;
+import uz.zazu.king.document.dto.DocumentDto;
 
 import java.util.List;
 

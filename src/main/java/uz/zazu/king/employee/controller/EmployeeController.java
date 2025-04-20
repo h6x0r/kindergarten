@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/employees")
-@PreAuthorize("hasRole('SUPER_ADMIN')")
 public class EmployeeController {
 
     private final EmployeeService employeeService;

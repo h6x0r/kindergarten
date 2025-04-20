@@ -28,7 +28,7 @@ import static uz.zazu.king.common.Constant.ID_MUST_NOT_BE_NULL_MSG;
  * - Почемучка АлАнга
  */
 @RestController
-@RequestMapping("/api/leads/questionnaire")
+@RequestMapping("/api/questionnaire/leads")
 @RequiredArgsConstructor
 public class LeadQuestionnaireController {
 

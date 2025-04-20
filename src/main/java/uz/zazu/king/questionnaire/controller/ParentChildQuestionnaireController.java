@@ -9,7 +9,7 @@ import uz.zazu.king.questionnaire.service.ParentChildQuestionnaireService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/parent-child/questionnaire")
+@RequestMapping("/api/questionnaire/parent-child")
 @RequiredArgsConstructor
 public class ParentChildQuestionnaireController {
 

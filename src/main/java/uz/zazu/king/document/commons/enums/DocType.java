@@ -1,4 +1,4 @@
-package uz.zazu.king.old.document.commons.enums;
+package uz.zazu.king.document.commons.enums;
 
 public enum DocType {
     INCOMING,

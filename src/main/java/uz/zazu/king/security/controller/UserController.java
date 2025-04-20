@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@PreAuthorize("hasRole('SUPER_ADMIN')")
 @RequiredArgsConstructor
 public class UserController {
 
