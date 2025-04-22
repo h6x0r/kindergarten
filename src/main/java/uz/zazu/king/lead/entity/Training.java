@@ -1,26 +1,23 @@
-package uz.zazu.king.document.entity;
+package uz.zazu.king.lead.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uz.zazu.king.document.commons.enums.DocType;
-import uz.zazu.king.common.enums.Branch;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "documents")
-public class DocumentEntity {
+@Builder
+@Document(collection = "trainings")
+public class Training {
+
     @Id
     private String id;
 
@@ -28,11 +25,13 @@ public class DocumentEntity {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
-    private boolean isActive;
+    private Boolean isActive;
 
-    private long orgId;
-    private Branch branch;
-    private DocType docType;
-    private String title;
-    private String googleDocUrl;
+    private String originAndDate;
+    private String parentName;
+    private String phoneNumber;
+    private String childName;
+    private Integer age;
+    private String status;
+    private String comment;
 }

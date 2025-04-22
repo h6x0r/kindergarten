@@ -9,9 +9,7 @@ import uz.zazu.king.questionnaire.mapper.ParentChildQuestionnaireMapper;
 import uz.zazu.king.questionnaire.repository.ParentChildQuestionnaireRepository;
 import uz.zazu.king.questionnaire.service.ParentChildQuestionnaireService;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

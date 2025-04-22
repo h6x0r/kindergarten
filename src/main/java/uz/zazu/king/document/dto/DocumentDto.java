@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.zazu.king.common.enums.Branch;
 import uz.zazu.king.document.commons.enums.DocType;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 public class DocumentDto {
     private String id;
     private long orgId;
+    private Branch branch;
     private DocType docType;
     private String title;
     private String contentPath;

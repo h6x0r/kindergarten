@@ -7,7 +7,6 @@ import uz.zazu.king.employee.dto.EmployeeDto;
 import uz.zazu.king.employee.mapper.EmployeeMapper;
 import uz.zazu.king.employee.repository.EmployeeRepository;
 import uz.zazu.king.employee.service.EmployeeService;
-import uz.zazu.king.info.exception.InfoNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;

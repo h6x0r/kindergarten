@@ -9,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
-import uz.zazu.king.questionnaire.common.enums.Branch;
+import uz.zazu.king.common.enums.Branch;
 
 import java.time.LocalDateTime;
 
