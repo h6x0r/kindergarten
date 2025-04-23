@@ -77,7 +77,7 @@ public class InfoServiceImpl implements InfoService {
         var entity = infoRepository.findActiveById(id)
                 .orElseThrow(() -> new InfoNotFoundException(id));
 
-        infoMapper.updateEntityFromDto(infoDto, entity);
+        infoMapper.updateEntityFromDto(infoDto, entity, id);
         var updatedEntity = infoRepository.save(entity);
         return infoMapper.toInfoDto(updatedEntity);
     }

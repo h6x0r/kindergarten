@@ -178,7 +178,6 @@ public class CandidateProfileController {
         return candidateProfileService.findAllBusinessByManager();
     }
 
-
     @GetMapping("/educator")
     public List<CandidateProfileEducatorDto> getAllEducative() {
         return candidateProfileService.findAllEducative();

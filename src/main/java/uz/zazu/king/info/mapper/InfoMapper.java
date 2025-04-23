@@ -25,7 +25,8 @@ public interface InfoMapper {
 
     List<InfoDto> toInfoDtoList(List<InfoEntity> entities);
 
-    void updateEntityFromDto(InfoDto dto, @MappingTarget InfoEntity entity);
+    @Mapping(target = "id", source = "id")
+    void updateEntityFromDto(InfoDto dto, @MappingTarget InfoEntity entity, String id);
 
     List<InfoEntity> toInfoEntityList(List<InfoDto> dtos);
 
