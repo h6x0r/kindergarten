@@ -163,10 +163,10 @@ public class CandidateProfileController {
         return candidateProfileService.findById(id);
     }
 
-    @GetMapping
-    public List<CandidateProfileDto> getAll() {
-        return candidateProfileService.findAll();
-    }
+//    @GetMapping
+//    public List<CandidateProfileDto> getAll() {
+//        return candidateProfileService.findAll();
+//    }
 
     @GetMapping("/business_assistant")
     public List<CandidateProfileBusinessDto> getAllBusinessByBusinessAssistant() {
