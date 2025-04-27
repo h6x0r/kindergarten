@@ -1,10 +1,6 @@
 package uz.zazu.king.document.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.zazu.king.common.enums.Branch;
 import uz.zazu.king.document.commons.enums.DocType;
 

@@ -1,11 +1,7 @@
 package uz.zazu.king.questionnaire.mapper;
 
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import uz.zazu.king.questionnaire.dto.ParentChildQuestionnaireDto;
 import uz.zazu.king.questionnaire.entity.ParentChildQuestionnaire;
 

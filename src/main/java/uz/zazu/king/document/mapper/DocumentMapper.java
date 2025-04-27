@@ -1,8 +1,6 @@
 package uz.zazu.king.document.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import uz.zazu.king.document.dto.DocumentDto;
 import uz.zazu.king.document.entity.DocumentEntity;
@@ -19,6 +17,7 @@ public interface DocumentMapper {
 
     DocumentDto toDto(DocumentEntity entity);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(DocumentDto dto, @MappingTarget DocumentEntity entity);
 
 }

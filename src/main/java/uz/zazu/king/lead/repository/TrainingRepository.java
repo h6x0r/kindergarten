@@ -1,17 +1,19 @@
 package uz.zazu.king.lead.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import uz.zazu.king.lead.entity.Training;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface TrainingRepository extends MongoRepository<Training, String> {
+@Repository
+public interface TrainingRepository extends JpaRepository<Training, String> {
 
-    @Query("{ '_id': ?0, 'isActive': true }")
+    @Query(value = "SELECT * FROM trainings WHERE id = ?1 AND is_active = true", nativeQuery = true)
     Optional<Training> getByIdAndActive(String id);
 
-    @Query("{ 'isActive': true }")
+    @Query(value = "SELECT * FROM trainings WHERE is_active = true", nativeQuery = true)
     List<Training> findAllActive();
 }

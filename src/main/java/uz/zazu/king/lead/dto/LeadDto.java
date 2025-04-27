@@ -1,11 +1,7 @@
 package uz.zazu.king.lead.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.zazu.king.lead.common.enums.LeadState;
 
 import java.time.LocalDateTime;

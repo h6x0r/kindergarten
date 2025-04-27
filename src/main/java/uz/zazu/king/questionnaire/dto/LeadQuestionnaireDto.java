@@ -1,11 +1,7 @@
 package uz.zazu.king.questionnaire.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.zazu.king.common.enums.Branch;
 
 import java.time.LocalDateTime;

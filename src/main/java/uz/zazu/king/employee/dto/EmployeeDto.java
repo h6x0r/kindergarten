@@ -1,10 +1,6 @@
 package uz.zazu.king.employee.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.zazu.king.employee.common.enums.EmployeeState;
 import uz.zazu.king.employee.common.enums.Position;
 

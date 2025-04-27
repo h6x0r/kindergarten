@@ -56,7 +56,7 @@ public class InventoryServiceImpl implements InventoryService {
         var existing = inventoryRepository.findActiveById(id)
                 .orElseThrow(() -> new InventoryNotFoundException(id));
 
-        existing.setActive(false);
+        existing.setIsActive(false);
         inventoryRepository.save(existing);
     }
 }

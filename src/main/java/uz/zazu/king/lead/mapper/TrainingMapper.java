@@ -1,10 +1,6 @@
 package uz.zazu.king.lead.mapper;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 import uz.zazu.king.lead.dto.TrainingDto;
 import uz.zazu.king.lead.entity.Training;
 

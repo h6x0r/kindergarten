@@ -3,6 +3,7 @@ package uz.zazu.king.employee.dto;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class CandidateProfileDto {
     private Integer age;
     @NotBlank(message = "Поле 'Контакты' не должно быть пустым")
     private String contacts;
-    @NotBlank(message = "Поле 'Статус кандидата' не должно быть пустым")
+    @NotNull(message = "Поле 'Статус кандидата' не должно быть пустым")
     private CandidateState candidateStatus;
     private String interviewComments;
     private LocalDateTime createdAt;

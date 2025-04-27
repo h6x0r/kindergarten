@@ -63,7 +63,7 @@ public class SecurityConfig {
 
     @Bean
     public String[] whiteList() {
-        return new String[] {
+        return new String[]{
                 "/api/auth/**",
                 "/v3/api-docs/**",
                 "/swagger-ui/**",

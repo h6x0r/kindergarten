@@ -1,14 +1,9 @@
 package uz.zazu.king.inventory.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
@@ -17,19 +12,37 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "inventories")
+@Entity
+@Table(name = "inventories")
 public class InventoryEntity {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @Column(name = "org_id")
     private long orgId;
+
+    @Column(name = "product_id")
     private long productId;
+
+    @Column(name = "price")
     private long price;
+
+    @Column(name = "item_name")
     private String itemName;
+
+    @Column(name = "count")
     private long count;
+
     @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    private boolean isActive;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

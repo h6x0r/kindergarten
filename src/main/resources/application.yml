@@ -2,11 +2,21 @@ server:
   port: 8080
 
 spring:
-  data:
-    mongodb:
-      uri: mongodb://mongo:PRHJgQPaSjvfwizYhvbIkyKXclrdwFYM@mongodb.railway.internal:27017/kindergarten
   application:
     name: kindergarten
+
+  datasource:
+    url: ${MONGO_URI}
+    username: ${MONGO_USER}
+    password: ${MONGO_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 king:
   jwt:

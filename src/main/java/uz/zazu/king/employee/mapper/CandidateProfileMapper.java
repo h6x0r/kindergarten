@@ -1,11 +1,6 @@
 package uz.zazu.king.employee.mapper;
 
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
 import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileNannyDto;

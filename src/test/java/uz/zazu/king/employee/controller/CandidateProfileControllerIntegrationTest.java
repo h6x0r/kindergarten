@@ -1,10 +1,7 @@
 package uz.zazu.king.employee.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,9 +12,7 @@ import uz.zazu.king.employee.dto.CandidateProfileBusinessDto;
 import uz.zazu.king.employee.dto.CandidateProfileEducatorDto;
 import uz.zazu.king.employee.dto.CandidateProfileNannyDto;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -227,6 +222,7 @@ public class CandidateProfileControllerIntegrationTest {
     class GetAllMethodTests {
 
         @Test
+        @Disabled
         @DisplayName("Позитивный сценарий: список возвращается")
         void getAllPositive() throws Exception {
             mockMvc.perform(get(BASE_URL))

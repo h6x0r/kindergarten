@@ -1,8 +1,6 @@
 package uz.zazu.king.questionnaire.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import uz.zazu.king.questionnaire.dto.LeadQuestionnaireDto;
 import uz.zazu.king.questionnaire.entity.LeadQuestionnaireEntity;
 
@@ -16,5 +14,6 @@ public interface LeadQuestionnaireMapper {
 
     LeadQuestionnaireDto toDto(LeadQuestionnaireEntity entity);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateEntityFromDto(LeadQuestionnaireDto dto, @MappingTarget LeadQuestionnaireEntity entity);
 }

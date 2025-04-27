@@ -12,11 +12,7 @@ import uz.zazu.king.info.mapper.InfoMapper;
 import uz.zazu.king.info.repository.InfoRepository;
 import uz.zazu.king.info.service.InfoService;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -77,7 +73,7 @@ public class InfoServiceImpl implements InfoService {
         var entity = infoRepository.findActiveById(id)
                 .orElseThrow(() -> new InfoNotFoundException(id));
 
-        infoMapper.updateEntityFromDto(infoDto, entity, id);
+        infoMapper.updateEntityFromDto(infoDto, entity);
         var updatedEntity = infoRepository.save(entity);
         return infoMapper.toInfoDto(updatedEntity);
     }
