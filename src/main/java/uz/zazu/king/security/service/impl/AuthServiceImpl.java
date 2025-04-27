@@ -36,6 +36,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${king.jwt.secret}")
     private String secretBase64;
 
+    @Override
     public LoginResponse login(LoginRequest loginRequest) {
         verifyUser(loginRequest);
         var userName = loginRequest.getUsername();

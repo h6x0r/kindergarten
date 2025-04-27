@@ -1,5 +1,7 @@
 package uz.zazu.king.security.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import uz.zazu.king.security.dto.UserDto;
@@ -15,12 +17,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public UserDto create(@RequestBody UserDto user) {
+    public UserDto create(@Valid @RequestBody UserDto user) {
         return userService.create(user);
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable String id) {
+    public UserDto getById(@NotBlank @PathVariable String id) {
         return userService.findById(id);
     }
 
@@ -30,12 +32,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserDto update(@PathVariable String id, @RequestBody UserDto user) {
+    public UserDto update(@PathVariable String id, @Valid @RequestBody UserDto user) {
         return userService.update(id, user);
     }
 
-    @DeleteMapping("/{name}")
-    public void delete(@PathVariable String name) {
-        userService.remove(name);
+    @DeleteMapping("/{id}")
+    public void delete(@NotBlank @PathVariable String id) {
+        userService.remove(id);
     }
 }

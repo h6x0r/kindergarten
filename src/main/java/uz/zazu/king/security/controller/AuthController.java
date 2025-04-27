@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uz.zazu.king.security.dto.AuthResponse;
 import uz.zazu.king.security.dto.LoginRequest;
-import uz.zazu.king.security.service.impl.AuthServiceImpl;
+import uz.zazu.king.security.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {

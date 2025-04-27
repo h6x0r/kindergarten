@@ -29,7 +29,7 @@ public class AuthControllerIntegrationTest {
 
     private static final String userName = "testSuperAdmin" + UUID.randomUUID().toString().substring(0, 8);
     private static final String password = "testSuperAdminPass";
-    private static final Set<String> roles = Set.of(Role.ROLE_ADMIN.name(), Role.ROLE_USER.name());
+    private static final Set<Role> roles = Set.of(Role.ROLE_ADMIN, Role.ROLE_USER);
     private static String jwtToken;
     @Autowired
     private MockMvc mockMvc;

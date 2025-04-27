@@ -62,10 +62,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void remove(String userName) {
-        var existing = userRepository.findByUserNameAndIsActive(userName)
-                .orElseThrow(() -> new UserNotFoundException(userName));
-
+    public void remove(String id) {
+        var existing = userRepository.findActiveById(id)
+                .orElse(userRepository.findByUserNameAndIsActive(id)
+                        .orElseThrow(() -> new UserNotFoundException(id)));
         existing.setActive(false);
         userRepository.save(existing);
     }

@@ -11,8 +11,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -47,13 +51,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(inactiveTokens());
+    public AuthenticationManager authenticationManager(DaoAuthenticationProvider provider) {
+        return new ProviderManager(provider);
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(DaoAuthenticationProvider provider) {
-        return new ProviderManager(provider);
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(inactiveTokens());
     }
 
     @Bean
@@ -105,5 +109,20 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager users() {
+        var login = System.getenv().getOrDefault("SPRING_SECURITY_USER_NAME", "dwayneJoker2411");
+        var pass = System.getenv().getOrDefault("SPRING_SECURITY_USER_PASSWORD", "Ztr0n6pAzzw0rD@#");
+        var role = System.getenv().getOrDefault("SPRING_SECURITY_USER_ROLES", "SUPER_ADMIN");
+
+        var pe = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        var u = User.builder()
+                .username(login)
+                .password(pe.encode(pass))
+                .roles(role)           // будет храниться как ROLE_SUPER_ADMIN
+                .build();
+        return new InMemoryUserDetailsManager(u);
     }
 }
