@@ -6,9 +6,9 @@ spring:
     name: kindergarten
 
   datasource:
-    url: ${MONGO_URI}
-    username: ${MONGO_USER}
-    password: ${MONGO_PASSWORD}
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
       minimum-idle: 5
@@ -17,6 +17,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
 
 king:
   jwt:
